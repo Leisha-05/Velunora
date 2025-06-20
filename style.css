@@ -1,0 +1,154 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+  --maincolor: #8B9178;
+  --text-heading: #65615d;
+  --btn: #d59a2d;
+  --btn-text: #fce9a2;
+  --brown-bg: #f3f0eb;
+  --green-bg: #d9e3db;
+  --light-black: #7e7d7b;
+  --white: #fff;
+  --black: #292930;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fff8f5;
+  color: #333;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  color: var(--black);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  overflow-x: hidden;
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 40px;
+}
+
+.announcement-bar {
+  background-color: var(--maincolor);
+  color:var(--white);
+  text-align: center;
+  padding: 8px 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  background-color: var(--white);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 40px;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.logo-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+    position: relative;
+}
+
+.logo-text {
+  font-family: 'Palatino Linotype', serif;
+  font-size: 3rem;
+  font-weight: bold;
+  color: #6B705C;
+}
+.logo-text i{
+    font-size: 1.5rem;
+}
+.tagline {
+  font-size: 1rem;
+  color: var(--btn); 
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+.nav-links a:hover{
+    color: var(--maincolor);
+}
+
+.nav-links a, .dropbtn {
+  text-decoration: none;
+  color: var(--black);
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+.nav-links .dropdown .dropbtn:hover{
+    color: var(--maincolor);
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #F3F6F4;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  min-width: 160px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: var(--black);
+  padding: 10px 16px;
+  display: block;
+  text-decoration: none;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown .dropdown-content a:hover{
+color: #6B705C;
+}
+
+.hero {
+  margin-top: 0;
+}
+
+.hero-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}

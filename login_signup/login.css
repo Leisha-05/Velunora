@@ -1,0 +1,202 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+:root {
+  --maincolor: #8B9178;
+  --white: #fff;
+  --black: #292930;
+  --text: #5a5a5a;
+  --input-bg: #f3f3f3;
+  --btn-bg: #6B705C;
+  --btn-hover: #585f4c;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  color: var(--black);
+}
+
+body {
+  background: linear-gradient(135deg, #fdfbf9, #e7e4dd);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+}
+
+.login-container {
+  max-width: 900px;
+  width: 100%;
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  display: flex;
+  height: 90vh;
+  margin-top: 5vh;
+}
+
+.login-box {
+  display: flex;
+  width: 100%;
+}
+
+.form-side {
+  flex: 1;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.image-side {
+  flex: 1;
+  background-color: var(--maincolor);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-side img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-right: 15rem;
+  margin-bottom: 1rem;
+}
+
+.logo-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.logo-text {
+  font-family: "Palatino Linotype", serif;
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #6b705c;
+}
+.logo-text i {
+  font-size: 0.875rem;
+  transform: translateY(-.2rem);
+}
+.tagline {
+  font-size: .5rem;
+  color: var(--btn);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+}
+
+.input-group input:focus{
+    border: .5px solid var(--maincolor);
+    outline: none;
+}
+.welcome-msg {
+  font-size: 3rem;
+  font-weight: 600;
+  color: var(--black);
+  margin-bottom:6rem;
+  text-align: center;
+  font-family: "Palatino Linotype", serif;
+  border-bottom: .1px solid #6b705c;
+  padding-bottom: .5rem;
+}
+
+.subtext {
+  font-size: .8rem;
+  color: var(--text);
+  margin-bottom: 30px;
+  text-align: center;
+  transform: translateY(-5rem);
+}
+.subtext span{
+    font-weight: bold;
+}
+
+.input-group {
+  margin-bottom: 2px;
+  transform: translateY(-4.65rem);
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1rem;
+  color: var(--black);
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 15px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--input-bg);
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+
+.login-btn {
+  background-color: var(--btn-bg);
+  color: var(--white);
+  padding: 14px 0;
+  border: none;
+  border-radius: 50rem;
+  width: 100%;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transform: translateY(-3rem);
+  position: relative;
+  z-index: 0;
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.login-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%; /* Initially invisible */
+  background-color: var(--black);
+  z-index: -1;
+  border-radius: 5rem;
+  transition: 0.2s ease-in-out;
+}
+
+.login-btn:hover::before {
+  width: 100%; /* Expands from left */
+}
+
+.login-btn:hover {
+  color: var(--white);
+}
+
+.form-side a{
+    text-decoration: none;
+    text-align: center;
+    font-size: 0.75rem;
+    color: #7e7d7b;
+    transform: translateY(-2rem);
+}
+.form-side a:hover{
+    color: var(--black);
+}

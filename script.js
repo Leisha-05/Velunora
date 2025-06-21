@@ -111,7 +111,7 @@ creators.forEach((creator, index) => {
 
     </div>
     <div class="view-creator-link">
-      <a href="#" class="btn">View Full Collection</a>
+      <a href="#" class="btn">Explore Full Collection</a>
     </div>
   </div>
 `;

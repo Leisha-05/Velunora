@@ -22,28 +22,149 @@
         <p class="tagline">Crafted with Soul, Curated with Love</p>
       </div>
       <nav class="nav-links">
-        <a href="#">Home</a>
-        <a href="#">Browse by Creators</a>
-
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
         <div class="dropdown">
-          <button class="dropbtn">Categories</button>
+          <a class="dropbtn" href="#category">Categories</a>
           <div class="dropdown-content">
             <a href="#">Jewelry</a>
-            <a href="#">Art & Prints</a>
             <a href="#">Decor</a>
+            <a href="#">Art & Prints</a>
             <a href="#">Stationery</a>
+            <a href="#">Embroidery</a>
+            <a href="#">Gifting</a>
           </div>
         </div>
-
+        <a href="#spotlight">Creator Spotlight</a>
         <a href="#">Login / Sign Up</a>
         <a href="#">Cart / Wishlist</a>
       </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-      <!-- You can replace this with your actual image -->
-      <img src="your-hero-image.jpg" alt="Hero Banner" class="hero-img" />
+    <section class="search-bar">
+      <div class="search-container">
+        <input
+          type="text"
+          placeholder="Search creations by your favorite artists..."
+        />
+        <i class="fas fa-search"></i>
+      </div>
     </section>
+
+    <section class="hero-section" id="home">
+      <div class="hero-overlay-box">
+        <div class="hero-text-content">
+          <h1 class="hero-heading">
+            Discover Treasures That Speak from the Heart
+          </h1>
+          <p class="hero-description">
+            Every creation at <strong>Velunora</strong> is a story — of hands
+            that craft with care, and hearts that curate with love. Explore
+            soulful, handmade pieces designed to add warmth, charm, and meaning
+            to your moments.
+          </p>
+          <a href="#" class="btn">Explore the Collection</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="video-container">
+        <video
+          src="images/960-142611994_small.mp4"
+          loop
+          autoplay
+          muted
+          playsinline
+        ></video>
+      </div>
+      <div class="about-content">
+        <h2>About Velunora</h2>
+        <p>
+          At Velunora, we’re not just a marketplace — we’re a movement of
+          mindful gifting, meaningful decor, and magical little details. From
+          scented candles and embroidered keepsakes to hand-painted art and
+          personalized treasures, every creation is crafted by independent
+          creators who turn passion into pieces you can feel. Whether you're
+          curating your space or curating a smile, we bring you moments made
+          with soul, wrapped in love, and designed to be remembered.
+          <span><br />Art you can touch. Stories you can keep.</span>
+        </p>
+        <a href="#" class="btn">Learn More</a>
+      </div>
+    </section>
+
+    <section class="featured-section" id="category">
+      <h2 class="section-title">FEATURED CATEGORIES</h2>
+      <div class="categorybox">
+        <div class="category-grid" id="categoryContainer"></div>
+      </div>
+    </section>
+
+    <section class="creator-spotlight-section" id="spotlight">
+      <h2 class="spotlight-title">Creator Spotlight</h2>
+
+      <div class="spotlight-scroll-wrapper" id="spotlightWrapper">
+        <!-- JS will populate creator slides here -->
+      </div>
+
+      <button class="scroll-prev" onclick="scrollPrev()">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <button class="scroll-next" onclick="scrollNext()">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+
+      <div class="dot-indicators" id="dotIndicators"></div>
+    </section>
+
+    <section class="from-the-heart">
+      <div class="heart-left">
+        <img
+          src="images/Heading__1_-removebg-preview.png"
+          alt="From the Heart"
+        />
+      </div>
+
+      <div class="heart-right">
+        <p>
+          Let’s have a <strong>heart to heart</strong> and not miss a single
+          beat.<br />
+          Sign up to receive our latest news, specials and more.
+        </p>
+        <form class="heart-form">
+          <input type="email" placeholder="YOUR EMAIL ADDRESS" required />
+          <button type="submit"><i class="fa-solid fa-arrow-right"></i></button>
+        </form>
+      </div>
+    </section>
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-brand">
+          <h2 class="footer-logo">
+            Velunora <i class="fa-solid fa-heart"></i>
+          </h2>
+          <p class="footer-tagline">Crafted with Soul, Curated with Love</p>
+          <p class="footer-desc">
+            Velunora is a curated marketplace of handmade gifts and soulful
+            creations by emerging artists & independent creators.
+          </p>
+
+          <div class="social-icons">
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-pinterest"></i></a>
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#"><i class="fa-regular fa-envelope"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 Velunora. Made with 💛 by Leisha, Shruti & Saffran.</p>
+        <p>Built for creators, by creators.</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
   </body>
 </html>

@@ -70,6 +70,40 @@ body {
   object-fit: cover;
 }
 
+.image-side {
+  position: relative; /* Enable absolute positioning inside */
+  flex: 1;
+  background-color: var(--maincolor);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+  overflow: hidden;
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  z-index: 2;
+}
+
+.close-btn a {
+  font-size: 1rem;
+  color: #fff;
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 4px 8px;
+  border-radius: 50%;
+  transition: background 0.3s ease;
+}
+
+.close-btn a:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+
 .logo {
   display: flex;
   flex-direction: column;
@@ -107,6 +141,7 @@ body {
     border: .5px solid var(--maincolor);
     outline: none;
 }
+
 .welcome-msg {
   font-size: 3rem;
   font-weight: 600;

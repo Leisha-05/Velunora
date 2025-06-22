@@ -30,6 +30,10 @@ body {
   justify-content: center;
   min-height: 70vh;
 }
+.form-side form {
+  transform: scale(0.9); /* 90% of original size */
+  transform-origin: top left; /* You can adjust origin if needed */
+}
 
 .login-container {
   max-width: 900px;
@@ -69,6 +73,39 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.image-side {
+  position: relative; /* Enable absolute positioning inside */
+  flex: 1;
+  background-color: var(--maincolor);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+  overflow: hidden;
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  z-index: 2;
+}
+
+.close-btn a {
+  font-size: 1rem;
+  color: #fff;
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 4px 8px;
+  border-radius: 50%;
+  transition: background 0.3s ease;
+}
+
+.close-btn a:hover {
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .logo {
@@ -112,7 +149,7 @@ body {
   font-size: 2.75rem;
   font-weight: 600;
   color: var(--black);
-  margin-bottom:5rem;
+  margin-bottom:3.5rem;
   text-align: center;
   font-family: "Palatino Linotype", serif;
   border-bottom: .1px solid #6b705c;
@@ -124,7 +161,7 @@ body {
   color: var(--text);
   margin-bottom: 30px;
   text-align: center;
-  transform: translateY(-4rem);
+  transform: translateY(-3rem);
 }
 .subtext span{
     font-weight: bold;
@@ -143,7 +180,7 @@ body {
 }
 
 .input-group input {
-  width: 100%;
+  width: 110%;
   padding: 12px 15px;
   border: none;
   border-radius: 8px;
@@ -159,7 +196,7 @@ body {
   padding: 14px 0;
   border: none;
   border-radius: 50rem;
-  width: 100%;
+  width: 110%;
   font-weight: 600;
   font-size: 1.1rem;
   transform: translateY(-4rem);
@@ -196,8 +233,38 @@ body {
     text-align: center;
     font-size: 0.75rem;
     color: #7e7d7b;
-    transform: translateY(-3rem);
+    transform: translateY(-5rem);
 }
 .form-side a:hover{
     color: var(--black);
+}
+
+
+.role-select {
+  margin-bottom: 25px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  transform: translateY(-4rem);
+  justify-content: center;
+}
+
+.role-label {
+  font-size: .75rem;
+  color: var(--black);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.role-label:hover {
+  color: var(--btn-bg);
+}
+
+.radio {
+  accent-color: var(--maincolor);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
 }

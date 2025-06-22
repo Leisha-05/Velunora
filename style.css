@@ -218,6 +218,12 @@ html {
   font-size: 1.4rem;
   margin-left: 10px;
 }
+
+.search-container:has(input:focus) {
+  border: 1px solid var(--logo);
+  box-shadow: 0 0 8px rgba(107, 112, 92, 0.4); /* subtle glow */
+}
+
 .hero-section {
   padding: 60px 20px;
   display: flex;
@@ -305,7 +311,7 @@ html {
   color: var(--light-black);
   margin-bottom: 25px;
   line-height: 1.7;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 .about-content p span{
   color: var(--logo);
@@ -753,4 +759,8 @@ background-color: #f3f0eb;
   margin-top: 40px;
   font-size: 1.2rem;
   color: #f0f0f0;
+}
+.browse-more-creators .btn{
+  margin-left: 42.5%;
+  margin-top: 2rem;
 }

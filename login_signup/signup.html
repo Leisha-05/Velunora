@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login | Velunora</title>
+    <title>SignUp | Velunora</title>
     <link rel="stylesheet" href="signup.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
@@ -32,16 +32,33 @@
           </p>
 
           <form>
+            <div class="role-select">
+              <label class="role-label">
+                <input
+                  type="radio"
+                  class="radio"
+                  name="role"
+                  value="customer"
+                  checked
+                />
+                Customer
+              </label>
+              <label class="role-label">
+                <input type="radio" class="radio" name="role" value="creator" />
+                Creator
+              </label>
+            </div>
+
             <div class="input-group">
               <label for="Name">Full Name</label>
               <input
                 type="text"
                 id="Name"
-                placeholder="you@example.com"
+                placeholder="Your Name"
                 required
               />
             </div>
-            
+
             <div class="input-group">
               <label for="email">Email</label>
               <input
@@ -72,12 +89,15 @@
               />
             </div>
 
-            <button type="submit" class="login-btn">Login</button>
+            <button type="submit" class="login-btn">SignUp</button>
           </form>
           <a href="login.html">Already have an account? Login.</a>
         </div>
 
         <div class="image-side">
+          <div class="close-btn">
+            <a href="javascript:history.back()"><i class="fas fa-times"></i></a>
+          </div>
           <img src="../images/login.jpg" alt="Login Visual" />
         </div>
       </div>

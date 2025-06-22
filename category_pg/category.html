@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Category Collection | Velunora</title>
+    <link rel="stylesheet" href="category.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">Free shipping on orders ₹500+</div>
+
+    <!-- Navbar -->
+    <header class="navbar">
+      <div class="logo">
+        <div class="logo-top">
+          <h1 class="logo-text">Velunora <i class="fa-solid fa-heart"></i></h1>
+        </div>
+        <p class="tagline">Crafted with Soul, Curated with Love</p>
+      </div>
+      <nav class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="#about">About</a>
+        <div class="dropdown">
+          <a class="dropbtn" href="#category">Categories</a>
+          <div class="dropdown-content">
+            <a href="category.html?category=jewelry">Jewelry</a>
+            <a href="category.html?category=decor">Decor</a>
+            <a href="category.html?category=art">Art & Prints</a>
+            <a href="category.html?category=stationery">Stationery</a>
+            <a href="category.html?category=embroidery">Embroidery</a>
+            <a href="category.html?category=gifting">Gifting</a>
+          </div>
+        </div>
+        <a href="#spotlight">Creator Spotlight</a>
+        <a href="../login_signup/login.html">Login / Sign Up</a>
+        <a href="#">Cart / Wishlist</a>
+      </nav>
+    </header>
+
+    <!-- Search + Filter Bar -->
+     <section class="search-bar">
+      <div class="search-container">
+        <input
+          type="text"
+          placeholder="Search creations by your favorite artists..."
+        />
+        <i class="fas fa-search"></i>
+      </div>
+      <select id="priceFilter">
+        <option value="default">Sort by Price</option>
+        <option value="low">Low to High</option>
+        <option value="high">High to Low</option>
+      </select>
+    </section>
+
+    <!-- Category Header -->
+    <section class="category-header">
+      <img src="images/headers/jewelry-banner.jpg" alt="Category Banner" />
+      <h2 id="categoryTitle">Jewelry Collection</h2>
+    </section>
+
+    <!-- Product Grid -->
+    <section class="product-section">
+      <div id="productContainer" class="product-grid"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2025 Velunora. All rights reserved.</p>
+    </footer>
+
+    <script src="category.js" defer></script>
+  </body>
+</html>

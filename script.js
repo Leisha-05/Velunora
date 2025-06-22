@@ -3,33 +3,40 @@ const categories = [
     name: "Jewelry",
     img: "images/jewelery1.webp",
     discount: "10%",
+    value: "jewelry"
   },
   {
     name: "Decor",
     img: "images/decors01.jpg",
     discount: "15%",
+    value: "decor"
   },
   {
     name: "Art & Prints",
     img: "images/art01.png",
     discount: "5%",
+    value: "art"
   },
   {
     name: "Stationery",
     img: "images/stationary01.jpg",
     discount: "20%",
+    value: "stationery"
   },
   {
     name: "Embroidery",
     img: "images/embroidery01.jpg",
     discount: "12%",
+    value: "embroidery"
   },
   {
     name: "Gifting",
     img: "images/gifting01.jpg",
     discount: "8%",
+    value: "gifting"
   },
 ];
+
 
 const container = document.getElementById("categoryContainer");
 
@@ -41,7 +48,7 @@ categories.forEach((cat) => {
         <span class="ribbon">min ${cat.discount} Off</span>
         <img src="${cat.img}" alt="${cat.name}">
         <div class="view-coll">
-          <a href="#">view collection</a>
+          <a href="category_pg/category.html?category=${cat.value}">view collection</a>
         </div>
       </div>
       <h3>${cat.name}</h3>

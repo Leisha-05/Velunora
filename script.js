@@ -59,8 +59,8 @@ categories.forEach((cat) => {
 
 const creators = [
   {
-     name: "Diksha Singhi",
-    brand: "A Little Extra",
+     name: "Aarushi Jain",
+    brand: "Few Vows",
     avatar: "images/creators/a little extra/a little extra.png",
     products: [
       { img: "images/creators/a little extra/jewelery1.webp", name: "Durga Earrings" },
@@ -69,8 +69,8 @@ const creators = [
     ]
   },
   {
-    name: "Akshata Jain",
-    brand: "Knot Your Type",
+    name: "Sanya Malhotra",
+    brand: "Your Type",
     avatar: "images/creators/knot your type/knotyourtype.png",
     products: [
       { img: "images/creators/knot your type/embroid1.webp", name: "Flower basket DIY Embroidery kit" },
@@ -79,8 +79,8 @@ const creators = [
     ]
   },
   {
-    name: "Mouni",
-    brand: "Mouni Crafts",
+    name: "Simran Bhatia",
+    brand: "Simran's Hub",
     avatar: "images/creators/Mouni crafts/mouni_crafts.png",
     products: [
       { img: "images/creators/Mouni crafts/img1.webp", name: "3-D Miniatures" },

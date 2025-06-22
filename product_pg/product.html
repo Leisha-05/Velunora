@@ -3,20 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Category Collection | Velunora</title>
-    <link rel="stylesheet" href="category.css" />
+    <title>Product | Velunora</title>
+    <link rel="stylesheet" href="product.css" />
     <link rel="stylesheet" href="../an+nav+search.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   </head>
   <body>
     <!-- Announcement Bar -->
     <div class="announcement-bar">Free shipping on orders ₹500+</div>
 
     <!-- Navbar -->
-    <header class="navbar">
+   <header class="navbar">
       <div class="logo">
         <div class="logo-top">
           <h1 class="logo-text">Velunora <i class="fa-solid fa-heart"></i></h1>
@@ -43,38 +40,30 @@
       </nav>
     </header>
 
-    <!-- Search + Filter Bar -->
-     <section class="search-bar">
-      <div class="search-container">
-        <input
-          type="text"
-          placeholder="Search creations by your favorite artists..."
-        />
-        <i class="fas fa-search"></i>
+    <!-- Product Section -->
+    <section class="product-container">
+      <div class="image-box">
+        <img id="product-img" src="" alt="Product Image" />
       </div>
-      <select id="priceFilter">
-        <option value="default">Sort by Price</option>
-        <option value="low">Low to High</option>
-        <option value="high">High to Low</option>
-      </select>
+      <div class="details-box">
+        <h2 id="product-name">Product Name</h2>
+        <p class="creator-name">by <a href="#" id="creator-link">Creator</a></p>
+        <p class="price">
+          ₹<span id="current-price"></span>
+          <span class="original" id="original-price"></span>
+        </p>
+        <p class="description" id="description">Short description of the product.</p>
+
+        <button class="btn">Add to Cart</button>
+        <button class="btn secondary">Add to Wishlist</button>
+        <button class="go-back"><i class="fas fa-arrow-left"></i> Back to Collection</button>
+
+        <div class="ratings">
+          <p>Rating: <span id="rating-stars"></span> (<span id="review-count"></span> reviews)</p>
+        </div>
+      </div>
     </section>
 
-    <!-- Category Header -->
-    <section class="category-header">
-      <img src="images/headers/jewelry-banner.jpg" alt="Category Banner" />
-      <h2 id="categoryTitle">Jewelry Collection</h2>
-    </section>
-
-    <!-- Product Grid -->
-    <section class="product-section">
-      <div id="productContainer" class="product-grid"></div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <p>&copy; 2025 Velunora. All rights reserved.</p>
-    </footer>
-
-    <script src="category.js" defer></script>
+    <script src="product.js"></script>
   </body>
 </html>

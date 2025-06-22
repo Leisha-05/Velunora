@@ -44,17 +44,20 @@ categories.forEach((cat) => {
   const card = document.createElement("div");
   card.className = "category-card";
   card.innerHTML = `
-      <div class="image-wrapper">
-        <span class="ribbon">min ${cat.discount} Off</span>
+    <div class="image-wrapper">
+      <span class="ribbon">min ${cat.discount} Off</span>
+      <a href="category_pg/category.html?category=${cat.value}">
         <img src="${cat.img}" alt="${cat.name}">
-        <div class="view-coll">
-          <a href="category_pg/category.html?category=${cat.value}">view collection</a>
-        </div>
+      </a>
+      <div class="view-coll">
+        <a href="category_pg/category.html?category=${cat.value}">view collection</a>
       </div>
-      <h3>${cat.name}</h3>
-    `;
+    </div>
+    <h3>${cat.name}</h3>
+  `;
   container.appendChild(card);
 });
+
 
 
 const creators = [

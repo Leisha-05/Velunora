@@ -6,14 +6,17 @@
     <title>Product | Velunora</title>
     <link rel="stylesheet" href="product.css" />
     <link rel="stylesheet" href="../an+nav+search.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
   </head>
   <body>
     <!-- Announcement Bar -->
     <div class="announcement-bar">Free shipping on orders ₹500+</div>
 
     <!-- Navbar -->
-   <header class="navbar">
+    <header class="navbar">
       <div class="logo">
         <div class="logo-top">
           <h1 class="logo-text">Velunora <i class="fa-solid fa-heart"></i></h1>
@@ -34,7 +37,7 @@
             <a href="category.html?category=gifting">Gifting</a>
           </div>
         </div>
-        <a href="#spotlight">Creator Spotlight</a>
+        <a href="../index.html#spotlight">Creator Spotlight</a>
         <a href="../login_signup/login.html">Login / Sign Up</a>
         <a href="#">Cart / Wishlist</a>
       </nav>
@@ -52,18 +55,65 @@
           ₹<span id="current-price"></span>
           <span class="original" id="original-price"></span>
         </p>
-        <p class="description" id="description">Short description of the product.</p>
+        <p class="description" id="description">
+          Short description of the product.
+        </p>
 
-        <button class="btn">Add to Cart</button>
-        <button class="btn secondary">Add to Wishlist</button>
-        <button class="go-back"><i class="fas fa-arrow-left"></i> Back to Collection</button>
+        <div class="star-rating" id="rating-stars">
+          <!-- Stars will be injected via JS -->
+        </div>
+
+        <div class="icon-buttons">
+          <button class="icon-btn" title="Add to Cart">
+            <i class="fa-solid fa-cart-shopping"></i>
+          </button>
+          <button class="icon-btn" title="Add to Wishlist">
+            <i class="fa-solid fa-heart"></i>
+          </button>
+        </div>
+
+        <button class="go-back">
+          <i class="fas fa-arrow-left"></i> Back to Collection
+        </button>
 
         <div class="ratings">
-          <p>Rating: <span id="rating-stars"></span> (<span id="review-count"></span> reviews)</p>
+          <p>
+            Rating: <span id="rating-text"></span> (<span
+              id="review-count"
+            ></span>
+            reviews)
+          </p>
+        </div>
+      </div>
+      <div class="product-lower-row">
+        <!-- LEFT: Reviews -->
+        <div class="reviews-section">
+          <h3>Customer Reviews</h3>
+          <div class="review-list" id="review-list">
+            <!-- JS will fill reviews -->
+          </div>
+        </div>
+
+        <!-- RIGHT: Custom Request Form -->
+        <div class="custom-request">
+          <h3>Send Customization Request</h3>
+          <form id="custom-form">
+            <label for="custom-message">Describe your order:</label>
+            <textarea
+              id="custom-message"
+              placeholder="Describe customization..."
+              required
+            ></textarea>
+
+            <label for="custom-file">Attach Image/PDF:</label>
+            <input type="file" id="custom-file" accept=".png,.jpg,.jpeg,.pdf" />
+
+            <button class="btn" type="submit">Send to Creator</button>
+          </form>
         </div>
       </div>
     </section>
-
+    <script src="../data/data.js"></script>
     <script src="product.js"></script>
   </body>
 </html>

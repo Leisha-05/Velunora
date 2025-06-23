@@ -11,6 +11,7 @@
   --white: #fff;
   --black: #292930;
   --logo: #6b705c;
+  --shadow: rgba(0, 0, 0, 0.08);
 }
 
 body {

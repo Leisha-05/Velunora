@@ -1,7 +1,6 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   const product = JSON.parse(localStorage.getItem("selectedProduct"));
-    
 
   if (!product) {
     document.querySelector(".product-container").innerHTML = "<p>Product not found.</p>";
@@ -14,9 +13,9 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("original-price").textContent = "₹" + product.price;
   document.getElementById("description").textContent = `A lovingly crafted ${product.name.toLowerCase()} from our ${product.category} collection.`;
   document.getElementById("creator-link").textContent = product.creator;
-  document.getElementById("creator-link").href = `#creator-${product.creator.replace(/\s+/g, "-").toLowerCase()}`;
-
+  document.getElementById("creator-link").href = `../creator_profile/creator_profile.html?creator=${encodeURIComponent(product.creator)}`;
 });
+
 
 function calculateDiscount(price, discountStr) {
   const discount = parseInt(discountStr.replace("%", ""));

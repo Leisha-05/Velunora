@@ -1,0 +1,18 @@
+.category-header h2 {
+  font-size: 4.5rem;
+  background-color: rgba(139, 131, 116, 0.6);
+  padding: 15px 30px;
+  border-radius: 10px;
+}
+
+.product-info h3 {
+  font-size: 2rem;
+  color: var(--text-heading);
+  font-weight: bold;
+}
+
+.product-info p {
+  font-size: 1.3rem;
+  color: var(--light-black);
+  margin-bottom: 6px;
+}

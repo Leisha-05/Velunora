@@ -13,6 +13,8 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     />
+    <script type = "module" src="firebase.js" defer></script>
+    <script type = "module" src="login.js" defer></script>
   </head>
   <body>
     <div class="login-container">
@@ -31,7 +33,7 @@
             Login to continue your journey with <span>Velunora</span>.
           </p>
 
-          <form>
+          <form id="loginForm">
             <div class="input-group">
               <label for="email">Email</label>
               <input

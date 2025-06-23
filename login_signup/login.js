@@ -21,9 +21,9 @@ loginForm.addEventListener('submit', async (e) => {
             alert(`Login successful! Welcome, ${userData.name} (${userData.role})`);
 
             if (userData.role === 'creator') {
-                window.location.href = "creator_dashboard.html";
+                window.location.href = "../wishlist_cart/index.html"; 
             } else {
-                window.location.href = "index.html";
+                window.location.href = "../wishlist_cart/index.html"; 
             }
         } else {
             alert("No user data found.");

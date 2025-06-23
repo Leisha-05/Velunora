@@ -32,7 +32,12 @@ signupForm.addEventListener('submit', async (e) => {
 
         window.location.href = "login.html";
     } catch (error) {
-        alert(error.message);
+        if (error.code === "auth/email-already-in-use") {
+    alert("This email is already registered. Please login instead.");
+    window.location.href = "login.html"; 
+} else {
+    alert(error.message);
+}
     }
 });
 

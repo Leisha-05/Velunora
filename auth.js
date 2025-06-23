@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+  const userRole = localStorage.getItem("userRole");
   const navLinks = document.querySelector(".nav-links");
 
   if (isLoggedIn) {
@@ -9,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const dropdown = document.createElement("div");
     dropdown.classList.add("account-dropdown");
 
-    // Dynamic base path resolver
     const baseFolder =
       window.location.pathname.includes("category_pg") ||
       window.location.pathname.includes("product_pg")
@@ -17,17 +17,18 @@ document.addEventListener("DOMContentLoaded", () => {
         : "wishlist_cart/";
 
     dropdown.innerHTML = `
-  <i class="fas fa-user user-icon"></i>
-  <div class="dropdown-content">
-    <a href="${baseFolder}wishlist.html">My Wishlist</a>
-    <a href="${baseFolder}cart.html">My Cart</a>
-    <a href="#" id="logout-btn">Logout</a>
-  </div>
-`;
+      <i class="fas fa-user user-icon"></i>
+      <div class="dropdown-content">
+        ${userRole === "creator" ? `<a href="creator_account/account.html">My Account</a>` : ""}
+        <a href="${baseFolder}wishlist.html">My Wishlist</a>
+        <a href="${baseFolder}cart.html">My Cart</a>
+        <a href="#" id="logout-btn">Logout</a>
+      </div>
+    `;
 
     navLinks.appendChild(dropdown);
 
-    // Logout functionality
+    // Logout
     dropdown.querySelector("#logout-btn").addEventListener("click", () => {
       localStorage.clear();
       location.reload();

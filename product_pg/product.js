@@ -20,12 +20,13 @@ console.log("Selected product:", product.name);
 
 
 iconButtons.innerHTML = `
-  <i class="fa-solid fa-cart-shopping icon-btn" title="Add to Cart"></i>
   <i class="fa-solid fa-heart wishlist-icon icon-btn" title="Add to Wishlist" data-product-name="${product.name}"></i>
+  <i class="fa-solid fa-cart-shopping icon-btn cart-icon" title="Add to Cart" data-product-name="${product.name}"></i>
   <i class="fa-solid fa-share-alt icon-btn" title="Share"></i>
 `;
 
 setupWishlistIconForSingleProduct(); // now it will 100% work
+setupCartIcons();
 
 
 

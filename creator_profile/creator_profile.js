@@ -27,7 +27,7 @@ creatorProducts.forEach((product) => {
     <span class="ribbon">${product.discount} OFF</span>
     <div class="icon-bar">
       <i class="fas fa-heart" data-product-name="${product.name}" title="Add to Wishlist"></i>
-      <i class="fas fa-shopping-cart" title="Add to Cart"></i>
+      <i class="fas fa-shopping-cart" data-product-name="${product.name}" title="Add to Cart"></i>
       <i class="fas fa-share-alt" title="Share"></i>
     </div>
   </div>

@@ -25,11 +25,26 @@
       <a href="../index.html">Home</a>
       <a href="../index.html#about">About</a>
       <a href="../index.html#category">Categories</a>
-      <a href="../creator_collection/creator_coll.html">Browse Creators</a>
+      <a href="../index.html#spotlight">Creator Spotlight</a>
       <a href="../login_signup/login.html">Login / Sign Up</a>
       <a href="#">Cart / Wishlist</a>
     </nav>
   </header>
+
+  <section class="search-bar">
+      <div class="search-container">
+        <input
+          type="text"
+          placeholder="Search creations by your favorite artists..."
+        />
+        <i class="fas fa-search"></i>
+      </div>
+      <select id="priceFilter">
+        <option value="default">Sort by Price</option>
+        <option value="low">Low to High</option>
+        <option value="high">High to Low</option>
+      </select>
+    </section>
 
   <!-- Profile Banner -->
   <section class="creator-banner" id="creatorBanner">

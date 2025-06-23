@@ -2,7 +2,7 @@ import { auth, db } from './firebase.js';
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-const loginForm = document.getElementById('loginForm');
+const loginForm = document.querySelector('form');
 
 loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -15,14 +15,31 @@ loginForm.addEventListener('submit', async (e) => {
         const user = userCredential.user;
 
         const userDoc = await getDoc(doc(db, "users", user.uid));
-        const userData = userDoc.data();
 
-        if (userData.role === "creator") {
-            window.location.href = "creator_dashboard.html";
+        if (userDoc.exists()) {
+            const userData = userDoc.data();
+            alert(`Login successful! Welcome, ${userData.name} (${userData.role})`);
+
+            if (userData.role === 'creator') {
+                window.location.href = "creator_dashboard.html";
+            } else {
+                window.location.href = "index.html";
+            }
         } else {
-            window.location.href = "index.html"; 
+            alert("No user data found.");
         }
     } catch (error) {
         alert(error.message);
     }
 });
+
+
+
+
+
+
+
+
+
+
+

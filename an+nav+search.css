@@ -222,3 +222,51 @@ html {
   border: 1px solid var(--logo);
   box-shadow: 0 0 8px rgba(107, 112, 92, 0.4); /* subtle glow */
 }
+
+.account-dropdown {
+  position: relative;
+  display: inline-block;
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.user-icon {
+  font-size: 20px;
+  color: var(--text-heading);
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: white;
+  min-width: 160px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+.dropdown-content a {
+  padding: 10px 16px;
+  display: block;
+  color: #333;
+  text-decoration: none;
+}
+
+.dropdown-content a:hover {
+  background-color: #f3f3f3;
+}
+
+.account-dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.wishlist-icon {
+  color: var(--white);
+  transition: 0.3s ease;
+}
+
+.wishlist-icon.wishlisted {
+  color: red;
+}

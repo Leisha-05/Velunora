@@ -82,7 +82,6 @@ document.querySelector(
   ".category-header img"
 ).src = `../images/headers/${bannerFix[selectedCategory]}-banner.jpg`;
 
-
 const productContainer = document.getElementById("productContainer");
 
 const filteredProducts = productData.filter(
@@ -93,40 +92,38 @@ if (filteredProducts.length === 0) {
   productContainer.innerHTML = `<p>No products found for this category.</p>`;
 } else {
   filteredProducts.forEach((product) => {
-  const card = document.createElement("div");
-  card.className = "product-card";
-  card.style.cursor = "pointer"; // Optional: makes it obvious it's clickable
+    const card = document.createElement("div");
+    card.className = "product-card";
+    card.style.cursor = "pointer"; // Optional: makes it obvious it's clickable
 
-  const discountPercent = parseInt(product.discount.replace("%", ""));
-  const discountedPrice = Math.round(
-    product.price * (1 - discountPercent / 100)
-  );
+    const discountPercent = parseInt(product.discount.replace("%", ""));
+    const discountedPrice = Math.round(
+      product.price * (1 - discountPercent / 100)
+    );
 
-  card.innerHTML = `
-    <div class="image-wrapper">
-      <span class="ribbon">${product.discount} OFF</span>
-      <img src="${product.img}" alt="${product.name}" />
-      <div class="icon-bar">
-        <i class="fas fa-heart" title="Wishlist"></i>
-        <i class="fas fa-shopping-cart" title="Add to Cart"></i>
-        <i class="fas fa-share-alt" title="Share"></i>
-      </div>
+    card.innerHTML = `
+  <div class="image-wrapper">
+    <span class="ribbon">${product.discount} OFF</span>
+    <img src="${product.img}" alt="${product.name}" />
+    <div class="icon-bar">
+      <i class="fas fa-heart wishlist-icon" data-product-name="${product.name}" title="Wishlist"></i>
+      <i class="fas fa-shopping-cart" title="Add to Cart"></i>
+      <i class="fas fa-share-alt" title="Share"></i>
     </div>
-    <h3>${product.name}</h3>
-    <p class="price">
-      <span class="original">₹${product.price}</span>
-      <span class="discounted">₹${discountedPrice}</span>
-    </p>
-  `;
+  </div>
+  <h3>${product.name}</h3>
+  <p class="price">
+    <span class="original">₹${product.price}</span>
+    <span class="discounted">₹${discountedPrice}</span>
+  </p>
+`;
 
-  // 🔗 Add click event to redirect to product page with data
-  card.addEventListener("click", () => {
-    localStorage.setItem("selectedProduct", JSON.stringify(product));
-    window.location.href = "../product_pg/product.html";
+    // 🔗 Add click event to redirect to product page with data
+    card.addEventListener("click", () => {
+      localStorage.setItem("selectedProduct", JSON.stringify(product));
+      window.location.href = "../product_pg/product.html";
+    });
+
+    productContainer.appendChild(card);
   });
-
-  productContainer.appendChild(card);
-});
-
-
 }

@@ -14,6 +14,21 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("description").textContent = `A lovingly crafted ${product.name.toLowerCase()} from our ${product.category} collection.`;
   document.getElementById("creator-link").textContent = product.creator;
   document.getElementById("creator-link").href = `../creator_profile/creator_profile.html?creator=${encodeURIComponent(product.creator)}`;
+
+const iconButtons = document.querySelector(".icon-buttons");
+console.log("Selected product:", product.name);
+
+
+iconButtons.innerHTML = `
+  <i class="fa-solid fa-cart-shopping icon-btn" title="Add to Cart"></i>
+  <i class="fa-solid fa-heart wishlist-icon icon-btn" title="Add to Wishlist" data-product-name="${product.name}"></i>
+  <i class="fa-solid fa-share-alt icon-btn" title="Share"></i>
+`;
+
+setupWishlistIconForSingleProduct(); // now it will 100% work
+
+
+
 });
 
 

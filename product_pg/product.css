@@ -119,6 +119,10 @@
   font-size: 1rem;
 }
 
+.go-back:hover{
+    color: var(--black);
+}
+
 .ratings {
   display: none;
 }
@@ -265,4 +269,13 @@
   .price {
     font-size: 1.3rem;
   }
+}
+.wishlist-icon {
+  color: #aaa;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.wishlist-icon.wishlisted {
+  color: #d9534f; /* red when wishlisted */
 }

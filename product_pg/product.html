@@ -39,9 +39,18 @@
         </div>
         <a href="../index.html#spotlight">Creator Spotlight</a>
         <a href="../login_signup/login.html">Login / Sign Up</a>
-        <a href="#">Cart / Wishlist</a>
       </nav>
     </header>
+
+    <section class="search-bar">
+      <div class="search-container">
+        <input
+          type="text"
+          placeholder="Search creations by your favorite artists..."
+        />
+        <i class="fas fa-search"></i>
+      </div>
+    </section>
 
     <!-- Product Section -->
     <section class="product-container">
@@ -64,12 +73,7 @@
         </div>
 
         <div class="icon-buttons">
-          <button class="icon-btn" title="Add to Cart">
-            <i class="fa-solid fa-cart-shopping"></i>
-          </button>
-          <button class="icon-btn" title="Add to Wishlist">
-            <i class="fa-solid fa-heart"></i>
-          </button>
+          
         </div>
 
         <button class="go-back">
@@ -114,6 +118,9 @@
       </div>
     </section>
     <script src="../data/data.js"></script>
+    <script src="../wishlist_handler.js" defer></script>
     <script src="product.js" defer></script>
+    <script src="../auth.js" defer></script>
+ 
   </body>
 </html>

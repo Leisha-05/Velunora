@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Wishlist | Velunora</title>
+    <link rel="stylesheet" href="wishlist.css" />
+    <link rel="stylesheet" href="../an+nav+search.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">Free shipping on orders ₹500+</div>
+
+    <!-- Navbar -->
+    <header class="navbar">
+      <div class="logo">
+        <div class="logo-top">
+          <h1 class="logo-text">Velunora <i class="fa-solid fa-heart"></i></h1>
+        </div>
+        <p class="tagline">Crafted with Soul, Curated with Love</p>
+      </div>
+      <nav class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#category">Categories</a>
+        <a href="../index.html#spotlight">Creator Spotlight</a>
+        <a href="../login_signup/login.html">Login / Sign Up</a>
+      </nav>
+    </header>
+
+    <section class="search-bar">
+      <div class="search-container">
+        <input
+          type="text"
+          placeholder="Search creations by your favorite artists..."
+        />
+    </section>
+
+    <main class="wishlist-container">
+      <aside class="user-sidebar">
+        <img
+          src="../images/user-avatar.png"
+          alt="User Avatar"
+          class="user-avatar"
+        />
+        <h3 class="user-name">Test User</h3>
+        <p class="user-email">testuser@email.com</p>
+        <ul class="user-options">
+          <li class="active"><i class="fas fa-heart"></i> Wishlist</li>
+          <li><i class="fas fa-shopping-cart"></i> Cart</li>
+          <li><i class="fas fa-sign-out-alt"></i> Logout</li>
+        </ul>
+      </aside>
+
+      <section class="wishlist-products" id="wishlistContainer">
+        <!-- Product cards inserted via JS -->
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>© 2025 Velunora. Made with 💛 by Leisha, Shruti & Saffran.
+      </p>
+    </footer>
+
+    <script src="../data/data.js"></script>
+    <script src="../wishlist_handler.js" defer></script>
+    <script src="wishlist.js" defer></script>
+    <script src="../auth.js" defer></script>
+    
+  </body>
+</html>

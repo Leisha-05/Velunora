@@ -270,3 +270,6 @@ html {
 .wishlist-icon.wishlisted {
   color: red;
 }
+.cart-icon.carted {
+  color: green; /* or your cart theme color */
+}

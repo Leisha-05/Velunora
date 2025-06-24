@@ -279,3 +279,10 @@
 .wishlist-icon.wishlisted {
   color: #d9534f; /* red when wishlisted */
 }
+.footer {
+  text-align: center;
+  background-color: var(--maincolor);
+  color: var(--white);
+  padding: 20px;
+  font-size: 1.3rem;
+}

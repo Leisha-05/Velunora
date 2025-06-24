@@ -23,8 +23,8 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="image-wrapper">
           <img src="${product.img}" alt="${product.name}">
           <div class="icon-bar">
-            <i class="fas fa-heart wishlist-icon wishlisted" data-product-name="${product.name}" title="Remove from Wishlist"></i>
-            <i class="fas fa-shopping-cart" title="Add to Cart"></i>
+            <i class="fas fa-times wishlist-remove-icon" data-product-name="${product.name}" title="Remove from Wishlist"></i>
+            <i class="fas fa-shopping-cart" data-product-name="${product.name}" title="Add to Cart"></i>
             <i class="fas fa-share-alt" title="Share"></i>
           </div>
         </div>
@@ -43,9 +43,15 @@ document.addEventListener("DOMContentLoaded", () => {
       wishlistContainer.appendChild(productCard);
     }
   });
-
-  // Make hearts clickable for removal
-  setupWishlistIcons();
+  wishlistContainer.addEventListener("click", (e) => {
+    if (e.target.classList.contains("wishlist-remove-icon")) {
+      const productName = e.target.dataset.productName;
+      let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+      wishlist = wishlist.filter((name) => name !== productName);
+      localStorage.setItem("wishlist", JSON.stringify(wishlist));
+      location.reload();
+    }
+  });
 });
 
 function calculateDiscount(price, discountStr) {

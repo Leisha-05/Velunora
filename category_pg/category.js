@@ -107,7 +107,7 @@ if (filteredProducts.length === 0) {
     <img src="${product.img}" alt="${product.name}" />
     <div class="icon-bar">
       <i class="fas fa-heart wishlist-icon" data-product-name="${product.name}" title="Wishlist"></i>
-      <i class="fas fa-shopping-cart" title="Add to Cart"></i>
+      <i class="fas fa-shopping-cart cart-icon" data-product-name="${product.name}" title="Add to Cart"></i>
       <i class="fas fa-share-alt" title="Share"></i>
     </div>
   </div>
@@ -119,11 +119,18 @@ if (filteredProducts.length === 0) {
 `;
 
     // 🔗 Add click event to redirect to product page with data
-    card.addEventListener("click", () => {
-      localStorage.setItem("selectedProduct", JSON.stringify(product));
-      window.location.href = "../product_pg/product.html";
-    });
+   card.addEventListener("click", (e) => {
+  // Ignore clicks on icon-bar icons
+  if (
+    e.target.closest(".icon-bar i") // checks if you clicked an icon inside .icon-bar
+  ) return;
 
-    productContainer.appendChild(card);
+  localStorage.setItem("selectedProduct", JSON.stringify(product));
+  window.location.href = "../product_pg/product.html";
+});
+    productContainer.appendChild(card); // ✅ add the card to the grid
+    setupWishlistIcons();              // ✅ re-run to attach events
+    setupCartIcons();
   });
 }
+

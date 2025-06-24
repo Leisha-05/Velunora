@@ -5,33 +5,33 @@ import { doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-f
 const loginForm = document.querySelector('form');
 
 loginForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
 
-    try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
 
-        const userDoc = await getDoc(doc(db, "users", user.uid));
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+    const userData = userDoc.data();
 
-        if (userDoc.exists()) {
-            const userData = userDoc.data();
-            alert(`Login successful! Welcome, ${userData.name} (${userData.role})`);
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("userRole", userData.role);
+    localStorage.setItem("userEmail", email);
 
-            if (userData.role === 'creator') {
-                window.location.href = "../wishlist_cart/index.html"; 
-            } else {
-                window.location.href = "../wishlist_cart/index.html"; 
-            }
-        } else {
-            alert("No user data found.");
-        }
-    } catch (error) {
-        alert(error.message);
+    if (userData.role === "creator") {
+      window.location.href = "../creator_account/account.html";
+    } else {
+      window.location.href = "../index.html";
     }
+  } catch (error) {
+    alert(error.message);
+  }
 });
+
+        
 
 
 

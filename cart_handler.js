@@ -1,19 +1,35 @@
 function setupCartIcons() {
-  const removeIcons = document.querySelectorAll(".cart-remove-icon");
+  const cartIcons = document.querySelectorAll(".cart-icon");
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  removeIcons.forEach((icon) => {
+  cartIcons.forEach((icon) => {
     const productName = icon.dataset.productName?.trim();
     if (!productName) return;
 
+    // Initial visual state
+    if (cart.includes(productName)) {
+      icon.classList.add("carted"); // Add a class to style active state
+    } else {
+      icon.classList.remove("carted");
+    }
+
     icon.onclick = (e) => {
       e.stopPropagation();
-      cart = cart.filter((p) => p !== productName);
+      cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      if (cart.includes(productName)) {
+        cart = cart.filter((p) => p !== productName);
+        icon.classList.remove("carted");
+      } else {
+        cart.push(productName);
+        icon.classList.add("carted");
+      }
+
       localStorage.setItem("cart", JSON.stringify(cart));
-      icon.closest(".wishlist-card").remove();
     };
   });
 }
+
 
 // Reusing wishlist icon logic
 function setupWishlistIcons() {

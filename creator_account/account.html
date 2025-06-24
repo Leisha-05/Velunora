@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Creator Dashboard | Velunora</title>
+  <link rel="stylesheet" href="account.css"/>
+  <link rel="stylesheet" href="../an+nav+search.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+</head>
+<body>
+  <div class="announcement-bar">Free shipping on orders ₹500+</div>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">
+      <div class="logo-top">
+        <h1 class="logo-text">Velunora <i class="fa-solid fa-heart"></i></h1>
+      </div>
+      <p class="tagline">Crafted with Soul, Curated with Love</p>
+    </div>
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#category">Categories</a>
+      <a href="../index.html#spotlight">Creator Spotlight</a>
+      <a href="../login_signup/login.html">Login / Sign Up</a>
+    </nav>
+  </header>
+<section class="search-bar">
+      <div class="search-container">
+        <input
+          type="text"
+          placeholder="Search creations by your favorite artists..."
+        />
+        <i class="fas fa-search"></i>
+      </div>
+    </section>
+  <main class="account-container">
+    <!-- Left Sidebar -->
+    <aside class="creator-sidebar">
+      <img src="../images/user-avatar.png" class="user-avatar" alt="Creator Avatar"/>
+      <h3 class="user-name" id="creatorName">Creator Name</h3>
+      <p class="user-email" id="creatorEmail">email@example.com</p>
+
+      <form id="addProductForm" class="product-form">
+        <h4>Add Product</h4>
+        <input type="text" id="prodName" placeholder="Product Name" required />
+        <input type="file" id="prodImg" accept="image/*" required />
+        <input type="text" id="prodDiscount" placeholder="Discount (e.g. 10%)" required />
+        <input type="number" id="prodPrice" placeholder="Price (₹)" required />
+        <select id="prodCategory" required>
+          <option value="" disabled selected>Select Category</option>
+          <option value="jewelry">Jewelry</option>
+          <option value="decor">Decor</option>
+          <option value="art">Art & Prints</option>
+          <option value="stationery">Stationery</option>
+          <option value="embroidery">Embroidery</option>
+          <option value="gifting">Gifting</option>
+        </select>
+        <button type="submit" class="btn">Add Product</button>
+      </form>
+
+      <form id="removeProductForm" class="product-form">
+        <h4>Remove Product</h4>
+        <input type="text" id="removeProdName" placeholder="Product Name to Remove" required />
+        <button type="submit" class="btn">Remove Product</button>
+      </form>
+    </aside>
+
+    <!-- Right Panel: Product Display -->
+    <section class="creator-products" id="creatorProductContainer">
+      <!-- Creator's products will load here via JS -->
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 Velunora. Made with 💛 by Leisha, Shruti & Saffran.</p>
+  </footer>
+
+  <script src="../data/data.js"></script>
+  <script src="../wishlist_handler.js" defer></script>
+  <script src="../cart_handler.js" defer></script>
+  <script src="../auth.js" defer></script>
+  <script src="account.js" defer></script>
+</body>
+</html>

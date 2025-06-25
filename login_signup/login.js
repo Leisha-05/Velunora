@@ -24,7 +24,7 @@ loginForm.addEventListener('submit', async (e) => {
     localStorage.setItem("userEmail", email);
 
     if (userData.role === "creator") {
-      window.location.href = "../creator_account/account.html";
+      window.location.href = "../index.html";
     } else {
       window.location.href = "../index.html";
     }

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout | Velunora</title>
+  <link rel="stylesheet" href="../an+nav+search.css" />
+  <link rel="stylesheet" href="wishlist.css" /> <!-- reuse existing theme -->
+  <link rel="stylesheet" href="checkout.css" /> <!-- reuse existing theme -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+</head>
+<body>
+  <!-- Announcement Bar -->
+  <div class="announcement-bar">Free shipping on orders ₹500+</div>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">
+      <div class="logo-top">
+        <h1 class="logo-text">Velunora <i class="fa-solid fa-heart"></i></h1>
+      </div>
+      <p class="tagline">Crafted with Soul, Curated with Love</p>
+    </div>
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#category">Categories</a>
+      <a href="../index.html#spotlight">Creator Spotlight</a>
+      <a href="../login_signup/login.html">Login / Sign Up</a>
+    </nav>
+  </header>
+
+  <!-- Checkout Container -->
+  <main class="wishlist-container">
+    <!-- Sidebar -->
+    <aside class="user-sidebar">
+      <img src="../images/user-avatar.png" alt="User Avatar" class="user-avatar" />
+      <h3 class="user-name">Test User</h3>
+      <p class="user-email">testuser@email.com</p>
+
+      <div class="checkout-summary-box">
+        <h3>Order Summary</h3>
+        <p>Subtotal: ₹<span id="subtotal">0</span></p>
+        <p>Shipping: ₹<span id="shipping">50</span></p>
+        <p><strong>Total: ₹<span id="total">0</span></strong></p>
+        <div class="order-btn-wrapper">
+          <button class="order-all-btn" id="place-order-btn">Place Order</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Shipping Form -->
+    <section class="checkout-form-section">
+      <div class="checkout-form-card">
+      <form id="shipping-form">
+        <h2>Shipping Details</h2>
+        <label>Full Name</label>
+        <input type="text" id="name" required />
+
+        <label>Mobile Number</label>
+        <input type="tel" id="phone" required />
+
+        <label>Address</label>
+        <textarea id="address" required></textarea>
+
+        <label>City</label>
+        <input type="text" id="city" required />
+
+        <label>State</label>
+        <input type="text" id="state" required />
+
+        <label>Pincode</label>
+        <input type="text" id="pincode" required />
+
+        <label>Payment Method</label>
+        <div class="payment-option">
+        <label class="payment-row-del">
+             Cash on Delivery
+            <input type="radio" name="payment" value="COD" class="radio" checked />
+        </label>
+        <label class="payment-row">
+            Online Payment (Coming Soon)
+            <input type="radio" name="payment" value="Online" class="radio2" disabled />
+        </label>
+        </div>
+
+      </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 Velunora. Made with 💛 by Leisha, Shruti & Saffran.</p>
+  </footer>
+
+  <script src="../auth.js" defer></script>
+  <script src="checkout.js" defer></script>
+</body>
+</html>

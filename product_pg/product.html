@@ -12,6 +12,8 @@
     />
   </head>
   <body>
+
+    <div class="page-wrapper">
     <!-- Announcement Bar -->
     <div class="announcement-bar">Free shipping on orders ₹500+</div>
 
@@ -90,37 +92,51 @@
         </div>
       </div>
       <div class="product-lower-row">
-        <!-- LEFT: Reviews -->
-        <div class="reviews-section">
-          <h3>Customer Reviews</h3>
-          <div class="review-list" id="review-list">
-            <!-- JS will fill reviews -->
-          </div>
-        </div>
+  <!-- LEFT: Reviews -->
+  <div class="reviews-section">
+    <h3>Customer Reviews</h3>
+    <div class="review-list" id="review-list">
+      <!-- JS will fill reviews -->
+    </div>
+  </div>
 
-        <!-- RIGHT: Custom Request Form -->
-        <div class="custom-request">
-          <h3>Send Customization Request</h3>
-          <form id="custom-form">
-            <label for="custom-message">Describe your order:</label>
-            <textarea
-              id="custom-message"
-              placeholder="Describe customization..."
-              required
-            ></textarea>
-
-            <label for="custom-file">Attach Image/PDF:</label>
-            <input type="file" id="custom-file" accept=".png,.jpg,.jpeg,.pdf" />
-
-            <button class="btn" type="submit">Send to Creator</button>
-          </form>
-        </div>
+  <!-- MIDDLE: Review Form -->
+  <div class="review-form-wrapper">
+    <div class="review-form">
+      <h3>Leave a Review</h3>
+      <input type="text" id="reviewer-name" placeholder="Your Name" />
+      <textarea id="review-comment" placeholder="Your review..."></textarea>
+      <div id="star-rating-input" class="star-rating review-stars">
+        <i class="far fa-star" data-value="1"></i>
+        <i class="far fa-star" data-value="2"></i>
+        <i class="far fa-star" data-value="3"></i>
+        <i class="far fa-star" data-value="4"></i>
+        <i class="far fa-star" data-value="5"></i>
       </div>
-    </section>
-     <footer class="footer">
+      <input type="hidden" id="review-rating" />
+      <button id="submit-review" class="btn">Submit Review</button>
+    </div>
+  </div>
+
+  <!-- RIGHT: Customization -->
+  <div class="custom-request">
+    <h3>Send Customization Request</h3>
+    <form id="custom-form">
+      <label for="custom-message">Describe your order:</label>
+      <textarea id="custom-message" placeholder="Describe customization..." required></textarea>
+
+      <label for="custom-file">Attach Image/PDF:</label>
+      <input type="file" id="custom-file" accept=".png,.jpg,.jpeg,.pdf" />
+      <button class="btn" type="submit">Save</button>
+    </form>
+  </div>
+</div>
+</div>
+ </div>  
+ <footer class="footer">
       <p>© 2025 Velunora. Made with 💛 by Leisha, Shruti & Saffran.
       </p>
-    </footer>
+    </footer>  
     <script src="../data/data.js"></script>
     <script src="../wishlist_handler.js" defer></script>
     <script src="../cart_handler.js" defer></script>
@@ -128,4 +144,5 @@
     <script src="../auth.js" defer></script>
  
   </body>
+  
 </html>

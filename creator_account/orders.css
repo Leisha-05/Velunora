@@ -1,0 +1,33 @@
+.order-card {
+  background: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-family: 'Inter', sans-serif;
+}
+
+.order-card h3 {
+  font-size: 1.6rem;
+  color: #333;
+}
+
+.order-card p,
+.order-card li {
+  font-size: 1.3rem;
+  color: #555;
+  margin: 4px 0;
+}
+.wishlist-products {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wishlist-products h2 {
+  font-size: 2.4rem;
+  margin-bottom: 20px;
+  text-align: center;
+  color: var(--text-heading);
+}
+

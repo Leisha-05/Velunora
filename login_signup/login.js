@@ -17,6 +17,8 @@ loginForm.addEventListener('submit', async (e) => {
     const userDoc = await getDoc(doc(db, "users", user.uid));
     const userData = userDoc.data();
 
+    alert(`Welcome back, ${userData.name}! You have successfully logged in as ${userData.role}.`);
+
     localStorage.setItem("isLoggedIn", "true");
     localStorage.setItem("userRole", userData.role);
     localStorage.setItem("userEmail", email);

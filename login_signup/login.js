@@ -17,14 +17,14 @@ loginForm.addEventListener('submit', async (e) => {
     const userDoc = await getDoc(doc(db, "users", user.uid));
     const userData = userDoc.data();
 
-    alert(`Welcome back, ${userData.name}! You have successfully logged in as ${userData.role}.`);
+    alert('Welcome back, ${userData.name}! You have successfully logged in as ${userData.role}.');
 
     localStorage.setItem("isLoggedIn", "true");
     localStorage.setItem("userRole", userData.role);
     localStorage.setItem("userEmail", email);
 
     if (userData.role === "creator") {
-      window.location.href = "../creator_account/account.html";
+      window.location.href = "../index.html";
     } else {
       window.location.href = "../index.html";
     }

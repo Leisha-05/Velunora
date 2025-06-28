@@ -1,101 +1,129 @@
+import { db } from "../login_signup/firebase.js";
+import {
+  doc,
+  getDoc,
+  collection,
+  getDocs,
+} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-  const product = JSON.parse(localStorage.getItem("selectedProduct"));
+const urlParams = new URLSearchParams(window.location.search);
+const productId = urlParams.get("id");
+const productName = urlParams.get("name");
 
-  if (!product) {
-    document.querySelector(".product-container").innerHTML = "<p>Product not found.</p>";
-    return;
+async function loadProduct() {
+  try {
+    let productData = null;
+
+    if (productId) {
+      const docRef = doc(db, "products", productId);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        productData = { id: docSnap.id, ...docSnap.data() };
+      }
+    } else if (productName) {
+      const querySnapshot = await getDocs(collection(db, "products"));
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        if (data.name.trim().toLowerCase() === productName.trim().toLowerCase()) {
+          productData = { id: doc.id, ...data };
+        }
+      });
+    }
+
+    if (!productData) {
+      document.querySelector(".product-container").innerHTML =
+        "<p>Product not found.</p>";
+      return;
+    }
+
+    // 🟢 Fill product details
+    document.getElementById("product-img").src = productData.img;
+    document.getElementById("product-name").textContent = productData.name;
+    document.getElementById("current-price").textContent = calculateDiscount(
+      productData.price,
+      productData.discount
+    );
+    document.getElementById("original-price").textContent = "₹" + productData.price;
+    document.getElementById("description").textContent =
+      productData.description ||
+      `A lovingly crafted ${productData.name.toLowerCase()} from our ${productData.category} collection.`;
+
+    document.getElementById("creator-link").textContent = productData.creator;
+    document.getElementById("creator-link").href =
+      `../creator_profile/creator_profile.html?creator=${encodeURIComponent(productData.creator)}`;
+
+    // Icons (Wishlist, Cart, Share)
+    const iconButtons = document.querySelector(".icon-buttons");
+    iconButtons.innerHTML = `
+      <i class="fa-solid fa-heart wishlist-icon icon-btn" title="Add to Wishlist" data-product-id="${productData.id}"></i>
+      <i class="fa-solid fa-cart-shopping icon-btn cart-icon" title="Add to Cart" data-product-id="${productData.id}"></i>
+      <i class="fa-solid fa-share-alt icon-btn" title="Share"></i>
+    `;
+
+    // Activate wishlist and cart logic
+    setupWishlistIconForSingleProduct?.();
+    setupCartIcons?.();
+
+    loadRatingStars(4.5);
+    loadReviews([
+      { name: "Maya", rating: 5, comment: "Beautiful work! Worth every penny." },
+      { name: "Rishi", rating: 4, comment: "Just like I imagined. Great packaging too!" },
+    ]);
+  } catch (error) {
+    console.error("Failed to load product:", error);
+    document.querySelector(".product-container").innerHTML =
+      "<p>Oops! Something went wrong while loading product.</p>";
   }
-
-  document.getElementById("product-img").src = product.img;
-  document.getElementById("product-name").textContent = product.name;
-  document.getElementById("current-price").textContent = calculateDiscount(product.price, product.discount);
-  document.getElementById("original-price").textContent = "₹" + product.price;
-  document.getElementById("description").textContent = `A lovingly crafted ${product.name.toLowerCase()} from our ${product.category} collection.`;
-  document.getElementById("creator-link").textContent = product.creator;
-  document.getElementById("creator-link").href = `../creator_profile/creator_profile.html?creator=${encodeURIComponent(product.creator)}`;
-
-const iconButtons = document.querySelector(".icon-buttons");
-console.log("Selected product:", product.name);
-
-
-iconButtons.innerHTML = `
-  <i class="fa-solid fa-heart wishlist-icon icon-btn" title="Add to Wishlist" data-product-name="${product.name}"></i>
-  <i class="fa-solid fa-cart-shopping icon-btn cart-icon" title="Add to Cart" data-product-name="${product.name}"></i>
-  <i class="fa-solid fa-share-alt icon-btn" title="Share"></i>
-`;
-
-setupWishlistIconForSingleProduct(); // now it will 100% work
-setupCartIcons();
-
-
-
-});
-
+}
 
 function calculateDiscount(price, discountStr) {
-  const discount = parseInt(discountStr.replace("%", ""));
-  return Math.round(price - (price * discount) / 100);
+  const discount = parseInt(discountStr.replace("%", "")) || 0;
+  return "₹" + Math.round(price - (price * discount) / 100);
+}
+
+function loadRatingStars(rating) {
+  const ratingContainer = document.getElementById("rating-stars");
+  const ratingText = document.getElementById("rating-text");
+
+  const fullStars = Math.floor(rating);
+  const hasHalfStar = rating % 1 !== 0;
+  let starHTML = "";
+
+  for (let i = 0; i < fullStars; i++) starHTML += `<i class="fas fa-star"></i>`;
+  if (hasHalfStar) starHTML += `<i class="fas fa-star-half-alt"></i>`;
+  for (let i = 0; i < 5 - fullStars - (hasHalfStar ? 1 : 0); i++) {
+    starHTML += `<i class="far fa-star"></i>`;
+  }
+
+  ratingContainer.innerHTML = starHTML;
+  ratingText.textContent = rating.toFixed(1);
+}
+
+function loadReviews(reviews) {
+  const reviewList = document.getElementById("review-list");
+  reviewList.innerHTML = "";
+
+  reviews.forEach((rev) => {
+    let stars = "";
+    for (let i = 1; i <= 5; i++) {
+      stars += `<i class="${i <= rev.rating ? "fas" : "far"} fa-star"></i>`;
+    }
+
+    const div = document.createElement("div");
+    div.className = "review-item";
+    div.innerHTML = `
+      <strong>${rev.name}</strong>
+      <div class="star-rating">${stars}</div>
+      <p>${rev.comment}</p>
+    `;
+    reviewList.appendChild(div);
+  });
 }
 
 document.querySelector(".go-back").addEventListener("click", () => {
   window.history.back();
 });
 
-const ratingContainer = document.getElementById("rating-stars");
-const ratingText = document.getElementById("rating-text"); // <-- Add this
-
-// Example: let's say all products are rated 4.5
-const rating = 4.5;
-const fullStars = Math.floor(rating);
-const hasHalfStar = rating % 1 !== 0;
-
-let starHTML = "";
-
-for (let i = 0; i < fullStars; i++) {
-  starHTML += `<i class="fas fa-star"></i>`;
-}
-
-if (hasHalfStar) {
-  starHTML += `<i class="fas fa-star-half-alt"></i>`;
-}
-
-const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-for (let i = 0; i < emptyStars; i++) {
-  starHTML += `<i class="far fa-star"></i>`;
-}
-
-ratingContainer.innerHTML = starHTML;
-ratingText.textContent = rating.toFixed(1); // Sets the number value in the <span>
-
-
-// Dummy reviews
-const reviews = [
-  { name: "Maya", rating: 5, comment: "Beautiful work! Worth every penny." },
-  { name: "Rishi", rating: 4, comment: "Just like I imagined. Great packaging too!" }
-];
-
-
-const reviewList = document.getElementById("review-list");
-reviews.forEach((rev) => {
-  const div = document.createElement("div");
-  div.className = "review-item";
-  // Generate star rating HTML
-let stars = "";
-for (let i = 1; i <= 5; i++) {
-  stars += `<i class="${i <= rev.rating ? 'fas' : 'far'} fa-star"></i>`;
-}
-
-div.innerHTML = `
-  <strong>${rev.name}</strong>
-  <div class="star-rating">${stars}</div>
-  <p>${rev.comment}</p>
-`;
-
-  reviewList.appendChild(div);
-});
-
-// Handle custom request submission
 document.getElementById("custom-form").addEventListener("submit", (e) => {
   e.preventDefault();
   const msg = document.getElementById("custom-message").value;
@@ -109,3 +137,4 @@ document.getElementById("custom-form").addEventListener("submit", (e) => {
   alert("Request submitted!");
 });
 
+loadProduct();

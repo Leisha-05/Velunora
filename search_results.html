@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Search Results | Velunora</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="an+nav+search.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  />
+</head>
+<body>
+  <!-- Announcement -->
+  <div class="announcement-bar">Free shipping on orders ₹500+</div>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">
+      <div class="logo-top">
+        <h1 class="logo-text">Velunora <i class="fa-solid fa-heart"></i></h1>
+      </div>
+      <p class="tagline">Crafted with Soul, Curated with Love</p>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#category">Categories</a>
+      <a href="index.html#spotlight">Creator Spotlight</a>
+      <a href="login_signup/login.html">Login / Sign Up</a>
+    </nav>
+  </header>
+
+  <!-- Search Bar -->
+  <section class="search-bar">
+    <div class="search-container">
+      <input
+        type="text"
+        placeholder="Search creations by your favorite artists..."
+      />
+      <i class="fas fa-search"></i>
+    </div>
+  </section>
+
+  <!-- Search Results Heading -->
+  <section class="search-results-header">
+    <h2 id="resultTitle" class="section-title">Search Results</h2>
+  </section>
+
+  <!-- Product Grid -->
+  <section class="product-section">
+    <div id="searchResultsContainer" class="product-grid"></div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <h2 class="footer-logo">
+          Velunora <i class="fa-solid fa-heart"></i>
+        </h2>
+        <p class="footer-tagline">Crafted with Soul, Curated with Love</p>
+        <p class="footer-desc">
+          Velunora is a curated marketplace of handmade gifts and soulful creations
+          by emerging artists & independent creators.
+        </p>
+        <div class="social-icons">
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-pinterest"></i></a>
+          <a href="#"><i class="fa-brands fa-facebook"></i></a>
+          <a href="#"><i class="fa-regular fa-envelope"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Velunora. Made with 💛 by Leisha, Shruti & Saffran.</p>
+      <p>Built for creators, by creators.</p>
+    </div>
+  </footer>
+
+   <script type="module" src="login_signup/firebase.js"></script>
+   <script type="module" src="search_results.js" defer></script>
+
+</body>
+</html>
+
+
+
+

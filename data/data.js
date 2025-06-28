@@ -1,4 +1,4 @@
-window.productData = [
+export const productData = [
   
   {
     name: "Durga Earrings",

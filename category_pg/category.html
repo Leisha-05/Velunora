@@ -66,7 +66,9 @@
 
     <!-- Product Grid -->
     <section class="product-section">
-      <div id="productContainer" class="product-grid"></div>
+      <div id="productContainer" class="product-grid">
+        <p id="loadingMessage">Loading products...</p>
+      </div>
     </section>
 
     <!-- Footer -->
@@ -76,9 +78,10 @@
 
     <script src="../wishlist_handler.js" defer></script>
     <script src="../cart_handler.js" defer></script>
-    <script src="../data/data.js"></script>
-    <script src="category.js" defer></script>
+     <script type="module" src="../login_signup/firebase.js"></script>
+    <script type="module" src="category.js"></script>
     <script src="../auth.js" defer></script>
+    
     
   </body>
 </html>

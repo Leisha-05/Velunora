@@ -1,3 +1,9 @@
+import { db } from "./login_signup/firebase.js";
+import {
+  collection,
+  getDocs,
+} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
 const categories = [
   {
     name: "Jewelry",
@@ -57,6 +63,44 @@ categories.forEach((cat) => {
   container.appendChild(card);
 });
 
+function setupSearchBar() {
+  const searchInput = document.querySelector(".search-container input");
+  const searchIcon = document.querySelector(".fa-search");
+
+  const handleSearch = async () => {
+    const keyword = searchInput.value.toLowerCase().trim();
+    if (!keyword) return;
+
+    const querySnapshot = await getDocs(collection(db, "products"));
+    const allProducts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+
+    const matched = allProducts.filter(
+      (p) =>
+        p.name.toLowerCase().includes(keyword) ||
+        p.category.toLowerCase().includes(keyword) ||
+        (p.tags && p.tags.some((tag) => tag.toLowerCase().includes(keyword)))
+    );
+
+    if (matched.length === 0) {
+      alert("No matching product found. Please try another keyword.");
+      return;
+    }
+
+    const queryString = encodeURIComponent(keyword);
+    window.location.href = `search_results.html?keyword=${queryString}`;
+  };
+
+  searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") handleSearch();
+  });
+  searchIcon.addEventListener("click", handleSearch);
+}
+
+setupSearchBar();
+
+const spotlightWrapper = document.getElementById("spotlightWrapper");
+const dotsContainer = document.getElementById("dotIndicators");
+
 const creators = [
   {
     name: "Aarushi Jain",
@@ -108,9 +152,6 @@ const creators = [
   },
 ];
 
-const spotlightWrapper = document.getElementById("spotlightWrapper");
-const dotsContainer = document.getElementById("dotIndicators");
-
 creators.forEach((creator, index) => {
   const slide = document.createElement("div");
   slide.className = "spotlight-slide";
@@ -148,8 +189,6 @@ creators.forEach((creator, index) => {
         )
         .join("")}
 
-
-
     <div class="view-creator-link">
   <a href="../creator_profile/creator_profile.html?creator=${encodeURIComponent(
     creator.name
@@ -168,46 +207,6 @@ creators.forEach((creator, index) => {
   dotsContainer.appendChild(dot);
 });
 
-document.querySelectorAll(".view-product-link").forEach((link) => {
-  link.addEventListener("click", function (e) {
-    e.preventDefault();
-    const productName = this.closest(".spotlight-product-card").querySelector(
-      "p"
-    ).textContent;
-
-    // Look up the full product details from data.js
-    const selectedProduct = window.productData.find(
-      (p) => p.name === productName
-    );
-
-    if (selectedProduct) {
-      localStorage.setItem("selectedProduct", JSON.stringify(selectedProduct));
-      window.location.href = "product_pg/product.html";
-    } else {
-      alert("Product details not found!");
-    }
-  });
-});
-// 🔁 Also add click listener to product images
-document.querySelectorAll(".clickable-product-img").forEach((img) => {
-  img.addEventListener("click", function (e) {
-    e.preventDefault();
-    const productName = this.dataset.name;
-    const creatorName = this.dataset.creator;
-
-    const selectedProduct = window.productData.find(
-      (p) => p.name === productName && p.creator === creatorName
-    );
-
-    if (selectedProduct) {
-      localStorage.setItem("selectedProduct", JSON.stringify(selectedProduct));
-      window.location.href = "product_pg/product.html";
-    } else {
-      alert("Product details not found!");
-    }
-  });
-});
-
 let currentIndex = 0;
 const slides = document.querySelectorAll(".spotlight-slide");
 const dots = document.querySelectorAll(".dot");
@@ -219,7 +218,7 @@ function updateDots(index) {
 }
 
 function scrollToIndex(index) {
-  const width = slides[0].offsetWidth + 32; // include padding/gap
+  const width = slides[0].offsetWidth + 32;
   spotlightWrapper.scrollTo({ left: index * width, behavior: "smooth" });
   currentIndex = index;
   updateDots(index);
@@ -237,5 +236,32 @@ function scrollPrev() {
   }
 }
 
-// Initial highlight
+spotlightWrapper.addEventListener("click", (e) => {
+  const creatorElement = e.target.closest(".spotlight-creator");
+  if (creatorElement) {
+    const creatorName = creatorElement.querySelector(".creator-person-name")?.textContent.trim();
+    if (creatorName) {
+      window.location.href = `creator_profile/creator_profile.html?creator=${encodeURIComponent(creatorName)}`;
+    }
+    return;
+  }
+
+  const productImage = e.target.closest(".clickable-product-img");
+  if (productImage) {
+    const productName = productImage.dataset.name;
+    if (productName) {
+      window.location.href = `product_pg/product.html?name=${encodeURIComponent(productName)}`;
+    }
+    return;
+  }
+
+  const viewLink = e.target.closest(".view-product-link");
+  if (viewLink) {
+    const productName = viewLink.dataset.name;
+    if (productName) {
+      window.location.href = `product_pg/product.html?name=${encodeURIComponent(productName)}`;
+    }
+  }
+});
+
 updateDots(currentIndex);

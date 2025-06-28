@@ -1,23 +1,195 @@
+// import { db, auth } from '../login_signup/firebase.js';
+// import {
+//   collection,
+//   addDoc,
+//   getDocs,
+//   deleteDoc,
+//   doc,
+//   query,
+//   where
+// } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+// import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+// document.addEventListener("DOMContentLoaded", () => {
+//   const addForm = document.getElementById("addProductForm");
+//   const removeForm = document.getElementById("removeProductForm");
+//   const container = document.getElementById("creatorProductContainer");
+
+//   let currentUID = null;
+
+//   onAuthStateChanged(auth, async (user) => {
+//     if (user) {
+//       currentUID = user.uid;
+//       document.getElementById("creatorEmail").textContent = user.email;
+//       await loadCreatorProducts();
+//     } else {
+//       alert("Please log in to access your account.");
+//       window.location.href = '../login_signup/login.html';
+//     }
+//   });
+
+//   async function loadCreatorProducts() {
+//     container.innerHTML = "<p>Loading...</p>";
+//     const q = query(collection(db, "products"), where("creatorUID", "==", currentUID));
+//     const querySnapshot = await getDocs(q);
+
+//     container.innerHTML = "";
+//     if (querySnapshot.empty) {
+//       container.innerHTML = "<p>No products yet.</p>";
+//       return;
+//     }
+
+//     querySnapshot.forEach((docSnap) => {
+//       const product = docSnap.data();
+//       const originalPrice = Math.round(product.price / (1 - parseFloat(product.discount) / 100));
+
+//       const card = document.createElement("div");
+//       card.className = "wishlist-card";
+//       card.innerHTML = `
+//         <div class="image-wrapper">
+//           <img src="${product.img}" alt="${product.name}" />
+//         </div>
+//         <h3>${product.name}</h3>
+//         <div class="price">
+//           <span class="discounted">₹${product.price}</span>
+//           <span class="original">₹${originalPrice}</span>
+//           <span class="discount-tag">(${product.discount} OFF)</span>
+//         </div>
+//       `;
+//       container.appendChild(card);
+//     });
+//   }
+
+//   addForm.addEventListener("submit", async (e) => {
+//     e.preventDefault();
+
+//     const name = document.getElementById("prodName").value.trim();
+//     const imgInput = document.getElementById("prodImg");
+//     const discount = document.getElementById("prodDiscount").value.trim();
+//     const price = Number(document.getElementById("prodPrice").value);
+//     const category = document.getElementById("prodCategory").value;
+
+//     const file = imgInput.files[0];
+//     if (!file) return alert("Please select an image");
+
+//     const reader = new FileReader();
+
+//     reader.onload = async function (e) {
+//       const img = e.target.result;
+
+//       try {
+//         await addDoc(collection(db, "products"), {
+//           name,
+//           img,
+//           discount,
+//           price,
+//           category,
+//           creatorUID: currentUID
+//         });
+//         alert("Product added!");
+//         addForm.reset();
+//         await loadCreatorProducts();
+//       } catch (err) {
+//         alert("Error adding product: " + err.message);
+//       }
+//     };
+
+//     reader.readAsDataURL(file);
+//   });
+
+//   removeForm.addEventListener("submit", async (e) => {
+//     e.preventDefault();
+//     const nameToRemove = document.getElementById("removeProdName").value.trim();
+
+//     const q = query(
+//       collection(db, "products"),
+//       where("creatorUID", "==", currentUID),
+//       where("name", "==", nameToRemove)
+//     );
+
+//     const querySnapshot = await getDocs(q);
+
+//     if (querySnapshot.empty) {
+//       alert("No product found with that name.");
+//     } else {
+//       const deletePromises = querySnapshot.docs.map((docSnap) =>
+//         deleteDoc(doc(db, "products", docSnap.id))
+//       );
+//       await Promise.all(deletePromises);
+//       alert("Product removed!");
+//       await loadCreatorProducts();
+//     }
+
+//     removeForm.reset();
+//   });
+// });
+
+
+
+import { db, auth } from '../login_signup/firebase.js';
+import {
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+  query,
+  where
+} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
 document.addEventListener("DOMContentLoaded", () => {
   const addForm = document.getElementById("addProductForm");
   const removeForm = document.getElementById("removeProductForm");
   const container = document.getElementById("creatorProductContainer");
+  const searchInput = document.querySelector(".search-container input");
 
-  let creatorProducts = JSON.parse(localStorage.getItem("creatorProducts")) || [];
+  let currentUID = null;
+  let creatorProducts = [];
 
-  function saveProducts() {
-    localStorage.setItem("creatorProducts", JSON.stringify(creatorProducts));
-    renderProducts();
-  }
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      currentUID = user.uid;
+      document.getElementById("creatorEmail").textContent = user.email;
+      await loadCreatorProducts();
+    } else {
+      alert("Please log in to access your account.");
+      window.location.href = '../login_signup/login.html';
+    }
+  });
 
-  function renderProducts() {
+  async function loadCreatorProducts() {
+    container.innerHTML = "<p>Loading...</p>";
+    const q = query(collection(db, "products"), where("creatorUID", "==", currentUID));
+    const querySnapshot = await getDocs(q);
+
+    creatorProducts = [];
     container.innerHTML = "";
-    if (creatorProducts.length === 0) {
+
+    if (querySnapshot.empty) {
       container.innerHTML = "<p>No products yet.</p>";
       return;
     }
 
-    creatorProducts.forEach((product) => {
+    querySnapshot.forEach((docSnap) => {
+      const product = docSnap.data();
+      creatorProducts.push(product);
+    });
+
+    renderCreatorProducts(creatorProducts);
+  }
+
+  function renderCreatorProducts(products) {
+    container.innerHTML = "";
+
+    if (products.length === 0) {
+      container.innerHTML = "<p>No matching products found.</p>";
+      return;
+    }
+
+    products.forEach((product) => {
+      const originalPrice = Math.round(product.price / (1 - parseFloat(product.discount) / 100));
+
       const card = document.createElement("div");
       card.className = "wishlist-card";
       card.innerHTML = `
@@ -27,14 +199,31 @@ document.addEventListener("DOMContentLoaded", () => {
         <h3>${product.name}</h3>
         <div class="price">
           <span class="discounted">₹${product.price}</span>
-          <span class="original">₹${(product.price * 1.2).toFixed(0)}</span>
+          <span class="original">₹${originalPrice}</span>
+          <span class="discount-tag">(${product.discount} OFF)</span>
         </div>
       `;
       container.appendChild(card);
     });
   }
 
-  addForm.addEventListener("submit", (e) => {
+  searchInput.addEventListener("input", () => {
+    const keyword = searchInput.value.trim().toLowerCase();
+
+    if (!keyword) {
+      renderCreatorProducts(creatorProducts);
+      return;
+    }
+
+    const filtered = creatorProducts.filter(p =>
+      p.name.toLowerCase().includes(keyword) ||
+      p.category.toLowerCase().includes(keyword)
+    );
+
+    renderCreatorProducts(filtered);
+  });
+
+  addForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const name = document.getElementById("prodName").value.trim();
@@ -47,32 +236,53 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!file) return alert("Please select an image");
 
     const reader = new FileReader();
-    reader.onload = function (e) {
+
+    reader.onload = async function (e) {
       const img = e.target.result;
 
-      creatorProducts.push({ name, img, discount, price, category });
-      saveProducts();
-      addForm.reset();
+      try {
+        await addDoc(collection(db, "products"), {
+          name,
+          img,
+          discount,
+          price,
+          category,
+          creatorUID: currentUID
+        });
+        alert("Product added!");
+        addForm.reset();
+        await loadCreatorProducts();
+      } catch (err) {
+        alert("Error adding product: " + err.message);
+      }
     };
+
     reader.readAsDataURL(file);
   });
 
-  removeForm.addEventListener("submit", (e) => {
+  removeForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const nameToRemove = document.getElementById("removeProdName").value.trim();
 
-    const initialLength = creatorProducts.length;
-    creatorProducts = creatorProducts.filter((p) => p.name !== nameToRemove);
+    const q = query(
+      collection(db, "products"),
+      where("creatorUID", "==", currentUID),
+      where("name", "==", nameToRemove)
+    );
 
-    if (creatorProducts.length === initialLength) {
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
       alert("No product found with that name.");
     } else {
+      const deletePromises = querySnapshot.docs.map((docSnap) =>
+        deleteDoc(doc(db, "products", docSnap.id))
+      );
+      await Promise.all(deletePromises);
       alert("Product removed!");
-      saveProducts();
+      await loadCreatorProducts();
     }
 
     removeForm.reset();
   });
-
-  renderProducts(); // Initial load
 });

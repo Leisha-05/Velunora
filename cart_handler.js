@@ -6,32 +6,51 @@ function setupCartIcons() {
     const productName = icon.dataset.productName?.trim();
     if (!productName) return;
 
-    // Initial visual state
-    if (cart.includes(productName)) {
-      icon.classList.add("carted"); // Add a class to style active state
+    // Initial state
+    const isInCart = cart.some((item) => item.name === productName);
+    if (isInCart) {
+      icon.classList.add("carted");
     } else {
       icon.classList.remove("carted");
     }
 
-    icon.onclick = (e) => {
+    icon.addEventListener("click", (e) => {
       e.stopPropagation();
-      cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-      if (cart.includes(productName)) {
-        cart = cart.filter((p) => p !== productName);
+      cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const index = cart.findIndex((item) => item.name === productName);
+
+      if (index !== -1) {
+        // Remove from cart
+        cart.splice(index, 1);
         icon.classList.remove("carted");
       } else {
-        cart.push(productName);
+        // Add to cart
+        const product = productData.find((p) => p.name === productName);
+        if (!product) return;
+
+         const request = localStorage.getItem(`customRequest_${product.name}`);
+        const customRequest = request ? JSON.parse(request) : { message: "", fileName: null };
+
+        cart.push({
+          name: product.name,
+          price: calculateDiscount(product.price, product.discount),
+          quantity: 1,
+          img: product.img,
+          creator: product.creator,
+          customRequest: customRequest,
+        });
         icon.classList.add("carted");
       }
 
       localStorage.setItem("cart", JSON.stringify(cart));
-    };
+    });
   });
 }
 
+window.setupCartIcons = setupCartIcons;
 
-// Reusing wishlist icon logic
+
 function setupWishlistIcons() {
   const wishlistIcons = document.querySelectorAll(".wishlist-icon");
   let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];

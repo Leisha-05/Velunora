@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Orders | Velunora Creator</title>
+  <link rel="stylesheet" href="../an+nav+search.css" />
+  <link rel="stylesheet" href="../wishlist_cart/wishlist.css" />
+  <link rel="stylesheet" href="orders.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+</head>
+<body>
+  <!-- Announcement Bar -->
+  <div class="announcement-bar">Free shipping on orders ₹500+</div>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">
+      <div class="logo-top">
+        <h1 class="logo-text">Velunora <i class="fa-solid fa-heart"></i></h1>
+      </div>
+      <p class="tagline">Crafted with Soul, Curated with Love</p>
+    </div>
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#category">Categories</a>
+      <a href="../index.html#spotlight">Creator Spotlight</a>
+      <a href="../login_signup/login.html">Login / Sign Up</a>
+    </nav>
+  </header>
+
+  <main class="wishlist-container">
+    <!-- Sidebar -->
+    <aside class="user-sidebar">
+      <img src="../images/user-avatar.png" alt="User Avatar" class="user-avatar" />
+      <h3 class="user-name">Creator</h3>
+      <p class="user-email">creator@email.com</p>
+
+      <ul class="user-options">
+        <li class="active"><i class="fas fa-box"></i>My Orders</li>
+        <li onclick="location.href='account.html'"><i class="fas fa-user-cog"></i>My Profile</li>
+      </ul>
+    </aside>
+
+    <!-- Orders Section -->
+    <section class="wishlist-products">
+      <h2>Received Orders</h2>
+      <div id="ordersContainer"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 Velunora. Made with 💛 by Leisha, Shruti & Saffran.</p>
+  </footer>
+  <script src="orders.js" defer></script>
+</body>
+</html>

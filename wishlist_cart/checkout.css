@@ -1,0 +1,115 @@
+.checkout-form-section {
+  flex: 2; /* Increased width */
+  padding: 13px 50px;
+  background-color: var(--brown-bg);
+  display: flex;
+  flex-direction: column;
+}
+.checkout-form-card {
+  background-color: var(--white);
+  border-radius: 12px;
+  padding: 30px 25px;
+  box-shadow: 0 4px 10px var(--shadow);
+  width: 100%;
+}
+
+.checkout-form-card h2 {
+  font-size: 2.75rem;
+  font-family: 'Playfair Display', serif;
+  color: var(--text-heading);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+#shipping-form {
+  display: flex;
+  flex-direction: column;
+}
+
+#shipping-form label {
+  font-size: 1.4rem;
+  margin-top: 12px;
+  color: var(--black);
+  font-weight: 500;
+}
+
+#shipping-form input,
+#shipping-form textarea {
+  width: 100%; /* or 95% if you want some side space */
+  padding: 12px; /* Only internal space, not width! */
+  font-size: 1.3rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+  background-color: var(--white);
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+
+#shipping-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.payment-option {
+  margin-top: 15px;
+  font-size: 1.3rem;
+}
+
+.checkout-summary-box {
+  background-color: #fefefe;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px var(--shadow);
+  padding: 20px;
+  text-align: left;
+  margin-top: 30px;
+  padding-bottom: 5rem;
+}
+
+.checkout-summary-box h3 {
+  font-size: 1.7rem;
+  color: var(--text-heading);
+  margin-bottom: 15px;
+}
+
+.checkout-summary-box p {
+  font-size: 1.4rem;
+  margin: 10px 0;
+  color: var(--black);
+}
+.form-card {
+  background-color: var(--white);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px var(--shadow);
+  padding: 30px 40px;
+  width: 100%;
+}
+.payment-option {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.payment-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.3rem;
+  color: var(--black);
+  cursor: pointer;
+  transform: translateY(-2.5rem);
+}
+
+.radio{
+    transform: translateX(-30.5rem);
+}
+.radio2{
+    transform: translateY(-2.5rem);
+    transform: translateX(-40rem);
+}
+#radio{
+    gap: 20rem;
+}

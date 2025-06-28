@@ -36,7 +36,6 @@ async function loadProduct() {
       return;
     }
 
-    // 🟢 Fill product details
     document.getElementById("product-img").src = productData.img;
     document.getElementById("product-name").textContent = productData.name;
     document.getElementById("current-price").textContent = calculateDiscount(
@@ -52,7 +51,6 @@ async function loadProduct() {
     document.getElementById("creator-link").href =
       `../creator_profile/creator_profile.html?creator=${encodeURIComponent(productData.creator)}`;
 
-    // Icons (Wishlist, Cart, Share)
     const iconButtons = document.querySelector(".icon-buttons");
     iconButtons.innerHTML = `
       <i class="fa-solid fa-heart wishlist-icon icon-btn" title="Add to Wishlist" data-product-id="${productData.id}"></i>
@@ -60,15 +58,109 @@ async function loadProduct() {
       <i class="fa-solid fa-share-alt icon-btn" title="Share"></i>
     `;
 
-    // Activate wishlist and cart logic
     setupWishlistIconForSingleProduct?.();
     setupCartIcons?.();
 
+    // Load previous custom request
+    const savedRequest = localStorage.getItem(`customRequest_${productData.name}`);
+    if (savedRequest) {
+      const { message, fileName } = JSON.parse(savedRequest);
+      document.getElementById("custom-message").value = message || "";
+      if (fileName) {
+        const fileNote = document.createElement("p");
+        fileNote.className = "custom-note";
+        fileNote.textContent = `📎 Previously uploaded: ${fileName}`;
+        document.querySelector(".custom-request").appendChild(fileNote);
+      }
+    }
+
+    // Save custom request
+    document.getElementById("custom-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const msg = document.getElementById("custom-message").value;
+      const file = document.getElementById("custom-file").files[0];
+
+      if (!msg.trim()) {
+        alert("Please enter a message.");
+        return;
+      }
+
+      const requestData = {
+        message: msg.trim(),
+        fileName: file ? file.name : null,
+      };
+
+      localStorage.setItem(`customRequest_${productData.name}`, JSON.stringify(requestData));
+      alert("Request saved!");
+    });
+
+    // Back button
+    document.querySelector(".go-back").addEventListener("click", () => {
+      window.history.back();
+    });
+
     loadRatingStars(4.5);
-    loadReviews([
+
+    const key = `reviews_${productData.name}`;
+    const dummyReviews = [
       { name: "Maya", rating: 5, comment: "Beautiful work! Worth every penny." },
       { name: "Rishi", rating: 4, comment: "Just like I imagined. Great packaging too!" },
-    ]);
+    ];
+
+    document.getElementById("submit-review").addEventListener("click", () => {
+      const name = document.getElementById("reviewer-name").value.trim();
+      const comment = document.getElementById("review-comment").value.trim();
+      const rating = parseInt(document.getElementById("review-rating").value);
+
+      if (!name || !comment || !rating) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      const newReview = { name, rating, comment };
+      const reviews = JSON.parse(localStorage.getItem(key)) || [];
+      reviews.push(newReview);
+      localStorage.setItem(key, JSON.stringify(reviews));
+
+      renderReviews([...dummyReviews, ...reviews]);
+      alert("Thanks for your review!");
+
+      document.getElementById("reviewer-name").value = "";
+      document.getElementById("review-comment").value = "";
+      document.getElementById("review-rating").value = "";
+
+      updateStars(0);
+    });
+
+    // Render star inputs
+    const ratingInput = document.getElementById("review-rating");
+    const starIcons = document.querySelectorAll("#star-rating-input i");
+    let selectedRating = 0;
+
+    starIcons.forEach((star, index) => {
+      star.addEventListener("click", () => {
+        selectedRating = index + 1;
+        ratingInput.value = selectedRating;
+        updateStars(selectedRating);
+      });
+    });
+
+    function updateStars(rating) {
+      starIcons.forEach((star, i) => {
+        if (i < rating) {
+          star.classList.add("selected");
+          star.classList.remove("far");
+          star.classList.add("fas");
+        } else {
+          star.classList.remove("selected");
+          star.classList.remove("fas");
+          star.classList.add("far");
+        }
+      });
+    }
+
+    const storedReviews = JSON.parse(localStorage.getItem(key)) || [];
+    renderReviews([...dummyReviews, ...storedReviews]);
   } catch (error) {
     console.error("Failed to load product:", error);
     document.querySelector(".product-container").innerHTML =
@@ -78,7 +170,7 @@ async function loadProduct() {
 
 function calculateDiscount(price, discountStr) {
   const discount = parseInt(discountStr.replace("%", "")) || 0;
-  return "₹" + Math.round(price - (price * discount) / 100);
+  return Math.round(price - (price * discount) / 100);
 }
 
 function loadRatingStars(rating) {
@@ -99,7 +191,7 @@ function loadRatingStars(rating) {
   ratingText.textContent = rating.toFixed(1);
 }
 
-function loadReviews(reviews) {
+function renderReviews(reviews) {
   const reviewList = document.getElementById("review-list");
   reviewList.innerHTML = "";
 
@@ -118,23 +210,36 @@ function loadReviews(reviews) {
     `;
     reviewList.appendChild(div);
   });
+
+  document.getElementById("review-count").textContent = reviews.length;
 }
 
-document.querySelector(".go-back").addEventListener("click", () => {
-  window.history.back();
-});
+// Setup custom cart logic
 
-document.getElementById("custom-form").addEventListener("submit", (e) => {
-  e.preventDefault();
-  const msg = document.getElementById("custom-message").value;
-  const file = document.getElementById("custom-file").files[0];
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("cart-icon")) {
+    const product = JSON.parse(localStorage.getItem("selectedProduct"));
+    const request = localStorage.getItem(`customRequest_${product.name}`);
+    const customRequest = request ? JSON.parse(request) : { message: "", fileName: null };
 
-  if (!msg.trim()) {
-    alert("Please enter a message.");
-    return;
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    if (!cart.some((item) => item.name === product.name)) {
+      cart.push({
+        name: product.name,
+        price: calculateDiscount(product.price, product.discount),
+        quantity: 1,
+        creator: product.creator,
+        img: product.img,
+        customRequest,
+      });
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert("Product added to cart with customization!");
+    } else {
+      alert("Product already in cart.");
+    }
   }
-
-  alert("Request submitted!");
 });
 
 loadProduct();

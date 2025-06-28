@@ -73,7 +73,7 @@
         </div>
 
         <div class="icon-buttons">
-          
+          <!-- Wishlist, Cart icons if needed -->
         </div>
 
         <button class="go-back">
@@ -82,19 +82,36 @@
 
         <div class="ratings">
           <p>
-            Rating: <span id="rating-text"></span> (<span
-              id="review-count"
-            ></span>
-            reviews)
+            Rating: <span id="rating-text"></span> (<span id="review-count"></span> reviews)
           </p>
         </div>
       </div>
+
+      <!-- Lower Row: Reviews + Customization -->
       <div class="product-lower-row">
         <!-- LEFT: Reviews -->
         <div class="reviews-section">
           <h3>Customer Reviews</h3>
           <div class="review-list" id="review-list">
             <!-- JS will fill reviews -->
+          </div>
+        </div>
+
+        <!-- MIDDLE: Leave a Review -->
+        <div class="review-form-wrapper">
+          <div class="review-form">
+            <h3>Leave a Review</h3>
+            <input type="text" id="reviewer-name" placeholder="Your Name" />
+            <textarea id="review-comment" placeholder="Your review..."></textarea>
+            <div id="star-rating-input" class="star-rating review-stars">
+              <i class="far fa-star" data-value="1"></i>
+              <i class="far fa-star" data-value="2"></i>
+              <i class="far fa-star" data-value="3"></i>
+              <i class="far fa-star" data-value="4"></i>
+              <i class="far fa-star" data-value="5"></i>
+            </div>
+            <input type="hidden" id="review-rating" />
+            <button id="submit-review" class="btn">Submit Review</button>
           </div>
         </div>
 
@@ -117,17 +134,17 @@
         </div>
       </div>
     </section>
-     <footer class="footer">
-      <p>© 2025 Velunora. Made with 💛 by Leisha, Shruti & Saffran.
-      </p>
+
+    <footer class="footer">
+      <p>© 2025 Velunora. Made with 💛 by Leisha, Shruti & Saffran.</p>
     </footer>
-    
-     <script type="module" src="../login_signup/firebase.js"></script>
-     <script type="module" src="product.js" defer></script>
-     <script type="module" src="../search_results.js"></script>
-     <script src="../wishlist_handler.js" defer></script>
-     <script src="../cart_handler.js" defer></script>
-     <script src="../auth.js" defer></script>
- 
+
+    <!-- Scripts -->
+    <script type="module" src="../login_signup/firebase.js"></script>
+    <script type="module" src="product.js" defer></script>
+    <script type="module" src="../search_results.js"></script>
+    <script src="../wishlist_handler.js" defer></script>
+    <script src="../cart_handler.js" defer></script>
+    <script src="../auth.js" defer></script>
   </body>
 </html>

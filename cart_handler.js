@@ -29,13 +29,16 @@ function setupCartIcons() {
         const product = productData.find((p) => p.name === productName);
         if (!product) return;
 
+         const request = localStorage.getItem(`customRequest_${product.name}`);
+        const customRequest = request ? JSON.parse(request) : { message: "", fileName: null };
+
         cart.push({
           name: product.name,
           price: calculateDiscount(product.price, product.discount),
           quantity: 1,
           img: product.img,
           creator: product.creator,
-          customRequest: null,
+          customRequest: customRequest,
         });
         icon.classList.add("carted");
       }

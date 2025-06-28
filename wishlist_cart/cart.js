@@ -11,14 +11,15 @@ document.addEventListener("DOMContentLoaded", () => {
           name: product.name,
           price: Number(product.price),
           quantity: 1,
-          img: product.img
+          img: product.img,
+          creator: product.creator,
+          customRequest: null
         };
       }
       return null;
     }
     return item;
   }).filter(Boolean);
-
   // Save cleaned cart back to localStorage
   localStorage.setItem("cart", JSON.stringify(cart));
 
@@ -51,6 +52,13 @@ document.addEventListener("DOMContentLoaded", () => {
           <span class="discounted">₹${discountedPrice}</span>
           <span class="original">₹${product.price}</span>
         </p>
+        ${item.customRequest && item.customRequest.message
+          ? `<p class="custom-request">
+               <strong>Customization:</strong> ${item.customRequest.message}<br>
+               ${item.customRequest.fileName ? `📎 File: ${item.customRequest.fileName}` : ''}
+             </p>`
+          : ''
+        }
       `;
 
       productCard.addEventListener("click", () => {

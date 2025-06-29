@@ -46,22 +46,34 @@ async function fetchAndDisplayResults(keyword) {
       return;
     }
 
-    matchedProducts.forEach((product) => {
+     matchedProducts.forEach((product) => {
       const card = document.createElement("div");
       card.className = "product-card";
       card.innerHTML = `
-        <img src="${product.img}" alt="${product.name}">
-        <h3>${product.name}</h3>
-        <p>Price: ₹${product.price}</p>
-        <button class="view-btn">View</button>
+        <div class="image-wrapper">
+          <img src="${product.img}" alt="${product.name}">
+          <span class="ribbon">${product.ribbon || "New"}</span>
+          <div class="icon-bar">
+            <i class="fas fa-heart"></i>
+            <i class="fas fa-shopping-cart"></i>
+            <i class="fas fa-share-alt"></i>
+          </div>
+        </div>
+        <div class="product-info">
+          <h3>${product.name}</h3>
+          <div class="price">
+            <span class="original">₹${product.originalPrice || (product.price * 1.2).toFixed(0)}</span>
+            <span class="discounted">₹${product.price}</span>
+          </div>
+        </div>
       `;
-      resultContainer.appendChild(card);
 
-      const viewBtn = card.querySelector(".view-btn");
-      viewBtn.addEventListener("click", () => {
+       card.querySelector(".image-wrapper").addEventListener("click", () => {
         window.location.href = `product_pg/product.html?id=${product.id}`;
       });
-    });
+
+      resultContainer.appendChild(card);
+      });
   } catch (error) {
     console.error("Error fetching products:", error);
     resultContainer.innerHTML = `<p>Something went wrong. Please try again later.</p>`;

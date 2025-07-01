@@ -54,7 +54,17 @@ function displayProducts(products) {
     return;
   }
 
-  products.forEach((product) => {
+
+  // Remove duplicates based on name + creator
+  const seen = new Set();
+  const uniqueProducts = products.filter((p) => {
+    const key = `${p.name.toLowerCase()}__${p.creator?.toLowerCase()}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+
+  uniqueProducts.forEach((product) => {
     const card = document.createElement("div");
     card.className = "product-card";
 
@@ -80,7 +90,6 @@ function displayProducts(products) {
       </p>
     `;
 
-    // ✅ Open product page with correct ID in URL
     card.addEventListener("click", (e) => {
       if (e.target.closest(".icon-bar i")) return;
       window.location.href = `../product_pg/product.html?id=${product.id}`;
@@ -113,5 +122,4 @@ sortSelect.addEventListener("change", () => {
   displayProducts(sorted);
 });
 
-// Initial fetch
 fetchProducts();

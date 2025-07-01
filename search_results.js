@@ -16,6 +16,17 @@ function getKeywordFromURL() {
   return urlParams.get("keyword")?.toLowerCase().trim();
 }
 
+function removeDuplicateProducts(products) {
+  const uniqueMap = new Map();
+  for (const product of products) {
+    const key = product.name.toLowerCase().trim();
+    if (!uniqueMap.has(key)) {
+      uniqueMap.set(key, product);
+    }
+  }
+  return Array.from(uniqueMap.values());
+}
+
 async function fetchAndDisplayResults(keyword) {
   if (!keyword) {
     resultTitle.textContent = "No search keyword provided.";
@@ -41,12 +52,14 @@ async function fetchAndDisplayResults(keyword) {
       );
     });
 
-    if (matchedProducts.length === 0) {
+    const uniqueProducts = removeDuplicateProducts(matchedProducts);
+
+    if (uniqueProducts.length === 0) {
       resultContainer.innerHTML = `<p>No products found for "${keyword}".</p>`;
       return;
     }
 
-     matchedProducts.forEach((product) => {
+    uniqueProducts.forEach((product) => {
       const card = document.createElement("div");
       card.className = "product-card";
       card.innerHTML = `
@@ -68,12 +81,12 @@ async function fetchAndDisplayResults(keyword) {
         </div>
       `;
 
-       card.querySelector(".image-wrapper").addEventListener("click", () => {
+      card.querySelector(".image-wrapper").addEventListener("click", () => {
         window.location.href = `product_pg/product.html?id=${product.id}`;
       });
 
       resultContainer.appendChild(card);
-      });
+    });
   } catch (error) {
     console.error("Error fetching products:", error);
     resultContainer.innerHTML = `<p>Something went wrong. Please try again later.</p>`;

@@ -1,5 +1,5 @@
 import { auth, db } from './firebase.js';
-import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 import { doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
 const signupForm = document.querySelector('form');
@@ -22,6 +22,12 @@ signupForm.addEventListener('submit', async (e) => {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
+        // Set the display name in Firebase Auth
+        await updateProfile(user, {
+            displayName: name
+        });
+
+        // Also store user info in Firestore
         await setDoc(doc(db, "users", user.uid), {
             name: name,
             email: email,
@@ -29,17 +35,18 @@ signupForm.addEventListener('submit', async (e) => {
         });
 
         alert("Signup successful!");
-
         window.location.href = "login.html";
+
     } catch (error) {
         if (error.code === "auth/email-already-in-use") {
-    alert("This email is already registered. Please login instead.");
-    window.location.href = "login.html"; 
-} else {
-    alert(error.message);
-}
+            alert("This email is already registered. Please login instead.");
+            window.location.href = "login.html"; 
+        } else {
+            alert(error.message);
+        }
     }
 });
+
 
 
 

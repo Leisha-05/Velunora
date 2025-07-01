@@ -25,6 +25,17 @@ if (creatorName) {
   creatorLabel.textContent = creatorName;
 }
 
+function removeDuplicateProducts(products) {
+  const uniqueMap = new Map();
+  for (const product of products) {
+    const key = product.name.toLowerCase().trim();
+    if (!uniqueMap.has(key)) {
+      uniqueMap.set(key, product);
+    }
+  }
+  return Array.from(uniqueMap.values());
+}
+
 function renderProducts(products) {
   productContainer.innerHTML = "";
 
@@ -76,10 +87,11 @@ async function fetchCreatorProducts() {
     const snapshot = await getDocs(collection(db, "products"));
     const allProducts = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
-    creatorProducts = allProducts.filter(
+    const filtered = allProducts.filter(
       (product) => product.creator?.trim() === creatorName
     );
 
+    creatorProducts = removeDuplicateProducts(filtered);
     renderProducts(creatorProducts);
   } catch (error) {
     console.error("Error fetching creator products:", error);
@@ -144,3 +156,6 @@ if (spotlightWrapper) {
     }
   });
 }
+
+
+

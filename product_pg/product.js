@@ -51,6 +51,15 @@ async function loadProduct() {
     document.getElementById("creator-link").href =
       `../creator_profile/creator_profile.html?creator=${encodeURIComponent(productData.creator)}`;
 
+    // Fix for category dropdown link issue from product page
+    const dropdownLinks = document.querySelectorAll(".dropdown-content a");
+    dropdownLinks.forEach((link) => {
+      const href = link.getAttribute("href");
+      if (!href.startsWith("../")) {
+        link.setAttribute("href", `../category_pg/${href.split('/').pop()}`);
+      }
+    });
+
     const iconButtons = document.querySelector(".icon-buttons");
     iconButtons.innerHTML = `
       <i class="fa-solid fa-heart wishlist-icon icon-btn" title="Add to Wishlist" data-product-id="${productData.id}"></i>
@@ -61,7 +70,6 @@ async function loadProduct() {
     setupWishlistIconForSingleProduct?.();
     setupCartIcons?.();
 
-    // Load previous custom request
     const savedRequest = localStorage.getItem(`customRequest_${productData.name}`);
     if (savedRequest) {
       const { message, fileName } = JSON.parse(savedRequest);
@@ -74,7 +82,6 @@ async function loadProduct() {
       }
     }
 
-    // Save custom request
     document.getElementById("custom-form").addEventListener("submit", (e) => {
       e.preventDefault();
       const msg = document.getElementById("custom-message").value;
@@ -94,7 +101,6 @@ async function loadProduct() {
       alert("Request saved!");
     });
 
-    // Back button
     document.querySelector(".go-back").addEventListener("click", () => {
       window.history.back();
     });
@@ -132,7 +138,6 @@ async function loadProduct() {
       updateStars(0);
     });
 
-    // Render star inputs
     const ratingInput = document.getElementById("review-rating");
     const starIcons = document.querySelectorAll("#star-rating-input i");
     let selectedRating = 0;

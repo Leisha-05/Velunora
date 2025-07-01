@@ -1,41 +1,63 @@
+import { auth } from "./login_signup/firebase.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
 document.addEventListener("DOMContentLoaded", () => {
-  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-  const userRole = localStorage.getItem("userRole");
-  const navLinks = document.querySelector(".nav-links");
+    const navLinks = document.querySelector(".nav-links");
+    if (!navLinks) {
+        console.error("❌ .nav-links not found.");
+        return;
+    }
 
-  if (isLoggedIn) {
-    const loginLink = navLinks.querySelector('a[href*="login"]');
-    if (loginLink) loginLink.remove();
+    onAuthStateChanged(auth, (user) => {
+        console.log("✅ Auth state changed:", user);
 
-    const dropdown = document.createElement("div");
-    dropdown.classList.add("account-dropdown");
+        const loginLink = navLinks.querySelector('a[href*="login"]');
 
-    const baseFolder =
-      window.location.pathname.includes("category_pg") ||
-      window.location.pathname.includes("product_pg")
-        ? "../wishlist_cart/"
-        : "wishlist_cart/";
+        let baseFolder;
+        const pathname = window.location.pathname;
 
-    dropdown.innerHTML = `
-  <i class="fas fa-user user-icon"></i>
-  <div class="dropdown-content">
-    ${userRole === "creator" ? `
-      <a href="creator_account/account.html">My Account</a>
-      <a href="creator_account/orders.html">My Orders</a>
-    ` : ""}
-    <a href="${baseFolder}wishlist.html">My Wishlist</a>
-    <a href="${baseFolder}cart.html">My Cart</a>
-    <a href="#" id="logout-btn">Logout</a>
-  </div>
-`;
+        if (pathname.includes("wishlist_cart")) {
+            baseFolder = "./";
+        } else if (pathname.includes("product_pg") || pathname.includes("category_pg")) {
+            baseFolder = "../wishlist_cart/";
+        } else {
+            baseFolder = "wishlist_cart/";
+        }
 
+        if (user) {
+            if (loginLink) loginLink.remove();
+            if (navLinks.querySelector(".account-dropdown")) return;
 
-    navLinks.appendChild(dropdown);
+            const dropdown = document.createElement("div");
+            dropdown.classList.add("account-dropdown");
 
-    // Logout
-    dropdown.querySelector("#logout-btn").addEventListener("click", () => {
-      localStorage.clear();
-      location.reload();
+            dropdown.innerHTML = `
+                <i class="fas fa-user user-icon"></i>
+                <div class="dropdown-content">
+                    <a href="${baseFolder}wishlist.html">My Wishlist</a>
+                    <a href="${baseFolder}cart.html">My Cart</a>
+                    <a href="#" id="logout-btn">Logout</a>
+                </div>
+            `;
+
+            navLinks.appendChild(dropdown);
+
+            dropdown.querySelector("#logout-btn").addEventListener("click", async (e) => {
+                e.preventDefault();
+                try {
+                    await signOut(auth);
+                    window.location.reload();
+                } catch (error) {
+                    console.error("Logout error:", error);
+                }
+            });
+        } else {
+            if (!loginLink) {
+                const loginAnchor = document.createElement("a");
+                loginAnchor.href = "login_signup/login.html";
+                loginAnchor.textContent = "Login / Sign Up";
+                navLinks.appendChild(loginAnchor);
+            }
+        }
     });
-  }
 });

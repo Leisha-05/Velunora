@@ -37,8 +37,9 @@
   <main class="wishlist-container">
     <aside class="user-sidebar">
       <img src="../images/user-avatar.png" alt="User Avatar" class="user-avatar" />
-      <h3 class="user-name" id="userName">Test User</h3>
-      <p class="user-email" id="userEmail">testuser@email.com</p>
+      <h3 class="user-name" id="userName"></h3>
+      <p class="user-email" id="userEmail"></p>
+
       <ul class="user-options">
         <li class="active"><i class="fas fa-heart"></i> Wishlist</li>
         <li id="cartNav"><i class="fas fa-shopping-cart"></i> Cart</li>
@@ -56,5 +57,10 @@
   </footer>
 
   <script type="module" src="wishlist.js"></script>
+  <script type="module" src="../login_signup/firebase.js"></script>
+  <script type="module" src="../auth.js" defer></script>
+  <!--<script type="module" src="../wishlist_handler.js" defer></script>
+  <script type="module" src="../cart_handler.js" defer></script>-->
+
 </body>
 </html>

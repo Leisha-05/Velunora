@@ -1,81 +1,59 @@
-function setupWishlistIcons() {
-  const wishlistIcons = document.querySelectorAll(".wishlist-icon");
-  let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+import { getAuth, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+import { app } from "../login_signup/firebase.js"; // ensure your firebase.js exports `app`
 
-  wishlistIcons.forEach((icon) => {
-    const productName = icon.dataset.productName?.trim();
-    if (!productName) return;
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-    // Initial state
-    if (wishlist.includes(productName)) {
-      icon.classList.add("wishlisted");
-    } else {
-      icon.classList.remove("wishlisted");
-    }
+export function setupWishlistIcons() {
+    const wishlistIcons = document.querySelectorAll(".wishlist-icon");
 
-    icon.onclick = (e) => {
-      e.stopPropagation();
+    onAuthStateChanged(auth, async (user) => {
+        if (!user) {
+            const anon = await signInAnonymously(auth);
+            user = anon.user;
+        }
 
-      wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+        const uid = user.uid;
+        const docRef = doc(db, "userWishlists", uid);
+        let wishlist = [];
+        const snap = await getDoc(docRef);
+        if (snap.exists()) {
+            wishlist = snap.data().wishlist || [];
+        }
 
-      if (wishlist.includes(productName)) {
-        wishlist = wishlist.filter((p) => p !== productName);
-        icon.classList.remove("wishlisted");
-      } else {
-        wishlist.push(productName);
-        icon.classList.add("wishlisted");
-      }
+        wishlistIcons.forEach(icon => {
+            const productName = icon.dataset.productName?.trim();
+            if (!productName) return;
 
-      localStorage.setItem("wishlist", JSON.stringify(wishlist));
-    };
-  });
-}
+            const isWishlisted = wishlist.includes(productName);
 
-document.addEventListener("DOMContentLoaded", setupWishlistIcons);
-window.setupWishlistIcons = setupWishlistIcons;
+            // Set initial color
+            if (isWishlisted) {
+                icon.classList.add("wishlisted");
+                icon.style.color = "red";
+            } else {
+                icon.classList.remove("wishlisted");
+                icon.style.color = "";
+            }
 
-function setupWishlistIconForSingleProduct() {
-  const icon = document.querySelector(".wishlist-icon");
-  if (!icon) {
-    console.warn("❌ No wishlist icon found on product page");
-    return;
-  }
+            icon.addEventListener("click", async (e) => {
+                e.stopPropagation();
+                const snapLatest = await getDoc(docRef);
+                const currentWishlist = snapLatest.exists() ? snapLatest.data().wishlist || [] : [];
 
-  const productName = icon.dataset.productName?.trim();
-  if (!productName) {
-    console.warn("❌ No product name found in data attribute");
-    return;
-  }
-
-  let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-
-  // ✅ Set initial visual state
-  if (wishlist.includes(productName)) {
-    icon.classList.add("wishlisted");
-    console.log("✅ Product is already in wishlist:", productName);
-  } else {
-    icon.classList.remove("wishlisted");
-    console.log("❌ Product not in wishlist:", productName);
-  }
-
-  icon.addEventListener("click", (e) => {
-    e.stopPropagation();
-
-    wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-
-    if (wishlist.includes(productName)) {
-      wishlist = wishlist.filter((name) => name !== productName);
-      icon.classList.remove("wishlisted");
-      console.log("❌ Removed from wishlist:", productName);
-    } else {
-      if (productName && typeof productName === "string") {
-  wishlist.push(productName);
-}
-
-      icon.classList.add("wishlisted");
-      console.log("✅ Added to wishlist:", productName);
-    }
-
-    localStorage.setItem("wishlist", JSON.stringify(wishlist));
-  });
+                if (currentWishlist.includes(productName)) {
+                    await updateDoc(docRef, { wishlist: arrayRemove(productName) });
+                    icon.classList.remove("wishlisted");
+                    icon.style.color = "";
+                } else {
+                    await updateDoc(docRef, { wishlist: arrayUnion(productName) }).catch(async () => {
+                        await setDoc(docRef, { wishlist: [productName] });
+                    });
+                    icon.classList.add("wishlisted");
+                    icon.style.color = "red";
+                }
+            });
+        });
+    });
 }

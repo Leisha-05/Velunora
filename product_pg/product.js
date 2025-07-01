@@ -1,30 +1,28 @@
 // ✅ Firebase Setup
 import { db, auth } from "../login_signup/firebase.js";
 import {
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-  collection,
-  getDocs,
-  arrayUnion
+  doc, getDoc, setDoc, updateDoc, arrayUnion
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
-// 🚀 Load Product by ID
+// 🚀 Load Product by ID or LocalStorage Fallback
 async function loadProduct() {
   try {
     const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get("id"); // ✅ Changed from 'name' to 'id'
+    const productId = urlParams.get("id");
 
     let productData = null;
 
     if (productId) {
       const docRef = doc(db, "products", productId);
       const docSnap = await getDoc(docRef);
-
       if (docSnap.exists()) {
         productData = { id: docSnap.id, ...docSnap.data() };
+      }
+    } else {
+      const storedProduct = localStorage.getItem("selectedProduct");
+      if (storedProduct) {
+        productData = JSON.parse(storedProduct);
       }
     }
 
@@ -38,6 +36,10 @@ async function loadProduct() {
     setupCartButton(productData);
     loadCustomization(productData);
     setupReviewSystem(productData);
+    displayAverageStars(productData);
+    setupBackToCollection();
+
+    localStorage.removeItem("selectedProduct");
   } catch (error) {
     console.error("Error loading product:", error);
     document.querySelector(".product-container").innerHTML = "<p>Error loading product.</p>";
@@ -58,35 +60,67 @@ function renderProductDetails(product) {
   document.querySelector(".icon-buttons").innerHTML = `
     <i class="fa-solid fa-heart wishlist-icon icon-btn" title="Add to Wishlist"></i>
     <i class="fa-solid fa-cart-shopping icon-btn cart-icon" title="Add to Cart"></i>
-    <i class="fa-solid fa-share-alt icon-btn" title="Share"></i>
+    <i class="fa-solid fa-share-alt icon-btn share-icon" title="Share"></i>
   `;
 }
 
-// ✅ Wishlist Functionality
+// ✅ Wishlist Functionality with Color Change
 function setupWishlistButton(product) {
-  document.querySelector(".wishlist-icon").addEventListener("click", () => {
+  const wishlistIcon = document.querySelector(".wishlist-icon");
+
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const ref = doc(db, "userWishlists", user.uid);
+      const snap = await getDoc(ref);
+      const wishlist = snap.exists() ? snap.data().wishlist || [] : [];
+      if (wishlist.some(p => p.name === product.name)) {
+        wishlistIcon.style.color = "red";
+      }
+    }
+  });
+
+  wishlistIcon.addEventListener("click", () => {
     onAuthStateChanged(auth, async (user) => {
       if (!user) return alert("Please log in to add to wishlist.");
       const ref = doc(db, "userWishlists", user.uid);
       const snap = await getDoc(ref);
       const wishlist = snap.exists() ? snap.data().wishlist || [] : [];
-      if (wishlist.some(p => p.name === product.name)) return alert("Already in wishlist.");
-      wishlist.push(product);
-      await setDoc(ref, { wishlist }, { merge: true });
+      if (wishlist.some(p => p.name === product.name)) {
+        alert("Already in wishlist.");
+        return;
+      }
+      await setDoc(ref, { wishlist: [...wishlist, product] }, { merge: true });
+      wishlistIcon.style.color = "red";
       alert("Added to wishlist!");
     });
   });
 }
 
-// ✅ Cart Functionality
+// ✅ Cart Functionality with Color Change
 function setupCartButton(product) {
-  document.querySelector(".cart-icon").addEventListener("click", () => {
+  const cartIcon = document.querySelector(".cart-icon");
+
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const ref = doc(db, "userCarts", user.uid);
+      const snap = await getDoc(ref);
+      const cart = snap.exists() ? snap.data().cart || [] : [];
+      if (cart.some(p => p.name === product.name)) {
+        cartIcon.style.color = "green";
+      }
+    }
+  });
+
+  cartIcon.addEventListener("click", () => {
     onAuthStateChanged(auth, async (user) => {
       if (!user) return alert("Please log in to add to cart.");
       const ref = doc(db, "userCarts", user.uid);
       const snap = await getDoc(ref);
       const existingCart = snap.exists() ? snap.data().cart || [] : [];
-      if (existingCart.some(p => p.name === product.name)) return alert("Product already in cart.");
+      if (existingCart.some(p => p.name === product.name)) {
+        alert("Product already in cart.");
+        return;
+      }
 
       const request = localStorage.getItem(`customRequest_${product.name}`);
       const customRequest = request ? JSON.parse(request) : { message: "", fileName: null };
@@ -100,9 +134,36 @@ function setupCartButton(product) {
         customRequest
       };
       await setDoc(ref, { cart: [...existingCart, item] }, { merge: true });
+      cartIcon.style.color = "green";
       alert("Added to cart with customization!");
     });
   });
+}
+
+// ✅ Display Average Star Ratings
+async function displayAverageStars(product) {
+  const ref = doc(db, "productReviews", product.name);
+  const snap = await getDoc(ref);
+  const reviews = snap.exists() ? snap.data().reviews || [] : [];
+
+  if (reviews.length === 0) {
+    document.getElementById("avgStars").innerHTML = "⭐ No ratings yet";
+    return;
+  }
+
+  const avg = (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1);
+  document.getElementById("avgStars").innerHTML = `⭐ ${avg} (${reviews.length} reviews)`;
+}
+
+// ✅ Back to Collection Button
+function setupBackToCollection() {
+  const backBtn = document.getElementById("back-to-collection");
+  if (backBtn) {
+    backBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      window.history.back();
+    });
+  }
 }
 
 // ✅ Customization Requests
@@ -158,6 +219,7 @@ function setupReviewSystem(product) {
     }
     alert("Review submitted!");
     fetchReviews(product);
+    displayAverageStars(product);
   });
 
   fetchReviews(product);

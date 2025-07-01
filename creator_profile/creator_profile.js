@@ -2,14 +2,13 @@ import { db } from "../login_signup/firebase.js";
 import {
   collection,
   getDocs,
-  query,
-  where,
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
+// ✅ URL parameters
 const urlParams = new URLSearchParams(window.location.search);
 const creatorName = urlParams.get("creator")?.trim();
-const productName = urlParams.get("name")?.trim();
 
+// ✅ DOM elements
 const creatorTitle = document.getElementById("creatorName");
 const creatorLabel = document.getElementById("creatorLabel");
 const productContainer = document.getElementById("productContainer");
@@ -19,12 +18,14 @@ const priceFilter = document.getElementById("priceFilter");
 
 let creatorProducts = [];
 
+// ✅ Set creator labels
 if (creatorName) {
   document.title = `${creatorName} | Velunora`;
   creatorTitle.textContent = creatorName;
   creatorLabel.textContent = creatorName;
 }
 
+// ✅ Render Products
 function renderProducts(products) {
   productContainer.innerHTML = "";
 
@@ -61,8 +62,8 @@ function renderProducts(products) {
 
     productContainer.appendChild(card);
 
-    const links = card.querySelectorAll(".product-link");
-    links.forEach((link) => {
+    // Ensure clicking on image or name navigates using ?id
+    card.querySelectorAll(".product-link").forEach((link) => {
       link.addEventListener("click", (e) => {
         e.preventDefault();
         window.location.href = `../product_pg/product.html?id=${product.id}`;
@@ -71,6 +72,7 @@ function renderProducts(products) {
   });
 }
 
+// ✅ Fetch Creator Products
 async function fetchCreatorProducts() {
   try {
     const snapshot = await getDocs(collection(db, "products"));
@@ -87,6 +89,7 @@ async function fetchCreatorProducts() {
   }
 }
 
+// ✅ Search Functionality
 if (searchInput && searchIcon) {
   const handleSearch = () => {
     const keyword = searchInput.value.trim();
@@ -97,31 +100,25 @@ if (searchInput && searchIcon) {
 
   searchIcon.addEventListener("click", handleSearch);
   searchInput.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") {
-      handleSearch();
-    }
+    if (e.key === "Enter") handleSearch();
   });
 }
 
+// ✅ Price Filter Functionality
 if (priceFilter) {
   priceFilter.addEventListener("change", () => {
     const selected = priceFilter.value;
     if (selected === "low") {
-      const sorted = [...creatorProducts].sort((a, b) => a.price - b.price);
-      renderProducts(sorted);
+      renderProducts([...creatorProducts].sort((a, b) => a.price - b.price));
     } else if (selected === "high") {
-      const sorted = [...creatorProducts].sort((a, b) => b.price - a.price);
-      renderProducts(sorted);
+      renderProducts([...creatorProducts].sort((a, b) => b.price - a.price));
     } else {
       renderProducts(creatorProducts);
     }
   });
 }
 
-if (creatorName) {
-  fetchCreatorProducts();
-}
-
+// ✅ Spotlight Click Handling
 const spotlightWrapper = document.getElementById("spotlightWrapper");
 if (spotlightWrapper) {
   spotlightWrapper.addEventListener("click", (e) => {
@@ -137,10 +134,15 @@ if (spotlightWrapper) {
     }
 
     if (productImage || viewLink) {
-      const productName = (productImage || viewLink).dataset.name;
-      if (productName) {
-        window.location.href = `../product_pg/product.html?name=${encodeURIComponent(productName)}`;
+      const productId = (productImage || viewLink).dataset.productId;
+      if (productId) {
+        window.location.href = `../product_pg/product.html?id=${productId}`;
       }
     }
   });
+}
+
+// ✅ Initialize
+if (creatorName) {
+  fetchCreatorProducts();
 }

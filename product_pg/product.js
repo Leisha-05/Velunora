@@ -162,14 +162,30 @@ async function displayAverageStars(product) {
   const snap = await getDoc(ref);
   const reviews = snap.exists() ? snap.data().reviews || [] : [];
 
+  const avgStarsElement = document.getElementById("avgStars");
+
   if (reviews.length === 0) {
-    document.getElementById("avgStars").innerHTML = "⭐ No ratings yet";
+    avgStarsElement.innerHTML = `<p style="color:#777; font-size: 14px;">⭐ No ratings yet</p>`;
     return;
   }
 
   const avg = (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1);
-  document.getElementById("avgStars").innerHTML = `⭐ ${avg} (${reviews.length} reviews)`;
+  const roundedAvg = Math.round(avg);
+
+  // Generate star icons
+  let starsHTML = "";
+  for (let i = 1; i <= 5; i++) {
+    starsHTML += `<i class="fa-star ${i <= roundedAvg ? "fas" : "far"}" style="color: gold;"></i>`;
+  }
+
+  avgStarsElement.innerHTML = `
+    <div style="margin-bottom: 6px; font-weight: 500; font-size: 14px; color: #444;">
+      ${starsHTML}
+    </div>
+    <div style="font-size: 13px; color: #777;">${reviews.length} review${reviews.length > 1 ? "s" : ""}</div>
+  `;
 }
+
 
 // ✅ Back to Collection Button
 function setupBackToCollection() {

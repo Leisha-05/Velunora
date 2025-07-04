@@ -1,9 +1,7 @@
 import { db } from "./login_signup/firebase.js";
 import {
   collection,
-  getDocs,
-  doc,
-  getDoc,
+  getDocs
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
 const resultContainer = document.getElementById("searchResultsContainer");
@@ -60,12 +58,16 @@ async function fetchAndDisplayResults(keyword) {
     }
 
     uniqueProducts.forEach((product) => {
+      const originalPrice = parseFloat(product.price);
+      const discount = parseFloat(product.discount) || 0;
+      const finalPrice = Math.round(originalPrice - (originalPrice * discount / 100));
+
       const card = document.createElement("div");
       card.className = "product-card";
       card.innerHTML = `
         <div class="image-wrapper">
           <img src="${product.img}" alt="${product.name}">
-          <span class="ribbon">${product.ribbon || "New"}</span>
+          ${discount > 0 ? `<span class="ribbon">${discount}% OFF</span>` : ""}
           <div class="icon-bar">
             <i class="fas fa-heart"></i>
             <i class="fas fa-shopping-cart"></i>
@@ -75,8 +77,8 @@ async function fetchAndDisplayResults(keyword) {
         <div class="product-info">
           <h3>${product.name}</h3>
           <div class="price">
-            <span class="original">₹${product.originalPrice || (product.price * 1.2).toFixed(0)}</span>
-            <span class="discounted">₹${product.price}</span>
+            ${discount > 0 ? `<span class="original">₹${originalPrice}</span>` : ""}
+            <span class="discounted">₹${finalPrice}</span>
           </div>
         </div>
       `;
@@ -106,22 +108,9 @@ if (searchInput && searchIcon) {
   };
 
   searchIcon.addEventListener("click", handleSearch);
-
   searchInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
       handleSearch();
     }
   });
 }
-
-
-
-
-
-
-
-
-
-
-
-

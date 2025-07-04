@@ -1,150 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Product | Velunora</title>
-    <link rel="stylesheet" href="product.css" />
-    <link rel="stylesheet" href="../an+nav+search.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-  </head>
-  <body>
-    <!-- Announcement Bar -->
-    <div class="announcement-bar">Free shipping on orders ₹500+</div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product | Velunora</title>
+  <link rel="stylesheet" href="product.css" />
+  <link rel="stylesheet" href="../an+nav+search.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+  <!-- Announcement Bar -->
+  <div class="announcement-bar">Free shipping on orders ₹500+</div>
 
-    <!-- Navbar -->
-    <header class="navbar">
-      <div class="logo">
-        <div class="logo-top">
-          <h1 class="logo-text">Velunora <i class="fa-solid fa-heart"></i></h1>
-        </div>
-        <p class="tagline">Crafted with Soul, Curated with Love</p>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">
+      <div class="logo-top">
+        <h1 class="logo-text">Velunora <i class="fa-solid fa-heart"></i></h1>
       </div>
-      <nav class="nav-links">
-        <a href="../index.html">Home</a>
-        <a href="../index.html#about">About</a>
-        <div class="dropdown">
-          <a class="dropbtn" href="../index.html#category">Categories</a>
-          <div class="dropdown-content">
-            <a href="category.html?category=jewelry">Jewelry</a>
-            <a href="category.html?category=decor">Decor</a>
-            <a href="category.html?category=art">Art & Prints</a>
-            <a href="category.html?category=stationery">Stationery</a>
-            <a href="category.html?category=embroidery">Embroidery</a>
-            <a href="category.html?category=gifting">Gifting</a>
+      <p class="tagline">Crafted with Soul, Curated with Love</p>
+    </div>
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../index.html#about">About</a>
+      <div class="dropdown">
+        <a class="dropbtn" href="../index.html#category">Categories</a>
+        <div class="dropdown-content">
+          <a href="category.html?category=jewelry">Jewelry</a>
+          <a href="category.html?category=decor">Decor</a>
+          <a href="category.html?category=art">Art & Prints</a>
+          <a href="category.html?category=stationery">Stationery</a>
+          <a href="category.html?category=embroidery">Embroidery</a>
+          <a href="category.html?category=gifting">Gifting</a>
+        </div>
+      </div>
+      <a href="../index.html#spotlight">Creator Spotlight</a>
+      <a href="../login_signup/login.html">Login / Sign Up</a>
+    </nav>
+  </header>
+
+  <section class="search-bar">
+    <div class="search-container">
+      <input type="text" placeholder="Search creations by your favorite artists..." />
+      <i class="fas fa-search"></i>
+    </div>
+  </section>
+
+  <!-- Product Section -->
+  <section class="product-container">
+    <div class="image-box">
+      <img id="product-img" src="" alt="Product Image" />
+    </div>
+    <div class="details-box">
+      <h2 id="product-name">Product Name</h2>
+      <p class="creator-name">by <a href="#" id="creator-link">Creator</a></p>
+      <p class="price">
+        ₹<span id="current-price"></span>
+        <span class="original" id="original-price"></span>
+      </p>
+      <p class="description" id="description">
+        Short description of the product.
+      </p>
+
+      <div class="star-rating" id="rating-stars"></div>
+
+      <div class="icon-buttons">
+        <!-- Wishlist, Cart, Share icons injected via JS -->
+      </div>
+
+      <!-- ⭐ AVG STAR RATING DISPLAY -->
+      <p id="avgStars" style="margin-top: 8px; font-size: 16px; color: #555;">⭐ Loading average rating...</p>
+
+      <!-- ✅ BACK BUTTON -->
+      <button id="back-to-collection" class="go-back">
+        <i class="fas fa-arrow-left"></i> Back to Collection
+      </button>
+
+      <div class="ratings">
+        <p>Rating: <span id="rating-text"></span> (<span id="review-count"></span> reviews)</p>
+      </div>
+    </div>
+
+    <!-- Lower Row: Reviews + Customization -->
+    <div class="product-lower-row">
+      <!-- LEFT: Reviews -->
+      <div class="reviews-section">
+        <h3>Customer Reviews</h3>
+        <div class="review-list" id="review-list"></div>
+      </div>
+
+      <!-- MIDDLE: Leave a Review -->
+      <div class="review-form-wrapper">
+        <div class="review-form">
+          <h3>Leave a Review</h3>
+          <input type="text" id="reviewer-name" placeholder="Your Name" />
+          <textarea id="review-comment" placeholder="Your review..."></textarea>
+          <div id="star-rating-input" class="star-rating review-stars">
+            <i class="far fa-star" data-value="1"></i>
+            <i class="far fa-star" data-value="2"></i>
+            <i class="far fa-star" data-value="3"></i>
+            <i class="far fa-star" data-value="4"></i>
+            <i class="far fa-star" data-value="5"></i>
           </div>
-        </div>
-        <a href="../index.html#spotlight">Creator Spotlight</a>
-        <a href="../login_signup/login.html">Login / Sign Up</a>
-      </nav>
-    </header>
-
-    <section class="search-bar">
-      <div class="search-container">
-        <input
-          type="text"
-          placeholder="Search creations by your favorite artists..."
-        />
-        <i class="fas fa-search"></i>
-      </div>
-    </section>
-
-    <!-- Product Section -->
-    <section class="product-container">
-      <div class="image-box">
-        <img id="product-img" src="" alt="Product Image" />
-      </div>
-      <div class="details-box">
-        <h2 id="product-name">Product Name</h2>
-        <p class="creator-name">by <a href="#" id="creator-link">Creator</a></p>
-        <p class="price">
-          ₹<span id="current-price"></span>
-          <span class="original" id="original-price"></span>
-        </p>
-        <p class="description" id="description">
-          Short description of the product.
-        </p>
-
-        <div class="star-rating" id="rating-stars">
-          <!-- Stars will be injected via JS -->
-        </div>
-
-        <div class="icon-buttons">
-          <!-- Wishlist, Cart icons if needed -->
-        </div>
-
-        <button class="go-back">
-          <i class="fas fa-arrow-left"></i> Back to Collection
-        </button>
-
-        <div class="ratings">
-          <p>
-            Rating: <span id="rating-text"></span> (<span id="review-count"></span> reviews)
-          </p>
+          <input type="hidden" id="review-rating" />
+          <button id="submit-review" class="btn">Submit Review</button>
         </div>
       </div>
 
-      <!-- Lower Row: Reviews + Customization -->
-      <div class="product-lower-row">
-        <!-- LEFT: Reviews -->
-        <div class="reviews-section">
-          <h3>Customer Reviews</h3>
-          <div class="review-list" id="review-list">
-            <!-- JS will fill reviews -->
-          </div>
-        </div>
+      <!-- RIGHT: Custom Request Form -->
+      <div class="custom-request">
+        <h3>Send Customization Request</h3>
+        <form id="custom-form">
+          <label for="custom-message">Describe your order:</label>
+          <textarea id="custom-message" placeholder="Describe customization..." required></textarea>
 
-        <!-- MIDDLE: Leave a Review -->
-        <div class="review-form-wrapper">
-          <div class="review-form">
-            <h3>Leave a Review</h3>
-            <input type="text" id="reviewer-name" placeholder="Your Name" />
-            <textarea id="review-comment" placeholder="Your review..."></textarea>
-            <div id="star-rating-input" class="star-rating review-stars">
-              <i class="far fa-star" data-value="1"></i>
-              <i class="far fa-star" data-value="2"></i>
-              <i class="far fa-star" data-value="3"></i>
-              <i class="far fa-star" data-value="4"></i>
-              <i class="far fa-star" data-value="5"></i>
-            </div>
-            <input type="hidden" id="review-rating" />
-            <button id="submit-review" class="btn">Submit Review</button>
-          </div>
-        </div>
+          <label for="custom-file">Attach Image/PDF:</label>
+          <input type="file" id="custom-file" accept=".png,.jpg,.jpeg,.pdf" />
 
-        <!-- RIGHT: Custom Request Form -->
-        <div class="custom-request">
-          <h3>Send Customization Request</h3>
-          <form id="custom-form">
-            <label for="custom-message">Describe your order:</label>
-            <textarea
-              id="custom-message"
-              placeholder="Describe customization..."
-              required
-            ></textarea>
-
-            <label for="custom-file">Attach Image/PDF:</label>
-            <input type="file" id="custom-file" accept=".png,.jpg,.jpeg,.pdf" />
-
-            <button class="btn" type="submit">Send to Creator</button>
-          </form>
-        </div>
+          <button class="btn" type="submit">Save request</button>
+        </form>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <footer class="footer">
-      <p>© 2025 Velunora. Made with 💛 by Leisha, Shruti & Saffran.</p>
-    </footer>
+  <footer class="footer">
+    <p>© 2025 Velunora. Made with 💛 by Leisha, Shruti & Saffran.</p>
+  </footer>
 
-    <!-- Scripts -->
-    <script type="module" src="../login_signup/firebase.js"></script>
-    <script type="module" src="product.js" defer></script>
-    <script type="module" src="../search_results.js"></script>
-    <script src="../wishlist_handler.js" defer></script>
-    <script src="../cart_handler.js" defer></script>
-    <script src="../auth.js" defer></script>
-  </body>
+  <!-- Scripts -->
+  <script type="module" src="../login_signup/firebase.js"></script>
+  <script type="module" src="product.js" defer></script>
+  <script type="module" src="../search_results.js"></script>
+  <script type="module" src="../wishlist_handler.js" defer></script>
+  <script type="module" src="../cart_handler.js" defer></script>
+  <script type="module" src="../auth.js" defer></script>
+</body>
 </html>

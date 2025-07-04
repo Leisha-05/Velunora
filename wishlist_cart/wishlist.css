@@ -176,6 +176,7 @@
   opacity: 1;
   transform: translateY(0);
 }
+  
 
 .footer {
   text-align: center;
@@ -241,3 +242,10 @@
   margin-top: 8px;
   border-radius: 5px;
 }
+.icon-bar .fa-shopping-cart.added {
+  color: green;
+}
+.icon-bar .wishlist-icon.active {
+    color: red;
+}
+

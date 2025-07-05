@@ -17,6 +17,13 @@ import { onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/f
 const params = new URLSearchParams(window.location.search);
 const selectedCategory = params.get("category");
 
+console.log("Selected Category from URL:", selectedCategory);
+
+if (!selectedCategory) {
+  document.getElementById("productContainer").innerHTML = `<p>Invalid or missing category.</p>`;
+  throw new Error("Missing category in URL");
+}
+
 document.getElementById("categoryTitle").textContent =
   selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1) + " Collection";
 
@@ -30,7 +37,7 @@ const bannerFix = {
   gifting: "gifting",
 };
 
-document.querySelector(".category-header img").src = `../images/headers/${bannerFix[selectedCategory] || "default"}-banner.jpg`;
+document.querySelector(".category-header img").src = `../images/headers/${bannerFix[selectedCategory.toLowerCase()] || "default"}-banner.jpg`;
 
 const productContainer = document.getElementById("productContainer");
 const searchInput = document.querySelector(".search-container input");
@@ -38,18 +45,30 @@ const sortSelect = document.getElementById("priceFilter");
 
 let allProducts = [];
 
+// ✅ Fetch products from Firestore
 async function fetchProducts() {
-  const q = query(collection(db, "products"), where("category", "==", selectedCategory));
-  const querySnapshot = await getDocs(q);
+  try {
+    const q = query(
+      collection(db, "products"),
+      where("category", "==", selectedCategory.toLowerCase())
+    );
+    const querySnapshot = await getDocs(q);
 
-  allProducts = [];
-  querySnapshot.forEach((doc) => {
-    allProducts.push({ id: doc.id, ...doc.data() });
-  });
+    if (querySnapshot.empty) {
+      productContainer.innerHTML = `<p>No products found for this category.</p>`;
+      return;
+    }
 
-  displayProducts(allProducts);
+    allProducts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+
+    displayProducts(allProducts);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    productContainer.innerHTML = `<p>Failed to load products.</p>`;
+  }
 }
 
+// ✅ Display products in grid
 function displayProducts(products) {
   productContainer.innerHTML = "";
 
@@ -58,7 +77,15 @@ function displayProducts(products) {
     return;
   }
 
-  products.forEach((product) => {
+  const seen = new Set();
+  const uniqueProducts = products.filter((p) => {
+    const key = `${p.name?.toLowerCase()}__${p.creator?.toLowerCase()}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+
+  uniqueProducts.forEach((product) => {
     const discountPercent = parseInt((product.discount || "0").replace("%", "")) || 0;
     const discountedPrice = product.price
       ? Math.round(product.price * (1 - discountPercent / 100))
@@ -97,12 +124,14 @@ function displayProducts(products) {
   attachCartHandlers();
 }
 
+// ✅ Search functionality
 searchInput.addEventListener("input", () => {
   const searchTerm = searchInput.value.trim().toLowerCase();
   const filtered = allProducts.filter((p) => p.name.toLowerCase().includes(searchTerm));
   displayProducts(filtered);
 });
 
+// ✅ Sort functionality
 sortSelect.addEventListener("change", () => {
   const sortValue = sortSelect.value;
   let sorted = [...allProducts];
@@ -116,6 +145,7 @@ sortSelect.addEventListener("change", () => {
   displayProducts(sorted);
 });
 
+// ✅ Wishlist handler
 function attachWishlistHandlers() {
   const wishlistIcons = document.querySelectorAll(".wishlist-icon");
 
@@ -134,11 +164,7 @@ function attachWishlistHandlers() {
       const productName = icon.dataset.productName?.trim();
       if (!productName) return;
 
-      if (wishlist.some((p) => p.name === productName)) {
-        icon.style.color = "red";
-      } else {
-        icon.style.color = "";
-      }
+      icon.style.color = wishlist.some((p) => p.name === productName) ? "red" : "";
 
       icon.addEventListener("click", async (e) => {
         e.stopPropagation();
@@ -163,6 +189,7 @@ function attachWishlistHandlers() {
   });
 }
 
+// ✅ Cart handler
 function attachCartHandlers() {
   const cartIcons = document.querySelectorAll(".cart-icon");
 
@@ -181,11 +208,7 @@ function attachCartHandlers() {
       const productName = icon.dataset.productName?.trim();
       if (!productName) return;
 
-      if (cart.some((p) => p.name === productName)) {
-        icon.style.color = "green";
-      } else {
-        icon.style.color = "";
-      }
+      icon.style.color = cart.some((p) => p.name === productName) ? "green" : "";
 
       icon.addEventListener("click", async (e) => {
         e.stopPropagation();
@@ -210,4 +233,5 @@ function attachCartHandlers() {
   });
 }
 
+// ✅ Call fetch on page load
 fetchProducts();

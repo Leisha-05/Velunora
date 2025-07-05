@@ -25,6 +25,24 @@ if (creatorName) {
   creatorLabel.textContent = creatorName;
 }
 
+// ✅ Remove duplicates while keeping valid product IDs
+function removeDuplicateProducts(products) {
+  const uniqueMap = new Map();
+  for (const product of products) {
+    const key = product.name.toLowerCase().trim();
+    if (!uniqueMap.has(key) || !uniqueMap.get(key)?.id) {
+      uniqueMap.set(key, product);
+    }
+  }
+  return Array.from(uniqueMap.values());
+}
+
+// ✅ Calculate Discounted Price
+function calculateDiscount(price, discountStr) {
+  const discount = parseInt(discountStr?.replace("%", "")) || 0;
+  return Math.round(price - (price * discount) / 100);
+}
+
 // ✅ Render Products
 function renderProducts(products) {
   productContainer.innerHTML = "";
@@ -35,6 +53,8 @@ function renderProducts(products) {
   }
 
   products.forEach((product) => {
+    const discountedPrice = calculateDiscount(product.price, product.discount);
+
     const card = document.createElement("div");
     card.classList.add("product-card");
 
@@ -54,19 +74,22 @@ function renderProducts(products) {
         <h3><a href="../product_pg/product.html?id=${product.id}" class="product-link">${product.name}</a></h3>
         <p>Category: ${product.category}</p>
         <div class="price">
-          <span class="original">₹${(product.price / (1 - parseInt(product.discount)/100)).toFixed(0)}</span>
-          <span class="discounted">₹${product.price}</span>
+          <span class="discounted">₹${discountedPrice}</span>
+          <span class="original">₹${product.price}</span>
         </div>
       </div>
     `;
 
     productContainer.appendChild(card);
 
-    // Ensure clicking on image or name navigates using ?id
     card.querySelectorAll(".product-link").forEach((link) => {
       link.addEventListener("click", (e) => {
         e.preventDefault();
-        window.location.href = `../product_pg/product.html?id=${product.id}`;
+        if (product.id) {
+          window.location.href = `../product_pg/product.html?id=${product.id}`;
+        } else {
+          alert("Product link is broken.");
+        }
       });
     });
   });
@@ -76,16 +99,21 @@ function renderProducts(products) {
 async function fetchCreatorProducts() {
   try {
     const snapshot = await getDocs(collection(db, "products"));
-    const allProducts = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    const allProducts = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
-    creatorProducts = allProducts.filter(
+    const filtered = allProducts.filter(
       (product) => product.creator?.trim() === creatorName
     );
 
+    creatorProducts = removeDuplicateProducts(filtered);
     renderProducts(creatorProducts);
   } catch (error) {
     console.error("Error fetching creator products:", error);
-    productContainer.innerHTML = `<p>Failed to load products. Please try again later.</p>`;
+    productContainer.innerHTML =
+      "<p>Failed to load products. Please try again later.</p>";
   }
 }
 
@@ -109,9 +137,13 @@ if (priceFilter) {
   priceFilter.addEventListener("change", () => {
     const selected = priceFilter.value;
     if (selected === "low") {
-      renderProducts([...creatorProducts].sort((a, b) => a.price - b.price));
+      renderProducts([...creatorProducts].sort((a, b) =>
+        calculateDiscount(a.price, a.discount) - calculateDiscount(b.price, b.discount)
+      ));
     } else if (selected === "high") {
-      renderProducts([...creatorProducts].sort((a, b) => b.price - a.price));
+      renderProducts([...creatorProducts].sort((a, b) =>
+        calculateDiscount(b.price, b.discount) - calculateDiscount(a.price, a.discount)
+      ));
     } else {
       renderProducts(creatorProducts);
     }

@@ -83,3 +83,9 @@ document.addEventListener("DOMContentLoaded", () => {
   searchInput.addEventListener("input", handleLiveSearch);
   loadCreators();
 });
+
+
+
+
+
+

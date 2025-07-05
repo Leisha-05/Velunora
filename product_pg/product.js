@@ -1,15 +1,14 @@
-// ✅ Firebase Setup
 import { db, auth } from "../login_signup/firebase.js";
 import {
-  doc, getDoc, setDoc, updateDoc, arrayUnion
+  doc, getDoc, setDoc, updateDoc, arrayUnion, collection, getDocs
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
-// 🚀 Load Product by ID or LocalStorage Fallback
 async function loadProduct() {
   try {
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get("id");
+    const productName = urlParams.get("name");
 
     let productData = null;
 
@@ -19,6 +18,14 @@ async function loadProduct() {
       if (docSnap.exists()) {
         productData = { id: docSnap.id, ...docSnap.data() };
       }
+    } else if (productName) {
+      const snapshot = await getDocs(collection(db, "products"));
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+        if (data.name.trim().toLowerCase() === productName.trim().toLowerCase()) {
+          productData = { id: doc.id, ...data };
+        }
+      });
     } else {
       const storedProduct = localStorage.getItem("selectedProduct");
       if (storedProduct) {
@@ -41,7 +48,7 @@ async function loadProduct() {
 
     localStorage.removeItem("selectedProduct");
   } catch (error) {
-    console.error("Error loading product:", error);
+    console.error("Failed to load product:", error);
     document.querySelector(".product-container").innerHTML = "<p>Error loading product.</p>";
   }
 }
@@ -52,10 +59,19 @@ function renderProductDetails(product) {
   document.getElementById("product-name").textContent = product.name;
   document.getElementById("current-price").textContent = calculateDiscount(product.price, product.discount);
   document.getElementById("original-price").textContent = "₹" + product.price;
-  document.getElementById("description").textContent = product.description || `A lovely ${product.name}`;
+  document.getElementById("description").textContent = product.description || `A lovingly crafted ${product.name.toLowerCase()} from our ${product.category} collection.`;
 
   document.getElementById("creator-link").textContent = product.creator;
   document.getElementById("creator-link").href = `../creator_profile/creator_profile.html?creator=${encodeURIComponent(product.creator)}`;
+
+  // Fix for category dropdown link issue from product page
+  const dropdownLinks = document.querySelectorAll(".dropdown-content a");
+  dropdownLinks.forEach((link) => {
+    const href = link.getAttribute("href");
+    if (!href.startsWith("../")) {
+      link.setAttribute("href", `../category_pg/${href.split('/').pop()}`);
+    }
+  });
 
   document.querySelector(".icon-buttons").innerHTML = `
     <i class="fa-solid fa-heart wishlist-icon icon-btn" title="Add to Wishlist"></i>
@@ -148,14 +164,30 @@ async function displayAverageStars(product) {
   const snap = await getDoc(ref);
   const reviews = snap.exists() ? snap.data().reviews || [] : [];
 
+  const avgStarsElement = document.getElementById("avgStars");
+
   if (reviews.length === 0) {
-    document.getElementById("avgStars").innerHTML = "⭐ No ratings yet";
+    avgStarsElement.innerHTML = `<p style="color:#777; font-size: 14px;">⭐ No ratings yet</p>`;
     return;
   }
 
   const avg = (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1);
-  document.getElementById("avgStars").innerHTML = `⭐ ${avg} (${reviews.length} reviews)`;
+  const roundedAvg = Math.round(avg);
+
+  // Generate star icons
+  let starsHTML = "";
+  for (let i = 1; i <= 5; i++) {
+    starsHTML += `<i class="fa-star ${i <= roundedAvg ? "fas" : "far"}" style="color: gold;"></i>`;
+  }
+
+  avgStarsElement.innerHTML = `
+    <div style="margin-bottom: 6px; font-weight: 500; font-size: 14px; color: #444;">
+      ${starsHTML}
+    </div>
+    <div style="font-size: 13px; color: #777;">${reviews.length} review${reviews.length > 1 ? "s" : ""}</div>
+  `;
 }
+
 
 // ✅ Back to Collection Button
 function setupBackToCollection() {
@@ -177,7 +209,8 @@ function loadCustomization(product) {
       document.getElementById("custom-message").value = message || "";
       if (fileName) {
         const fileNote = document.createElement("p");
-        fileNote.textContent = `📎 File: ${fileName}`;
+        fileNote.className = "custom-note";
+        fileNote.textContent = `📎 Previously uploaded: ${fileName}`;
         document.querySelector(".custom-request").appendChild(fileNote);
       }
     }
@@ -250,7 +283,6 @@ function renderReviews(reviews) {
   document.getElementById("review-count").textContent = reviews.length;
 }
 
-// ✅ Utilities
 function updateStars(rating) {
   const stars = document.querySelectorAll("#star-rating-input i");
   stars.forEach((star, i) => {
@@ -263,5 +295,4 @@ function calculateDiscount(price, discountStr) {
   return Math.round(price - (price * discount) / 100);
 }
 
-// ✅ Initialize
 loadProduct();

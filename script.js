@@ -208,33 +208,43 @@ creators.forEach((creator, index) => {
 });
 
 let currentIndex = 0;
-const slides = document.querySelectorAll(".spotlight-slide");
-const dots = document.querySelectorAll(".dot");
+let slides = [];
+
+function updateSlides() {
+  slides = document.querySelectorAll(".spotlight-slide");
+}
 
 function updateDots(index) {
+  const dots = document.querySelectorAll(".dot");
   dots.forEach((dot, i) => {
     dot.classList.toggle("active", i === index);
   });
 }
 
 function scrollToIndex(index) {
-  const width = slides[0].offsetWidth + 32;
+  updateSlides();
+  const width = spotlightWrapper.offsetWidth;
   spotlightWrapper.scrollTo({ left: index * width, behavior: "smooth" });
   currentIndex = index;
   updateDots(index);
 }
 
 function scrollNext() {
+  updateSlides();
   if (currentIndex < slides.length - 1) {
     scrollToIndex(currentIndex + 1);
   }
 }
 
 function scrollPrev() {
+  updateSlides();
   if (currentIndex > 0) {
     scrollToIndex(currentIndex - 1);
   }
 }
+
+document.querySelector(".scroll-next").addEventListener("click", scrollNext);
+document.querySelector(".scroll-prev").addEventListener("click", scrollPrev);
 
 spotlightWrapper.addEventListener("click", (e) => {
   const creatorElement = e.target.closest(".spotlight-creator");
@@ -264,4 +274,5 @@ spotlightWrapper.addEventListener("click", (e) => {
   }
 });
 
+updateSlides();
 updateDots(currentIndex);

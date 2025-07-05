@@ -32,21 +32,36 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     onAuthStateChanged(auth, async (user) => {
-        if (user) {
-            currentUser = user;
-            userName.textContent = user.displayName || user.email?.split("@")[0] || "Guest";
-            userEmail.textContent = user.email || "guest@email.com";
-        } else {
-            const anon = await signInAnonymously(auth);
-            currentUser = anon.user;
-            userName.textContent = "Guest User";
-            userEmail.textContent = "guest@email.com";
+    if (user) {
+        currentUser = user;
+        document.getElementById("navName").textContent = user.displayName || user.email?.split("@")[0] || "User";
+        userName.textContent = user.displayName || user.email?.split("@")[0] || "Guest";
+        userEmail.textContent = user.email || "guest@email.com";
+
+        // 🚩 Role-based sidebar control
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        const userData = userDoc.exists() ? userDoc.data() : {};
+        const isCreator = userData.role === "creator";
+
+        if (!isCreator) {
+            const profileLink = document.getElementById("profileLink");
+            const ordersLink = document.getElementById("ordersLink");
+            if (profileLink) profileLink.style.display = "none";
+            if (ordersLink) ordersLink.style.display = "none";
         }
 
-        const wishlist = await loadWishlist(currentUser.uid);
-        const cart = await loadCart(currentUser.uid);
-        renderWishlist(wishlistContainer, wishlist, cart);
-    });
+    } else {
+        const anon = await signInAnonymously(auth);
+        currentUser = anon.user;
+        userName.textContent = "Guest User";
+        userEmail.textContent = "guest@email.com";
+    }
+
+    const wishlist = await loadWishlist(currentUser.uid);
+    const cart = await loadCart(currentUser.uid);
+    renderWishlist(wishlistContainer, wishlist, cart);
+});
+
 
     if (logoutBtn) {
         logoutBtn.addEventListener("click", () => {

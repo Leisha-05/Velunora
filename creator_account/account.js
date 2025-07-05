@@ -133,6 +133,7 @@ import {
   getDocs,
   deleteDoc,
   doc,
+  getDoc,
   query,
   where
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
@@ -148,15 +149,35 @@ document.addEventListener("DOMContentLoaded", () => {
   let creatorProducts = [];
 
   onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      currentUID = user.uid;
-      document.getElementById("creatorEmail").textContent = user.email;
-      await loadCreatorProducts();
-    } else {
-      alert("Please log in to access your account.");
-      window.location.href = '../login_signup/login.html';
+  if (user) {
+    currentUID = user.uid;
+
+    // Get the creator email from Firebase Auth
+    document.getElementById("creatorEmail").textContent = user.email;
+
+    // 🔍 Fetch creator name from Firestore
+    try {
+      const userDoc = await getDoc(doc(db, "users", currentUID));
+      if (userDoc.exists()) {
+        const data = userDoc.data();
+        document.getElementById("creatorName").textContent = data.name || "Creator Name";
+      } else {
+        console.warn("No user document found in Firestore.");
+        document.getElementById("creatorName").textContent = "Creator Name";
+      }
+    } catch (err) {
+      console.error("Error fetching creator name:", err);
+      document.getElementById("creatorName").textContent = "Creator Name";
     }
-  });
+
+    // Load their products
+    await loadCreatorProducts();
+  } else {
+    alert("Please log in to access your account.");
+    window.location.href = '../login_signup/login.html';
+  }
+});
+
 
   async function loadCreatorProducts() {
     container.innerHTML = "<p>Loading...</p>";

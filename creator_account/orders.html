@@ -4,16 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Orders | Velunora Creator</title>
+
+  <!-- Styles -->
   <link rel="stylesheet" href="../an+nav+search.css" />
   <link rel="stylesheet" href="../wishlist_cart/wishlist.css" />
   <link rel="stylesheet" href="orders.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
 </head>
 <body>
-  <!-- Announcement Bar -->
+  <!-- ✅ Announcement Bar -->
   <div class="announcement-bar">Free shipping on orders ₹500+</div>
 
-  <!-- Navbar -->
+  <!-- ✅ Navbar -->
   <header class="navbar">
     <div class="logo">
       <div class="logo-top">
@@ -26,33 +28,56 @@
       <a href="../index.html#about">About</a>
       <a href="../index.html#category">Categories</a>
       <a href="../index.html#spotlight">Creator Spotlight</a>
-      <a href="../login_signup/login.html">Login / Sign Up</a>
+
+      <div class="user-dropdown" id="userDropdown">
+        <i class="fas fa-user"></i>
+        <ul class="dropdown-menu horizontal" id="dropdownMenu">
+          <li><a href="../creator/account.html">My Account</a></li>
+          <li><a href="../creator/orders.html">My Orders</a></li>
+          <li><a href="../wishlist_cart/wishlist.html">My Wishlist</a></li>
+          <li><a href="../wishlist_cart/cart.html">My Cart</a></li>
+          <li><a href="#" id="logoutBtn">Logout</a></li>
+        </ul>
+      </div>
+
+      <a href="../login_signup/login.html" id="loginLink">Login</a>
     </nav>
   </header>
+ <main>
+  <!-- ✅ Sidebar -->
+  <aside class="user-sidebar">
+    <img src="../images/user-avatar.png" alt="User Avatar" class="user-avatar" />
+    <h3 class="user-name" id="creatorName">Creator Name</h3>
+    <p class="user-email" id="creatorEmail">email@example.com</p>
 
-  <main class="wishlist-container">
-    <!-- Sidebar -->
-    <aside class="user-sidebar">
-      <img src="../images/user-avatar.png" alt="User Avatar" class="user-avatar" />
-      <h3 class="user-name">Creator</h3>
-      <p class="user-email">creator@email.com</p>
+    <ul class="user-options">
+      <li onclick="location.href='account.html'"><i class="fas fa-user-cog"></i> My Profile</li>
+      <li class="active"><i class="fas fa-box"></i> My Orders</li>
+      <li onclick="location.href='../wishlist_cart/wishlist.html'"><i class="fas fa-heart"></i> Wishlist</li>
+      <li onclick="location.href='../wishlist_cart/cart.html'"><i class="fas fa-shopping-cart"></i> Cart</li>
+    </ul>
+  </aside>
 
-      <ul class="user-options">
-        <li class="active"><i class="fas fa-box"></i>My Orders</li>
-        <li onclick="location.href='account.html'"><i class="fas fa-user-cog"></i>My Profile</li>
-      </ul>
-    </aside>
+  <!-- ✅ Orders Section -->
+ 
+  <section class="orders-section">
+  <div class="orders-header">
+    <h2>RECEIVED ORDERS</h2>
+  </div>
 
-    <!-- Orders Section -->
-    <section class="wishlist-products">
-      <h2>Received Orders</h2>
-      <div id="ordersContainer"></div>
-    </section>
+  <div id="ordersContainer">
+    <!-- …your .order-card elements… -->
+  </div>
+</section>
+
   </main>
 
+  <!-- ✅ Footer -->
   <footer class="footer">
     <p>© 2025 Velunora. Made with 💛 by Leisha, Shruti & Saffran.</p>
   </footer>
-  <script src="orders.js" defer></script>
+
+  <!-- ✅ Script -->
+  <script type="module" src="orders.js" defer></script>
 </body>
 </html>

@@ -56,21 +56,54 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    onAuthStateChanged(auth, async (user) => {
-        if (user) {
-            currentUser = user;
-            userName.textContent = user.displayName || user.email?.split("@")[0] || "Guest User";
-            userEmail.textContent = user.email || "guest@email.com";
-        } else {
-            const anonUser = await signInAnonymously(auth);
-            currentUser = anonUser.user;
-            userName.textContent = "Guest User";
-            userEmail.textContent = "guest@email.com";
+   onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        currentUser = user;
+        userName.textContent = user.displayName || user.email?.split("@")[0] || "Guest User";
+        userEmail.textContent = user.email || "guest@email.com";
+
+        // 🔹 Check role to hide sidebar links if not creator
+        try {
+            const userDoc = await getDoc(doc(db, "users", user.uid));
+            const userData = userDoc.exists() ? userDoc.data() : {};
+            const isCreator = userData.role === "creator";
+
+            if (!isCreator) {
+                const profileLink = document.getElementById("profileLink");
+                const ordersLink = document.getElementById("ordersLink");
+                if (profileLink) profileLink.style.display = "none";
+                if (ordersLink) ordersLink.style.display = "none";
+            }
+        } catch (err) {
+            console.error("Error checking user role:", err);
         }
-        const cart = await loadCart(currentUser.uid);
-        const wishlist = await loadWishlist(currentUser.uid);
-        renderCart(cart, wishlist);
-    });
+
+    } else {
+        const anonUser = await signInAnonymously(auth);
+        currentUser = anonUser.user;
+        userName.textContent = "Guest User";
+        userEmail.textContent = "guest@email.com";
+    }
+
+    // 🔹 Load and render cart + wishlist
+    const cart = await loadCart(currentUser.uid);
+    const wishlist = await loadWishlist(currentUser.uid);
+    renderCart(cart, wishlist);
+
+    // 🔹 Logout handling
+    const logoutBtn = document.getElementById("logoutBtn");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", async () => {
+            try {
+                await signOut(auth);
+                window.location.href = "../login_signup/login.html"; // or window.location.reload();
+            } catch (error) {
+                console.error("Error during logout:", error);
+            }
+        });
+    }
+});
+
 
     async function loadCart(uid) {
         try {

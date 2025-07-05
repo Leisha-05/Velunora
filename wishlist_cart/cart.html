@@ -19,12 +19,26 @@
       <p class="tagline">Crafted with Soul, Curated with Love</p>
     </div>
     <nav class="nav-links">
-      <a href="../index.html">Home</a>
-      <a href="../index.html#about">About</a>
-      <a href="../index.html#category">Categories</a>
-      <a href="../index.html#spotlight">Creator Spotlight</a>
-      <a href="../login_signup/login.html">Login / Sign Up</a>
-    </nav>
+  <a href="../index.html">Home</a>
+  <a href="../index.html#about">About</a>
+  <a href="../index.html#category">Categories</a>
+  <a href="../index.html#spotlight">Creator Spotlight</a>
+
+  <div class="user-dropdown" id="userDropdown" style="display: none;">
+    <i class="fas fa-user"></i> <span id="navName">Loading...</span>
+    <ul class="dropdown-menu horizontal" id="dropdownMenu">
+  <li><a href="../creator_account/account.html">My Account</a></li>
+  <li><a href="../creator_account/orders.html">My Orders</a></li>
+  <li><a href="wishlist_cart/wishlist.html">My Wishlist</a></li>
+  <li><a href="wishlist_cart/cart.html">My Cart</a></li>
+  <li><a href="#" id="logoutBtn">Logout</a></li>
+</ul>
+
+  </div>
+
+  <a href="../login_signup/login.html" id="loginLink">Login</a>
+</nav>
+
   </header>
 
   <section class="search-bar">
@@ -40,11 +54,20 @@
       <h3 class="user-name" id="userName"></h3>
       <p class="user-email" id="userEmail"></p>
 
-      <ul class="user-options">
-        <li id="wishlistNav"><i class="fas fa-heart"></i> Wishlist</li>
-        <li class="active"><i class="fas fa-shopping-cart"></i> Cart</li>
-        <li id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</li>
-      </ul>
+    <ul class="user-options">
+  <li id="profileLink" onclick="location.href='../creator_account/account.html'">
+    <i class="fas fa-user-cog"></i> My Profile
+  </li>
+  <li id="ordersLink" onclick="location.href='../creator_account/orders.html'">
+    <i class="fas fa-box"></i> My Orders
+  </li>
+  <li onclick="location.href='../wishlist_cart/wishlist.html'">
+    <i class="fas fa-heart"></i> Wishlist
+  </li>
+  <li onclick="location.href='../wishlist_cart/cart.html'">
+    <i class="fas fa-shopping-cart"></i> Cart
+  </li>
+</ul>
     </aside>
 
     <section class="wishlist-products" id="cartContainer">

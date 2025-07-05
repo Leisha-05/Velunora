@@ -1,3 +1,37 @@
+/* reset any mysterious padding/margin */
+html, body, main, .wishlist-products {
+  margin: 0;
+  padding: 0;
+}
+/* your orders section (formerly .wishlist-products) */
+.wishlist-products {
+  /* remove any top‐padding you had here */
+  padding-top: 0;
+  margin-top: 0;
+}
+.orders-header {
+  position: sticky; 
+  /* push it down beneath your announcement‑bar (30px?) + navbar (60px?) = ~90px total */
+  top: 90px;                      
+  background: #fff;               /* white so it stands out */
+  padding: 1rem 2rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  z-index: 100;                   
+}
+.orders-header h2 {
+  margin: 0;
+  font-size: 2rem;
+  color: #333;
+}
+.orders-section {
+  /* remove its own padding or margin at the top */
+  padding-top: 0;
+  margin-top: 0;
+  background: transparent;  /* let the page’s background show through */
+}
+
+/* === Order Card Styling === */
 .order-card {
   background: #fff;
   padding: 20px;
@@ -18,16 +52,235 @@
   color: #555;
   margin: 4px 0;
 }
-.wishlist-products {
+
+/* === Dropdown Styling (unchanged) === */
+.user-dropdown {
+  position: relative;
+  display: inline-block;
+}
+.user-dropdown i {
+  font-size: 20px;
+  cursor: pointer;
+}
+.dropdown-menu { 
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  padding: 12px 0;
+  width: 180px;
+  z-index: 1000;
+  display: none;
+}
+.user-dropdown:hover .dropdown-menu,
+.user-dropdown:focus-within .dropdown-menu {
+  display: block;
+}
+.dropdown-menu li {
+  list-style: none;
+  padding: 10px 16px;
+  transition: background 0.2s ease;
+}
+.dropdown-menu li:hover {
+  background-color: #f3f3f3;
+}
+.dropdown-menu li a {
+  text-decoration: none;
+  color: #333;
+  font-size: 15px;
+  display: block;
+}
+
+/* === Layout: Sidebar + Content === */
+main {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: flex-start; /* top‑aligns sidebar & content */
 }
 
-.wishlist-products h2 {
-  font-size: 2.4rem;
+/* Sidebar styling */
+.user-sidebar {
+  flex: 0 0 240px;                   /* fixed width */
+  background: #fff;
+  padding: 2rem;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 80px;                         /* adjust if navbar height differs */
+  height: calc(100vh - 80px);
+  box-sizing: border-box;
+  z-index: 20;
+}
+
+/* Orders container styling */
+.wishlist-products {
+  flex: 1;                           /* take remaining space */
+  padding: 2rem;
+  box-sizing: border-box;
+  display: block;                    /* remove old centering */
+  text-align: left;
+}
+
+/* “Received Orders” header styling */
+.orders-header {
+  position: sticky;
+  top: 0;
+  background: #f9f5f0;
+  padding: 1rem 0;
+  margin-bottom: 1rem;
+  z-index: 10;
+}
+.orders-header h2 {
+  font-size: 2rem;
+  margin: 0;
+  color: var(--text-heading, #333);
+  text-align: left;
+}
+
+/* Grid for order cards */
+/* reset any mysterious padding/margin */
+html, body, main, .wishlist-products {
+  margin: 0;
+  padding: 0;
+}
+/* your orders section (formerly .wishlist-products) */
+.wishlist-products {
+  /* remove any top‐padding you had here */
+  padding-top: 0;
+  margin-top: 0;
+}
+.orders-header {
+  position: sticky; 
+  /* push it down beneath your announcement‑bar (30px?) + navbar (60px?) = ~90px total */
+  top: 90px;                      
+  background: #fff;               /* white so it stands out */
+  padding: 1rem 2rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  z-index: 100;                   
+}
+.orders-header h2 {
+  margin: 0;
+  font-size: 2rem;
+  color: #333;
+}
+.orders-section {
+  /* remove its own padding or margin at the top */
+  padding-top: 0;
+  margin-top: 0;
+  background: transparent;  /* let the page’s background show through */
+}
+
+/* === Order Card Styling === */
+.order-card {
+  background: #fff;
+  padding: 20px;
   margin-bottom: 20px;
-  text-align: center;
-  color: var(--text-heading);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-family: 'Inter', sans-serif;
 }
 
+.order-card h3 {
+  font-size: 1.6rem;
+  color: #333;
+}
+
+.order-card p,
+.order-card li {
+  font-size: 1.3rem;
+  color: #555;
+  margin: 4px 0;
+}
+
+/* === Dropdown Styling (unchanged) === */
+.user-dropdown {
+  position: relative;
+  display: inline-block;
+}
+.user-dropdown i {
+  font-size: 20px;
+  cursor: pointer;
+}
+.dropdown-menu { 
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  padding: 12px 0;
+  width: 180px;
+  z-index: 1000;
+  display: none;
+}
+.user-dropdown:hover .dropdown-menu,
+.user-dropdown:focus-within .dropdown-menu {
+  display: block;
+}
+.dropdown-menu li {
+  list-style: none;
+  padding: 10px 16px;
+  transition: background 0.2s ease;
+}
+.dropdown-menu li:hover {
+  background-color: #f3f3f3;
+}
+.dropdown-menu li a {
+  text-decoration: none;
+  color: #333;
+  font-size: 15px;
+  display: block;
+}
+
+/* === Layout: Sidebar + Content === */
+main {
+  display: flex;
+  align-items: flex-start; /* top‑aligns sidebar & content */
+}
+
+/* Sidebar styling */
+.user-sidebar {
+  flex: 0 0 240px;                   /* fixed width */
+  background: #fff;
+  padding: 2rem;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 80px;                         /* adjust if navbar height differs */
+  height: calc(100vh - 80px);
+  box-sizing: border-box;
+  z-index: 20;
+}
+
+/* Orders container styling */
+#ordersContainer {
+  display: grid;
+  /* exactly 3 equal‑width columns */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+
+/* “Received Orders” header styling */
+.orders-header {
+  position: sticky;
+  top: 0;
+  background: #f9f5f0;
+  padding: 1rem 0;
+  margin-bottom: 1rem;
+  z-index: 10;
+}
+.orders-header h2 {
+  font-size: 2rem;
+  margin: 0;
+  color: var(--text-heading, #333);
+  text-align: left;
+}
+
+/* Grid for order cards */
+#ordersContainer {
+  display: grid;
+  /* exactly 3 equal‑width columns */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}

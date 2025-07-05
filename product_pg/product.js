@@ -131,6 +131,8 @@ function setupCartButton(product) {
         quantity: 1,
         creator: product.creator,
         img: product.img,
+        creator: auth.currentUser.email,
+       creatorId: product.creatorUID || product.creatorId,  // ✅ Add this line
         customRequest
       };
       await setDoc(ref, { cart: [...existingCart, item] }, { merge: true });

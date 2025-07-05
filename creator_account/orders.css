@@ -1,37 +1,102 @@
-/* reset any mysterious padding/margin */
-html, body, main, .wishlist-products {
+/* 1. Reset */
+html, body, main, #ordersContainer {
   margin: 0;
   padding: 0;
 }
-/* your orders section (formerly .wishlist-products) */
-.wishlist-products {
-  /* remove any top‐padding you had here */
+#ordersContainer {            /* 2. Remove top‑padding */
   padding-top: 0;
   margin-top: 0;
 }
+
+/* 3. Sticky header */
 .orders-header {
-  position: sticky; 
-  /* push it down beneath your announcement‑bar (30px?) + navbar (60px?) = ~90px total */
-  top: 90px;                      
-  background: #fff;               /* white so it stands out */
-  padding: 1rem 2rem;
+  position: sticky; top: 90px;
+  background: #fff; padding: 1rem 2rem;
   margin-bottom: 1rem;
   box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  z-index: 100;                   
+  z-index: 100;
 }
 .orders-header h2 {
   margin: 0;
   font-size: 2rem;
   color: #333;
 }
-.orders-section {
-  /* remove its own padding or margin at the top */
-  padding-top: 0;
-  margin-top: 0;
-  background: transparent;  /* let the page’s background show through */
+
+/* 4. Layout: Sidebar + Content */
+main {
+  display: flex;
+  align-items: flex-start;
 }
 
-/* === Order Card Styling === */
+/* 5. Sidebar (rename from .user-sidebar) */
+.sidebar {
+  width: 280px;
+  background: var(--white);
+  border-radius: 12px;
+  padding: 30px 20px;
+  text-align: center;
+  box-shadow: 0 4px 10px var(--shadow);
+  margin-right: 40px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 80px;
+  height: calc(100vh - 80px);
+}
+.user-avatar {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  border: 2px solid var(--maincolor);
+}
+
+.user-name {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--maincolor);
+  margin-bottom: 5px;
+}
+
+.user-email {
+  font-size: 1.3rem;
+  color: var(--light-black);
+  margin-bottom: 25px;
+}
+.sidebar-nav {
+  margin-top: 10px;
+}
+
+.sidebar-nav .nav-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  font-size: 1.4rem;
+  color: var(--black);
+  text-decoration: none;
+  border-radius: 50px;
+  margin-bottom: 10px;
+  transition: background 0.2s ease;
+  gap: 12px;
+}
+
+
+
+.sidebar-nav .nav-item:hover,
+.sidebar-nav .nav-item.active {
+  background-color: var(--maincolor);
+  color: white;
+}
+
+/* 6. Orders grid (only once) */
+#ordersContainer {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+/* 7. Order cards */
 .order-card {
   background: #fff;
   padding: 20px;
@@ -40,20 +105,11 @@ html, body, main, .wishlist-products {
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   font-family: 'Inter', sans-serif;
 }
-
-.order-card h3 {
-  font-size: 1.6rem;
-  color: #333;
-}
-
+.order-card h3 { font-size:1.6rem; color:#333 }
 .order-card p,
-.order-card li {
-  font-size: 1.3rem;
-  color: #555;
-  margin: 4px 0;
-}
+.order-card li { font-size:1.3rem; color:#555; margin:4px 0 }
 
-/* === Dropdown Styling (unchanged) === */
+/* 8. User dropdown */
 .user-dropdown {
   position: relative;
   display: inline-block;
@@ -91,196 +147,4 @@ html, body, main, .wishlist-products {
   color: #333;
   font-size: 15px;
   display: block;
-}
-
-/* === Layout: Sidebar + Content === */
-main {
-  display: flex;
-  align-items: flex-start; /* top‑aligns sidebar & content */
-}
-
-/* Sidebar styling */
-.user-sidebar {
-  flex: 0 0 240px;                   /* fixed width */
-  background: #fff;
-  padding: 2rem;
-  box-shadow: 2px 0 8px rgba(0,0,0,0.05);
-  position: sticky;
-  top: 80px;                         /* adjust if navbar height differs */
-  height: calc(100vh - 80px);
-  box-sizing: border-box;
-  z-index: 20;
-}
-
-/* Orders container styling */
-.wishlist-products {
-  flex: 1;                           /* take remaining space */
-  padding: 2rem;
-  box-sizing: border-box;
-  display: block;                    /* remove old centering */
-  text-align: left;
-}
-
-/* “Received Orders” header styling */
-.orders-header {
-  position: sticky;
-  top: 0;
-  background: #f9f5f0;
-  padding: 1rem 0;
-  margin-bottom: 1rem;
-  z-index: 10;
-}
-.orders-header h2 {
-  font-size: 2rem;
-  margin: 0;
-  color: var(--text-heading, #333);
-  text-align: left;
-}
-
-/* Grid for order cards */
-/* reset any mysterious padding/margin */
-html, body, main, .wishlist-products {
-  margin: 0;
-  padding: 0;
-}
-/* your orders section (formerly .wishlist-products) */
-.wishlist-products {
-  /* remove any top‐padding you had here */
-  padding-top: 0;
-  margin-top: 0;
-}
-.orders-header {
-  position: sticky; 
-  /* push it down beneath your announcement‑bar (30px?) + navbar (60px?) = ~90px total */
-  top: 90px;                      
-  background: #fff;               /* white so it stands out */
-  padding: 1rem 2rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  z-index: 100;                   
-}
-.orders-header h2 {
-  margin: 0;
-  font-size: 2rem;
-  color: #333;
-}
-.orders-section {
-  /* remove its own padding or margin at the top */
-  padding-top: 0;
-  margin-top: 0;
-  background: transparent;  /* let the page’s background show through */
-}
-
-/* === Order Card Styling === */
-.order-card {
-  background: #fff;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  font-family: 'Inter', sans-serif;
-}
-
-.order-card h3 {
-  font-size: 1.6rem;
-  color: #333;
-}
-
-.order-card p,
-.order-card li {
-  font-size: 1.3rem;
-  color: #555;
-  margin: 4px 0;
-}
-
-/* === Dropdown Styling (unchanged) === */
-.user-dropdown {
-  position: relative;
-  display: inline-block;
-}
-.user-dropdown i {
-  font-size: 20px;
-  cursor: pointer;
-}
-.dropdown-menu { 
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background: #fff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  border-radius: 8px;
-  padding: 12px 0;
-  width: 180px;
-  z-index: 1000;
-  display: none;
-}
-.user-dropdown:hover .dropdown-menu,
-.user-dropdown:focus-within .dropdown-menu {
-  display: block;
-}
-.dropdown-menu li {
-  list-style: none;
-  padding: 10px 16px;
-  transition: background 0.2s ease;
-}
-.dropdown-menu li:hover {
-  background-color: #f3f3f3;
-}
-.dropdown-menu li a {
-  text-decoration: none;
-  color: #333;
-  font-size: 15px;
-  display: block;
-}
-
-/* === Layout: Sidebar + Content === */
-main {
-  display: flex;
-  align-items: flex-start; /* top‑aligns sidebar & content */
-}
-
-/* Sidebar styling */
-.user-sidebar {
-  flex: 0 0 240px;                   /* fixed width */
-  background: #fff;
-  padding: 2rem;
-  box-shadow: 2px 0 8px rgba(0,0,0,0.05);
-  position: sticky;
-  top: 80px;                         /* adjust if navbar height differs */
-  height: calc(100vh - 80px);
-  box-sizing: border-box;
-  z-index: 20;
-}
-
-/* Orders container styling */
-#ordersContainer {
-  display: grid;
-  /* exactly 3 equal‑width columns */
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-
-
-/* “Received Orders” header styling */
-.orders-header {
-  position: sticky;
-  top: 0;
-  background: #f9f5f0;
-  padding: 1rem 0;
-  margin-bottom: 1rem;
-  z-index: 10;
-}
-.orders-header h2 {
-  font-size: 2rem;
-  margin: 0;
-  color: var(--text-heading, #333);
-  text-align: left;
-}
-
-/* Grid for order cards */
-#ordersContainer {
-  display: grid;
-  /* exactly 3 equal‑width columns */
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
 }

@@ -151,4 +151,11 @@
   text-decoration: none;
   color: inherit; /* Optional: keeps the link color same as parent */
 }
+.fa-heart.active {
+  color: red;
+}
+
+.fa-shopping-cart.active {
+  color: green;
+}
 

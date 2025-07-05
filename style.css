@@ -807,3 +807,10 @@
   margin-top: 2rem;
 }
 
+.wishlist-icon.active {
+  color: red;
+}
+
+.cart-icon.active {
+  color: green;
+}

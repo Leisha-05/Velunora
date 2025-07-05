@@ -19,7 +19,7 @@
   <header class="navbar">
     <div class="logo">
       <div class="logo-top">
-        <h1 class="logo-text">Velunora <i class="fa-solid fa-heart"></i></h1>
+        <h1 class="logo-text">Velunora </h1>
       </div>
       <p class="tagline">Crafted with Soul, Curated with Love</p>
     </div>
@@ -30,7 +30,7 @@
       <a href="../index.html#spotlight">Creator Spotlight</a>
 
       <div class="user-dropdown" id="userDropdown">
-        <i class="fas fa-user"></i>
+          
         <ul class="dropdown-menu horizontal" id="dropdownMenu">
           <li><a href="../creator_account/account.html">My Account</a></li>
          <li><a href="../creator_account/orders.html">My Orders</a></li>
@@ -45,17 +45,28 @@
   </header>
  <main>
   <!-- ✅ Sidebar -->
-  <aside class="user-sidebar">
+  <aside class="sidebar">
+ 
+
+
     <img src="../images/user-avatar.png" alt="User Avatar" class="user-avatar" />
     <h3 class="user-name" id="creatorName">Creator Name</h3>
     <p class="user-email" id="creatorEmail">email@example.com</p>
 
-    <ul class="user-options">
-      <li onclick="location.href='account.html'"><i class="fas fa-user-cog"></i> My Profile</li>
-      <li class="active"><i class="fas fa-box"></i> My Orders</li>
-      <li onclick="location.href='../wishlist_cart/wishlist.html'"><i class="fas fa-heart"></i> Wishlist</li>
-      <li onclick="location.href='../wishlist_cart/cart.html'"><i class="fas fa-shopping-cart"></i> Cart</li>
-    </ul>
+   <nav class="sidebar-nav">
+       <a href="account.html" class="nav-item">
+       <i class="fas fa-user-cog"></i> My Profile
+       </a>
+     <a href="orders.html" class="nav-item active">
+       <i class="fas fa-box"></i> My Orders
+      </a>
+      <a href="../wishlist_cart/wishlist.html" class="nav-item">
+        <i class="fas fa-heart"></i> Wishlist
+      </a>
+      <a href="../wishlist_cart/cart.html" class="nav-item">
+        <i class="fas fa-shopping-cart"></i> Cart
+      </a>
+    </nav>
   </aside>
 
   <!-- ✅ Orders Section -->

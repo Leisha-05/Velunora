@@ -1,8 +1,15 @@
-import { db } from "../login_signup/firebase.js";
+import { db, auth } from "../login_signup/firebase.js";
 import {
   collection,
   getDocs,
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
 // ✅ URL parameters
 const urlParams = new URLSearchParams(window.location.search);
@@ -17,6 +24,10 @@ const searchIcon = document.querySelector(".search-container i");
 const priceFilter = document.getElementById("priceFilter");
 
 let creatorProducts = [];
+let currentUser = null;
+onAuthStateChanged(auth, (user) => {
+  if (user) currentUser = user;
+});
 
 // ✅ Set creator labels
 if (creatorName) {
@@ -44,13 +55,28 @@ function calculateDiscount(price, discountStr) {
 }
 
 // ✅ Render Products
-function renderProducts(products) {
+async function renderProducts(products) {
   productContainer.innerHTML = "";
 
   if (products.length === 0) {
     productContainer.innerHTML = `<p>No products found for ${creatorName}.</p>`;
     return;
   }
+let wishlistItems = [];
+let cartItems = [];
+
+if (currentUser) {
+  const wishlistRef = doc(db, "userWishlists", currentUser.uid);
+  const cartRef = doc(db, "userCarts", currentUser.uid);
+
+  const [wishlistSnap, cartSnap] = await Promise.all([
+    getDoc(wishlistRef),
+    getDoc(cartRef),
+  ]);
+
+  wishlistItems = wishlistSnap.exists() ? wishlistSnap.data().wishlist || [] : [];
+  cartItems = cartSnap.exists() ? cartSnap.data().cart || [] : [];
+}
 
   products.forEach((product) => {
     const discountedPrice = calculateDiscount(product.price, product.discount);
@@ -81,6 +107,56 @@ function renderProducts(products) {
     `;
 
     productContainer.appendChild(card);
+    const wishlistIcon = card.querySelector(".fa-heart");
+    const cartIcon = card.querySelector(".fa-shopping-cart");
+if (wishlistItems.some(p => p.id === product.id)) {
+  wishlistIcon.classList.add("active");
+}
+if (cartItems.some(p => p.id === product.id)) {
+  cartIcon.classList.add("active");
+}
+
+    // Wishlist click
+    wishlistIcon.addEventListener("click", async (e) => {
+      e.stopPropagation();
+      if (!currentUser) return alert("Please login to use wishlist");
+      const ref = doc(db, "userWishlists", currentUser.uid);
+      const snap = await getDoc(ref);
+      const existing = snap.exists() ? snap.data().wishlist || [] : [];
+      const inList = existing.some(p => p.id === product.id);
+      try {
+        if (!inList) {
+          await setDoc(ref, { wishlist : arrayUnion(product) }, { merge: true });
+          wishlistIcon.classList.add("active");
+        } else {
+          await updateDoc(ref, { wishlist: arrayRemove(product) });
+          wishlistIcon.classList.remove("active");
+        }
+      } catch (err) {
+        console.error("Wishlist error:", err);
+      }
+    });
+
+    // Cart click
+    cartIcon.addEventListener("click", async (e) => {
+      e.stopPropagation();
+      if (!currentUser) return alert("Please login to use cart");
+      const ref = doc(db, "userCarts", currentUser.uid);
+      const snap = await getDoc(ref);
+      const existing = snap.exists() ? snap.data().cart || [] : [];
+      const inList = existing.some(p => p.id === product.id);
+      try {
+        if (!inList) {
+          await setDoc(ref, { cart: arrayUnion(product) }, { merge: true });
+          cartIcon.classList.add("active");
+        } else {
+          await updateDoc(ref, { cart: arrayRemove(product) });
+          cartIcon.classList.remove("active");
+        }
+      } catch (err) {
+        console.error("Cart error:", err);
+      }
+    });
 
     card.querySelectorAll(".product-link").forEach((link) => {
       link.addEventListener("click", (e) => {

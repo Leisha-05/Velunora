@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let baseFolder;
     if (pathname.includes("wishlist_cart")) {
-      baseFolder = "./";
+      baseFolder = "../";
     } else if (
       pathname.includes("creator_account") ||
       pathname.includes("product_pg") ||

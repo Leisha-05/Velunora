@@ -142,15 +142,16 @@ function setupCartButton(product) {
       const customRequest = request ? JSON.parse(request) : { message: "", fileName: null };
 
       const item = {
-        name: product.name,
-        price: calculateDiscount(product.price, product.discount),
-        quantity: 1,
-        creator: product.creator,
-        img: product.img,
-        creator: auth.currentUser.email,
-       creatorId: product.creatorUID || product.creatorId,  // ✅ Add this line
-        customRequest
-      };
+        
+  name: product.name,
+  price: calculateDiscount(product.price, product.discount),
+  quantity: 1,
+  creator: product.creator || auth.currentUser.email, // fallback if not available
+  img: product.img,
+  creatorUID: product.creatorUID || product.creatorId || "", // ✅ unified field
+  customRequest
+};
+     
       await setDoc(ref, { cart: [...existingCart, item] }, { merge: true });
       cartIcon.style.color = "green";
       alert("Added to cart with customization!");

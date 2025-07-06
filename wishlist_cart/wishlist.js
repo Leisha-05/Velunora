@@ -68,6 +68,17 @@ document.addEventListener("DOMContentLoaded", () => {
             signOut(auth).then(() => window.location.href = "../login_signup/login.html");
         });
     }
+     const sidebarLogout = document.getElementById("sidebarLogout");
+  if (sidebarLogout) {
+    sidebarLogout.addEventListener("click", async () => {
+      try {
+        await signOut(auth);
+        window.location.href = "../login_signup/login.html";
+      } catch (err) {
+        console.error("Sidebar logout failed:", err);
+      }
+    });
+  }
 });
 
 async function loadWishlist(uid) {

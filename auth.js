@@ -50,21 +50,19 @@ document.addEventListener("DOMContentLoaded", () => {
       dropdown.classList.add("account-dropdown");
 
       dropdown.innerHTML = `
-        <i class="fas fa-user user-icon"></i>
-        <div class="dropdown-content">
-          ${
-            isCreator
-              ? `
-            <a href="${baseFolder.replace('wishlist_cart/', '')}creator_account/account.html">My Account</a>
-            <a href="${baseFolder.replace('wishlist_cart/', '')}creator_account/orders.html">My Orders</a>
-            `
-              : ""
-          }
-          <a href="${baseFolder}wishlist.html">My Wishlist</a>
-          <a href="${baseFolder}cart.html">My Cart</a>
-          <a href="#" id="logout-btn">Logout</a>
-        </div>
-      `;
+  <i class="fas fa-user user-icon"></i>
+  <div class="dropdown-content">
+    ${ isCreator
+        ? `<a href="/creator_account/account.html">My Account</a>
+           <a href="/creator_account/orders.html">My Orders</a>`
+        : ''
+    }
+    <a href="/wishlist_cart/wishlist.html">My Wishlist</a>
+    <a href="/wishlist_cart/cart.html">My Cart</a>
+    <a href="#" id="logout-btn">Logout</a>
+  </div>
+`;
+
 
       navLinks.appendChild(dropdown);
 

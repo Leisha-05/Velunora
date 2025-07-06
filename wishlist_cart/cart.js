@@ -102,6 +102,20 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+    const sidebarLogout = document.getElementById("sidebarLogout");
+if (sidebarLogout) {
+  sidebarLogout.addEventListener("click", async () => {
+    try {
+      await signOut(auth);
+      // clear any local state if needed:
+      localStorage.clear();
+      // redirect to login page:
+      window.location.href = "../login_signup/login.html";
+    } catch (err) {
+      console.error("Sidebar logout failed:", err);
+    }
+  });
+}
 });
 
 

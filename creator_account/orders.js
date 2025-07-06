@@ -64,7 +64,14 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "../login_signup/login.html";
     });
   }
-
+const sidebarLogout = document.getElementById("sidebarLogout");
+  if (sidebarLogout) {
+    sidebarLogout.addEventListener("click", async () => {
+      await signOut(auth);
+      localStorage.clear();
+      window.location.href = "../login_signup/login.html";
+    });
+  }
   // ✅ Render Orders for This Creator
   async function renderOrders() {
     ordersContainer.innerHTML = "<p>Loading orders...</p>";

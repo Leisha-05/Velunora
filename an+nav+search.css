@@ -1,5 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
+html, body {
+  overflow-x: hidden;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 :root {
   --maincolor: #8b9178;
   --text-heading: #65615d;
@@ -38,7 +46,7 @@ html {
   overflow-x: hidden;
   font-size: 62.5%;
   scroll-behavior: smooth;
-  scroll-padding-top: 40px;
+  scroll-padding-top: 120px;
 }
 
 .btn {
@@ -87,34 +95,71 @@ html {
   padding: 8px 0;
   font-size: 14px;
   font-weight: 500;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+
 }
 
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 50px;
+  padding: 20px 30px;
   background-color: var(--white);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  height: 40px;
+  /* height: 80px; */
   border-bottom: 0.1px solid var(--maincolor);
+
+  position: fixed;
+  top: 30px; /* pushes below announcement bar */
+  width: 100%;
+  z-index: 1000;
+
+}
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* spacing between login & hamburger */
+}
+.hamburger {
+  display: none; /* hidden by default */
+    font-size: 2rem;
+  cursor: pointer;
+}
+.login-signup {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+.login-signup a{
+  text-decoration: none;
+  color: var(--black);
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  border: 1px solid var(--maincolor);
+  border-radius: 400rem;
+  padding: 1.2rem;
+}
+.login-signup a:hover {
+  background-color: var(--maincolor);
+  color: white;
+   font-weight: 500;
 }
 
 .logo {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start; /* makes tagline align left under logo */
+  flex-shrink: 0;
 }
 
 .logo-top {
   display: flex;
   align-items: center;
-  gap: 10px;
-  position: relative;
 }
 
 .logo-text {
@@ -138,10 +183,6 @@ html {
   align-items: center;
   gap: 25px;
 }
-.nav-links a:hover {
-  color: var(--maincolor);
-}
-
 .nav-links a,
 .dropbtn {
   text-decoration: none;
@@ -151,7 +192,29 @@ html {
   border: none;
   cursor: pointer;
   font-size: 15px;
+  position: relative;
+  transition: color 0.3s ease;
 }
+
+.nav-links>a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -4px; /* a bit below text */
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background-color: var(--logo); /* ✅ Use correct variable name */
+  transition: width 0.3s ease;
+}
+.nav-links a:hover {
+  color: var(--text-heading);
+}
+
+.nav-links>a:hover::after {
+  width: 100%;      /* expands underline fully */
+}
+
 .nav-links .dropdown .dropbtn:hover {
   color: var(--maincolor);
 }
@@ -185,6 +248,7 @@ html {
   color: #6b705c;
 }
 .search-bar {
+  margin-top: 120px;
   background-color: #f3f0eb;
   padding: 20px 50px;
   display: flex;
@@ -272,4 +336,219 @@ html {
 }
 .cart-icon.carted {
   color: green; /* or your cart theme color */
+}
+@media (max-width: 1024px) {
+  .nav-links {
+    display: none;
+     flex-direction: column; /* 👈 ADD THIS! */
+     align-items: flex-start;
+    gap: 2rem;
+    position: absolute;
+    top: 60px; /* adjust based on your header height */
+    right: 20px;
+    background: var(--white);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 15px;
+    border-radius: 8px;
+    z-index: 999;
+  }
+  .nav-links a {
+    text-align: left; /* 👈 ensures text is left aligned */
+    width: 100%; /* optional: makes links full width */
+  }
+
+  .nav-links.show {
+    display: flex; /* toggle this with JS */
+    flex-direction: column;
+  }
+
+   .account-dropdown .user-icon{
+    font-size: 15px;
+  }
+  .hamburger{
+    font-size: 15px;
+  }
+  .announcement-bar {
+    font-size: 1rem;
+  }
+  .logo-text{
+    font-size: 2.4rem;
+  }
+  .logo-text i{
+    font-size: .75rem;
+  }
+  .tagline{
+    font-size: .9rem;
+  }
+
+  .hamburger {
+    display: block; /* show the hamburger */
+    cursor: pointer;
+    font-size: 2rem;
+    color: var(--black);
+    margin-left: 15px;
+  }
+
+  .navbar {
+    flex-direction: row;    /* Keep items in a row */
+    flex-wrap: wrap;        /* Allow wrapping if needed */
+    height: auto;
+    padding: 15px;
+  }
+}
+/* =======================
+   USER ICON DROPDOWN STYLES
+   ======================= */
+
+.account-dropdown {
+  position: relative;
+  display: inline-block;
+  margin-left: 10px; /* adjust as needed */
+  cursor: pointer;
+}
+
+.account-dropdown .user-icon {
+  font-size: 25px;               /* match your icon size */
+  color: var(--text-heading);           /* match your nav text color */
+  padding: 12px;                 /* match login button padding */
+  border-radius: 400rem;        
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.account-dropdown:hover .user-icon {
+  background-color: var(--maincolor);
+  color: #fff;                   /* white icon on hover */
+}
+
+.account-dropdown .dropdown-content {
+  position: absolute;
+  right: 0;                      /* align to right under icon */
+  top: 100%;                     /* drop down below icon */
+  background-color: #fff;
+  min-width: 160px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  display: none;
+  z-index: 1000;
+  color: var(--black);
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.account-dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.account-dropdown .dropdown-content a {
+  display: block;
+  padding: 10px 16px;
+  color: var(--black);
+  text-decoration: none;
+}
+
+.account-dropdown .dropdown-content a:hover {
+  background-color: #f3f3f3;
+}
+
+/* Make search bar responsive */
+@media (max-width: 768px) {
+  .search-bar {
+    padding: 15px 20px;  /* Reduce side padding */
+  }
+
+  .search-container {
+    padding: 6px 12px;   /* Smaller padding inside */
+    max-width: 60%;     /* Full width */
+  }
+
+  .search-container input {
+    font-size: 1.2rem;   /* Slightly smaller text */
+  }
+
+  .search-container i {
+    font-size: 1.2rem;   /* Smaller icon */
+  }
+  .navbar {
+    padding: 12px 20px;
+    height: auto; /* let content define height */
+  }
+
+  .nav-links a {
+    font-size: 14px;  /* slightly smaller nav links */
+  }
+  .account-dropdown .user-icon{
+    font-size: 18px;
+  }
+  .hamburger{
+    font-size: 1.8rem;
+  }
+  .announcement-bar {
+    font-size: 1rem;
+  }
+  .logo-text{
+    font-size: 2rem;
+  }
+  .logo-text i{
+    font-size: .75rem;
+  }
+  .tagline{
+    font-size: .75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-bar {
+    padding: 10px 15px;
+  }
+
+  .search-container {
+    flex-direction: row;  /* Keep input and icon side by side */
+    padding: 6px 10px;
+  }
+
+  .search-container input {
+    font-size: 1rem;
+  }
+
+  .search-container i {
+    font-size: 1rem;
+    margin-left: 8px;
+  }
+  .navbar {
+    padding: 12px 20px;
+    height: auto; /* let content define height */
+  }
+
+  .logo-text {
+    font-size: 2.4rem; /* shrink logo text a bit */
+  }
+
+  .tagline {
+    font-size: 0.9rem; /* smaller tagline */
+  }
+
+  .nav-links a {
+    font-size: 14px;  /* slightly smaller nav links */
+  }
+  .account-dropdown .user-icon{
+    font-size: 15px;
+  }
+  .hamburger{
+    font-size: 1.8rem;
+  }
+  .announcement-bar {
+    font-size: 1rem;
+  }
+  .logo-text{
+    font-size: 2rem;
+  }
+  .logo-text i{
+    font-size: .75rem;
+  }
+  .tagline{
+    font-size: .75rem;
+  }
 }

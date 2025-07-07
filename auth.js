@@ -5,67 +5,58 @@ import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/
 const db = getFirestore();
 
 document.addEventListener("DOMContentLoaded", () => {
+  const navActions = document.querySelector(".nav-actions");
   const navLinks = document.querySelector(".nav-links");
-  if (!navLinks) {
-    console.error("❌ .nav-links not found.");
+  const loginSignup = document.querySelector(".login-signup");
+
+  if (!navLinks || !navActions) {
+    console.error("❌ nav-links or nav-actions not found.");
     return;
   }
 
   onAuthStateChanged(auth, async (user) => {
     console.log("✅ Auth state changed:", user);
 
-    const loginLink = navLinks.querySelector('a[href*="login"]');
-    const pathname = window.location.pathname;
-
-    let baseFolder;
-    if (pathname.includes("wishlist_cart")) {
-      baseFolder = "../";
-    } else if (
-      pathname.includes("creator_account") ||
-      pathname.includes("product_pg") ||
-      pathname.includes("category_pg") ||
-      pathname.includes("creator_profile")
-    ) {
-      baseFolder = "../wishlist_cart/";
-    } else {
-      baseFolder = "wishlist_cart/";
-    }
-
     if (user) {
-      if (loginLink) loginLink.remove();
-      if (navLinks.querySelector(".account-dropdown")) return;
+      // ✅ Remove login/signup container if exists
+      if (loginSignup) loginSignup.remove();
 
-      // 🔍 Check user role from Firestore
+      // 🔍 Check user role
       let isCreator = false;
       try {
         const userRef = doc(db, "users", user.uid);
         const userSnap = await getDoc(userRef);
-        const userData = userSnap.exists() ? userSnap.data() : {};
-        isCreator = userData.role === "creator";
+        if (userSnap.exists()) {
+          const userData = userSnap.data();
+          isCreator = userData.role === "creator";
+        }
       } catch (err) {
-        console.error("Error fetching user role:", err);
+        console.error("❌ Error fetching user role:", err);
       }
 
+      // ✅ Remove old dropdown if exists (avoid duplicates)
+      const existingDropdown = navActions.querySelector(".account-dropdown");
+      if (existingDropdown) existingDropdown.remove();
+
+      // ✅ Create user dropdown
       const dropdown = document.createElement("div");
       dropdown.classList.add("account-dropdown");
-
       dropdown.innerHTML = `
-  <i class="fas fa-user user-icon"></i>
-  <div class="dropdown-content">
-    ${ isCreator
-        ? `<a href="/creator_account/account.html">My Account</a>
-           <a href="/creator_account/orders.html">My Orders</a>`
-        : ''
-    }
-    <a href="/wishlist_cart/wishlist.html">My Wishlist</a>
-    <a href="/wishlist_cart/cart.html">My Cart</a>
-    <a href="#" id="logout-btn">Logout</a>
-  </div>
-`;
+        <i class="fas fa-user user-icon"></i>
+        <div class="dropdown-content">
+          ${isCreator ? `
+            <a href="/creator_account/account.html">My Account</a>
+            <a href="/creator_account/orders.html">My Orders</a>` : ''}
+          <a href="/wishlist_cart/wishlist.html">My Wishlist</a>
+          <a href="/wishlist_cart/cart.html">My Cart</a>
+          <a href="#" id="logout-btn">Logout</a>
+        </div>
+      `;
 
+      // ✅ Insert the dropdown exactly where login/signup was
+      navActions.insertBefore(dropdown, navActions.firstChild);
 
-      navLinks.appendChild(dropdown);
-
+      // ✅ Logout logic
       dropdown.querySelector("#logout-btn").addEventListener("click", async (e) => {
         e.preventDefault();
         try {
@@ -73,16 +64,24 @@ document.addEventListener("DOMContentLoaded", () => {
           await signOut(auth);
           window.location.reload();
         } catch (error) {
-          console.error("Logout error:", error);
+          console.error("❌ Logout error:", error);
         }
       });
+
     } else {
-      if (!loginLink) {
-        const loginAnchor = document.createElement("a");
-        loginAnchor.href = "login_signup/login.html";
-        loginAnchor.textContent = "Login / Sign Up";
-        navLinks.appendChild(loginAnchor);
+      // ✅ If logged out, ensure Login/Signup is present
+      if (!loginSignup) {
+        const newLoginSignup = document.createElement("div");
+        newLoginSignup.classList.add("login-signup");
+        newLoginSignup.innerHTML = `
+          <a href="login_signup/login.html">Login / Sign Up</a>
+        `;
+        navActions.insertBefore(newLoginSignup, navActions.firstChild);
       }
+
+      // ✅ Remove user dropdown if it exists
+      const dropdown = navActions.querySelector(".account-dropdown");
+      if (dropdown) dropdown.remove();
     }
   });
 });

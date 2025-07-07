@@ -162,6 +162,7 @@ creators.forEach((creator, index) => {
     <p class="creator-brand-name">${creator.brand}</p>
   </div>
   <div class="spotlight-products-wrapper">
+   <hr class="spotlight-divider" />
     <div class="spotlight-products">
       ${creator.products
         .map(
@@ -188,14 +189,15 @@ creators.forEach((creator, index) => {
 `
         )
         .join("")}
-
-    <div class="view-creator-link">
-  <a href="../creator_profile/creator_profile.html?creator=${encodeURIComponent(
-    creator.name
-  )}" class="btn">
-    Explore Full Collection
-  </a>
-</div>
+    </div>
+    <div class="spotlight-cta">
+      <a href="../creator_profile/creator_profile.html?creator=${encodeURIComponent(
+        creator.name
+      )}" class="btn">
+        Explore Full Collection
+      </a>
+    </div>
+  </div>
 `;
 
   spotlightWrapper.appendChild(slide);

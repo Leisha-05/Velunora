@@ -688,6 +688,11 @@
     text-align: center;       /* center button */
     width: 100%;              /* optional for full width */
   }
+
+  .dot{
+    width: 10px;
+    height: 10px;
+  }
 }
 
 @media (max-width: 1024px) and (min-width: 1000px) {

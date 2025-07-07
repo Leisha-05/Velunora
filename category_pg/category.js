@@ -107,8 +107,8 @@ function displayProducts(products) {
       </div>
       <h3>${product.name || "Product"}</h3>
       <p class="price">
-        <span class="original">₹${product.price || 0}</span>
         <span class="discounted">₹${discountedPrice}</span>
+        <span class="original">₹${product.price || 0}</span>
       </p>
     `;
 

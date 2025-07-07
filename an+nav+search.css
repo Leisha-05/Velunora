@@ -361,6 +361,10 @@ html {
     display: flex; /* toggle this with JS */
     flex-direction: column;
   }
+  .login-signup a{
+    font-size: 10px;
+    padding: 10px;
+  }
 
    .account-dropdown .user-icon{
     font-size: 15px;

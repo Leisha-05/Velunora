@@ -104,6 +104,7 @@
 
 .price .original {
   text-decoration: line-through;
+  font-size: 1rem;
   color: gray;
   margin-right: 0.5rem;
 }
@@ -217,4 +218,81 @@
   color: var(--white);
   padding: 20px;
   font-size: 1.3rem;
+}
+/* ================================
+   RESPONSIVE: CATEGORY PAGE
+   ================================ */
+
+/* Medium screens: tablets (<= 992px) */
+@media (max-width: 992px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .category-header h2 {
+    font-size: 3rem;
+    padding: 15px 30px;
+  }
+
+  .image-wrapper {
+    height: 30rem;
+  }
+}
+
+/* Small screens: mobile (<= 768px) */
+@media (max-width: 768px) {
+  .search-bar {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .search-bar .search-container {
+    width: 100%;
+  }
+
+  #priceFilter {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .category-header img {
+    height: 180px;
+  }
+
+  .category-header h2 {
+    font-size: 2rem;
+    padding: 10px 20px;
+  }
+
+  .image-wrapper {
+    height: 25rem;
+  }
+
+  .product-card img {
+    height: auto;
+  }
+}
+
+/* Extra small screens: phones (<= 480px) */
+@media (max-width: 480px) {
+  .category-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .product-info h3 {
+    font-size: 1.6rem;
+  }
+
+  .product-info p {
+    font-size: 1.2rem;
+  }
+
+  .icon-bar i {
+    font-size: 1.4rem;
+    padding: 0.5rem;
+  }
 }

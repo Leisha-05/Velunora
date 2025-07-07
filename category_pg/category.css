@@ -219,44 +219,67 @@
   padding: 20px;
   font-size: 1.3rem;
 }
-/* ================================
-   RESPONSIVE: CATEGORY PAGE
-   ================================ */
-
-/* Medium screens: tablets (<= 992px) */
+/* Tablets and small desktops */
+/* For tablets and small desktops: 2 per row */
 @media (max-width: 992px) {
   .product-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .category-header h2 {
-    font-size: 3rem;
-    padding: 15px 30px;
-  }
-
   .image-wrapper {
     height: 30rem;
   }
-}
 
-/* Small screens: mobile (<= 768px) */
-@media (max-width: 768px) {
-  .search-bar {
-    flex-direction: column;
-    gap: 10px;
+  .product-card .product-info {
+    padding: 15px;
   }
 
-  .search-bar .search-container {
-    width: 100%;
+  .product-card h3 {
+    font-size: 1.6rem;
   }
 
-  #priceFilter {
-    width: 100%;
+  .price {
+    font-size: 1.2rem;
+  }
+  .icon-bar i{
+    font-size: 1.5rem;
+  }
+  #priceFilter{
     font-size: 1rem;
   }
+  #priceFilter option{
+    font-size: 1rem;
+  }
+  .ribbon{
+    font-size: 1rem;
+  }
+}
 
+/* For mobile: 2 per row with smaller images */
+@media (max-width: 768px) {
   .product-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px; /* Smaller gap for mobile */
+  }
+
+  .product-section {
+    padding: 30px 20px;
+  }
+
+  .image-wrapper {
+    height: 20rem; /* Smaller height for mobile cards */
+  }
+
+  .product-card h3 {
+    font-size: 1.4rem;
+  }
+
+  .product-card .product-info {
+    padding: 10px;
+  }
+
+  .price {
+    font-size: 1rem;
   }
 
   .category-header img {
@@ -267,32 +290,16 @@
     font-size: 2rem;
     padding: 10px 20px;
   }
-
-  .image-wrapper {
-    height: 25rem;
+  .icon-bar i{
+    font-size: 1rem;
   }
-
-  .product-card img {
-    height: auto;
+   #priceFilter{
+    font-size: 1rem;
   }
-}
-
-/* Extra small screens: phones (<= 480px) */
-@media (max-width: 480px) {
-  .category-header h2 {
-    font-size: 1.8rem;
+  #priceFilter option{
+    font-size: 1rem;
   }
-
-  .product-info h3 {
-    font-size: 1.6rem;
-  }
-
-  .product-info p {
-    font-size: 1.2rem;
-  }
-
-  .icon-bar i {
-    font-size: 1.4rem;
-    padding: 0.5rem;
+  .ribbon{
+    font-size: .85rem;
   }
 }

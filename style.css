@@ -30,7 +30,7 @@
   max-width: 100rem;
   text-align: center;
   position: relative;
-  transform: translateY(-10rem); /* Move upwards but keeps it responsive */
+  transform: translateY(clamp(-4rem, -5vh, -6rem)); /* Move upwards but keeps it responsive */
   color: var(--white);
 }
 
@@ -593,7 +593,7 @@
     box-sizing: content-box;
     text-align: center;
     position: relative;
-    transform: translateY(-10rem); /* Move upwards but keeps it responsive */
+    /* transform: translateY(-10rem);  */
   }
 
   .hero-description {
@@ -893,7 +893,7 @@
     box-sizing: content-box;
     text-align: center;
     position: relative;
-    transform: translateY(-8rem); /* Move upwards but keeps it responsive */
+    /* transform: translateY(-8rem); */
   }
 
   .hero-description {
@@ -1048,7 +1048,7 @@
     box-sizing: content-box;
     text-align: center;
     position: relative;
-    transform: translateY(-9rem); /* Move upwards but keeps it responsive */
+    /* transform: translateY(-9rem);  */
   }
 
   .hero-description {

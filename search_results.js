@@ -11,8 +11,9 @@ import {
   getDocs
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-const resultContainer = document.getElementById("searchResultsContainer");
-const resultTitle = document.getElementById("resultTitle");
+// ✅ Matching variable names to category_pg
+const productGrid = document.getElementById("searchResultsContainer");
+const sectionTitle = document.getElementById("resultTitle");
 const searchInput = document.querySelector(".search-container input");
 const searchIcon = document.querySelector(".search-container i");
 
@@ -34,12 +35,12 @@ function removeDuplicateProducts(products) {
 
 async function fetchAndDisplayResults(keyword) {
   if (!keyword) {
-    resultTitle.textContent = "No search keyword provided.";
+    sectionTitle.textContent = "No search keyword provided.";
     return;
   }
 
-  resultTitle.textContent = `Search results for "${keyword}"`;
-  resultContainer.innerHTML = "";
+  sectionTitle.textContent = `Search results for "${keyword}"`;
+  productGrid.innerHTML = "";
 
   try {
     const querySnapshot = await getDocs(collection(db, "products"));
@@ -60,11 +61,10 @@ async function fetchAndDisplayResults(keyword) {
     const uniqueProducts = removeDuplicateProducts(matchedProducts);
 
     if (uniqueProducts.length === 0) {
-      resultContainer.innerHTML = `<p>No products found for "${keyword}".</p>`;
+      productGrid.innerHTML = `<p>No products found for "${keyword}".</p>`;
       return;
     }
 
-    // Display all product cards
     uniqueProducts.forEach((product) => {
       const originalPrice = parseFloat(product.price);
       const discount = parseFloat(product.discount) || 0;
@@ -90,11 +90,9 @@ async function fetchAndDisplayResults(keyword) {
           </div>
         </div>
       `;
-
-      resultContainer.appendChild(card);
+      productGrid.appendChild(card);
     });
 
-    // ✅ Run ONCE to attach Firebase wishlist/cart logic
     if (!window.userInitialized) {
       window.userInitialized = true;
 
@@ -173,7 +171,6 @@ async function fetchAndDisplayResults(keyword) {
       });
     }
 
-    // Product click
     uniqueProducts.forEach((product) => {
       const card = document.querySelector(`.product-card img[alt="${product.name}"]`)?.closest(".product-card");
       if (card) {
@@ -185,14 +182,14 @@ async function fetchAndDisplayResults(keyword) {
 
   } catch (error) {
     console.error("Error fetching products:", error);
-    resultContainer.innerHTML = `<p>Something went wrong. Please try again later.</p>`;
+    productGrid.innerHTML = `<p>Something went wrong. Please try again later.</p>`;
   }
 }
 
-// Initial fetch on page load
+// Initial fetch
 fetchAndDisplayResults(getKeywordFromURL());
 
-// Handle search input
+// Handle search
 if (searchInput && searchIcon) {
   const handleSearch = () => {
     const newKeyword = searchInput.value.trim();
@@ -200,7 +197,6 @@ if (searchInput && searchIcon) {
       window.location.href = `../search_results.html?keyword=${encodeURIComponent(newKeyword)}`;
     }
   };
-
   searchIcon.addEventListener("click", handleSearch);
   searchInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {

@@ -4,19 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Search Results | Velunora</title>
-  <link rel="stylesheet" href="style.css" />
+
+  <!-- Core Styles -->
+  <!-- <link rel="stylesheet" href="style.css" /> -->
   <link rel="stylesheet" href="an+nav+search.css" />
-  <link rel="stylesheet" href="category_pg/category.css">
+  <link rel="stylesheet" href="category_pg/category.css" /> <!-- ✅ REUSE THIS -->
+
+  <!-- Font Awesome -->
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
   />
 </head>
 <body>
-  <!-- Announcement -->
+  <!-- ✅ Announcement -->
   <div class="announcement-bar">Free shipping on orders ₹500+</div>
 
-  <!-- Navbar -->
+  <!-- ✅ Navbar -->
   <header class="navbar">
     <div class="logo">
       <div class="logo-top">
@@ -24,37 +28,35 @@
       </div>
       <p class="tagline">Crafted with Soul, Curated with Love</p>
     </div>
+
     <nav class="nav-links">
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <div class="dropdown">
-          <a class="dropbtn" href="#category">Categories</a>
-          <div class="dropdown-content">
-            <a href="category_pg/category.html?category=jewelry">Jewelry</a>
-            <a href="category_pg/category.html?category=decor">Decor</a>
-            <a href="category_pg/category.html?category=art">Art & Prints</a>
-            <a href="category_pg/category.html?category=stationery"
-              >Stationery</a
-            >
-            <a href="category_pg/category.html?category=embroidery"
-              >Embroidery</a
-            >
-            <a href="category_pg/category.html?category=gifting">Gifting</a>
-          </div>
-        </div>
-        <a href="#spotlight">Creator Spotlight</a>
-      </nav>
-      <div class="nav-actions">
-        <div class="login-signup">
-          <a href="login_signup/login.html">Login / Sign Up</a>
-        </div>
-        <div class="hamburger">
-          <i class="fas fa-bars"></i>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <div class="dropdown">
+        <a class="dropbtn" href="#category">Categories</a>
+        <div class="dropdown-content">
+          <a href="category_pg/category.html?category=jewelry">Jewelry</a>
+          <a href="category_pg/category.html?category=decor">Decor</a>
+          <a href="category_pg/category.html?category=art">Art & Prints</a>
+          <a href="category_pg/category.html?category=stationery">Stationery</a>
+          <a href="category_pg/category.html?category=embroidery">Embroidery</a>
+          <a href="category_pg/category.html?category=gifting">Gifting</a>
         </div>
       </div>
+      <a href="#spotlight">Creator Spotlight</a>
+    </nav>
+
+    <div class="nav-actions">
+      <div class="login-signup">
+        <a href="login_signup/login.html">Login / Sign Up</a>
+      </div>
+      <div class="hamburger">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
   </header>
 
-  <!-- Search Bar -->
+  <!-- ✅ Search Bar -->
   <section class="search-bar">
     <div class="search-container">
       <input
@@ -65,26 +67,27 @@
     </div>
   </section>
 
-  <!-- Search Results Heading -->
-  <section class="search-results-header">
+  <!-- ✅ Search Results Heading -->
+  <section class="section-header">
     <h2 id="resultTitle" class="section-title">Search Results</h2>
   </section>
 
-  <!-- Product Grid -->
+  <!-- ✅ Product Grid (uses same class as category page) -->
   <section class="product-section">
-    <div id="searchResultsContainer" class="product-grid"></div>
+    <div id="searchResultsContainer" class="product-grid">
+      <!-- Products will be dynamically injected here -->
+    </div>
   </section>
 
-  <!-- Footer -->
- <footer class="footer">
-      <p>&copy; 2025 Velunora. All rights reserved.</p>
-    </footer>
+  <!-- ✅ Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 Velunora. All rights reserved.</p>
+  </footer>
 
-   <script type="module" src="login_signup/firebase.js"></script>
-   <script type="module" src="hamburger.js"></script>
-   <script type="module" src="search_results.js" defer></script>
-   <script type="module" src="auth.js" defer></script>
-
-
+  <!-- ✅ Scripts -->
+  <script type="module" src="login_signup/firebase.js"></script>
+  <script type="module" src="hamburger.js"></script>
+  <script type="module" src="search_results.js" defer></script>
+  <script type="module" src="auth.js" defer></script>
 </body>
 </html>

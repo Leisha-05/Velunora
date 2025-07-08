@@ -215,6 +215,9 @@
   transform: translateY(0);
 }
 
+ h2 {
+  margin-left: 5rem;
+}
 
 .footer {
   text-align: center;
@@ -260,6 +263,11 @@
   .ribbon{
     font-size: 1rem;
   }
+  h2 {
+  margin-left: 5rem;
+  font-size: 1.25rem;
+}
+
 }
 
 /* For mobile: 2 per row with smaller images */
@@ -311,4 +319,9 @@
   .ribbon{
     font-size: .85rem;
   }
+   h2 {
+  margin-left: 3rem;
+  font-size: 1rem;
+}
+
 }

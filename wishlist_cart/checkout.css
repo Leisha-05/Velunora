@@ -35,7 +35,7 @@
 
 #shipping-form input,
 #shipping-form textarea {
-  width: 100%; /* or 95% if you want some side space */
+  
   padding: 12px; /* Only internal space, not width! */
   font-size: 1.3rem;
   border-radius: 8px;
@@ -45,6 +45,7 @@
   font-family: 'Inter', sans-serif;
   box-sizing: border-box;
   text-align: left;
+  width: 100%; 
 }
 
 
@@ -102,6 +103,13 @@
   cursor: pointer;
   transform: translateY(-2.5rem);
 }
+h1{
+  font-size: large;
+  font-family: 'playfair display',serif;
+}
+.checkout-summary-box h1 {
+  text-align: center;
+}
 
 .radio{
     transform: translateX(-30.5rem);
@@ -116,28 +124,114 @@
 #wish{
   margin-top: 120px;
 }
-@media (max-width: 768px) {
-  /* 1) Show the sidebar again */
-  main#wish.wishlist-container .user-sidebar {
-    display: block !important;  /* override wishlist.css */
-  }
-
-  /* 2) Stack everything vertically */
+@media (max-width: 1022px) {
+  /* Stack columns */
   main#wish.wishlist-container {
-    display: flex;
     flex-direction: column;
+     display: flex;
   }
-
-  /* 3) Move the Order Summary above the form */
-  main#wish.wishlist-container .user-sidebar {
-    order: -1;        /* appear first */
+  .user-sidebar {
+    order: -1;
     width: 100%;
     margin-bottom: 2rem;
+    display: block !important; 
   }
-
-  main#wish.wishlist-container .checkout-form-section {
-    order: 2;         /* form comes second */
+  .checkout-form-section {
+    order: 2;
     width: 100%;
   }
+
+  /* Swap buttons */
+  .checkout-summary-box .order-btn-wrapper {
+    display: none;
+  }
+  .order-btn-mobile {
+    display: block;
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+  .order-btn-mobile .order-all-btn {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+  }
+
+  /* Full‑width cards */
+  .checkout-summary-box,
+  .checkout-form-card {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 auto 1.5rem;
+  }
+}
+@media (max-width: 1022px) {
+  /* Stack layout vertically */
+  main#wish.wishlist-container {
+    flex-direction: column;
+     display: flex;
+  }
+
+  /* Sidebar (Order Summary) at top, smaller width, centered */
+  .user-sidebar {
+  order: -1;
+  width: 90%;           /* ✅ Make it narrower */
+  max-width: 500px;     /* ✅ Optional, limits very large phones */
+  margin: 0 auto 2rem;  /* ✅ Center it */
+  text-align: center;  
+  display: block !important;  /* ✅ Center inner content */
 }
 
+
+  .checkout-summary-box {
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .checkout-summary-box h3,
+  .checkout-summary-box p {
+    text-align: center;
+  }
+
+  /* Form full width below */
+  .checkout-form-section {
+    order: 2;
+    width: 100%;
+    padding: 0 1rem;
+  }
+
+  .checkout-form-card {
+    width: 100%;
+    max-width: none;
+  }
+
+  /* Hide sidebar button, show mobile one */
+  .checkout-summary-box .order-btn-wrapper {
+    display: none;
+  }
+
+  .order-btn-mobile {
+    display: block;
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+
+  .order-btn-mobile .order-all-btn {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+  }
+}
+.checkout-summary-box h3,
+.checkout-summary-box p {
+  text-align: center;
+}
+.checkout-summary-box h3 {
+  font-size: 1.4rem;
+}
+/* When screen is wide enough (desktop), hide mobile form button */
+@media (min-width: 1023px) {
+  .order-btn-mobile {
+    display: none !important;
+  }
+}

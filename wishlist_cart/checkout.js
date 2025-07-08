@@ -24,12 +24,13 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db   = getFirestore(app);
+const db = getFirestore(app);
 
 // ─── 2) UI Elements ─────────────────────────────────────────────────
 const subtotalElem    = document.getElementById("subtotal");
 const totalElem       = document.getElementById("total");
-const placeOrderBtn   = document.getElementById("place-order-btn");
+const placeOrderBtn   = document.getElementById("place-order-btn"); // Desktop sidebar button
+const shippingForm    = document.getElementById("shipping-form");   // Form element
 const nameInput       = document.getElementById("name");
 const phoneInput      = document.getElementById("phone");
 const addressInput    = document.getElementById("address");
@@ -44,16 +45,34 @@ let cartItems     = [];
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     currentUserId = user.uid;
+
+    // Fetch user profile from Firestore
+    const userRef = doc(db, "users", currentUserId);
+    const userSnap = await getDoc(userRef);
+
+    if (userSnap.exists()) {
+      const userData = userSnap.data();
+      document.getElementById("userName").textContent = userData.name || "User";
+      document.getElementById("userEmail").textContent = user.email || "Anonymous";
+    } else {
+      document.getElementById("userName").textContent = "User";
+      document.getElementById("userEmail").textContent = user.email || "Anonymous";
+    }
   } else {
     const anon = await signInAnonymously(auth);
     currentUserId = anon.user.uid;
+
+    document.getElementById("userName").textContent = "Guest User";
+    document.getElementById("userEmail").textContent = "Not logged in";
   }
 
-  // Fetch cart from Firestore
+  // Fetch cart after user is set
   const cartSnap = await getDoc(doc(db, "userCarts", currentUserId));
   cartItems = cartSnap.exists() ? cartSnap.data().cart || [] : [];
   renderTotals();
 });
+
+
 
 // ─── 4) Render Subtotal & Total ─────────────────────────────────────
 function renderTotals() {
@@ -68,9 +87,8 @@ function renderTotals() {
   totalElem.textContent    = (subtotal + deliveryCharge).toFixed(2);
 }
 
-// ─── 5) Place Order Handler ─────────────────────────────────────────
-placeOrderBtn.addEventListener("click", async () => {
-  // Validate form fields
+// ─── 5) Place Order Logic (Reusable Function) ───────────────────────
+async function handlePlaceOrder() {
   const name    = nameInput.value.trim();
   const phone   = phoneInput.value.trim();
   const address = addressInput.value.trim();
@@ -86,7 +104,6 @@ placeOrderBtn.addEventListener("click", async () => {
     return alert("Your cart is empty.");
   }
 
-  // Derive unique creatorUIDs
   const creatorUIDs = Array.from(new Set(
     cartItems.map(it => it.creatorUID).filter(Boolean)
   ));
@@ -94,12 +111,10 @@ placeOrderBtn.addEventListener("click", async () => {
     return alert("No valid items with creatorUID in your cart to place an order.");
   }
 
-  // Calculate totals again
   const deliveryCharge = 50;
   const subtotal = cartItems.reduce((sum, it) => sum + (it.price * it.quantity), 0);
   const total    = subtotal + deliveryCharge;
 
-  // Build order object
   const order = {
     userId:      currentUserId,
     creatorUIDs,
@@ -116,9 +131,7 @@ placeOrderBtn.addEventListener("click", async () => {
   };
 
   try {
-    // Save order
     await addDoc(collection(db, "orders"), order);
-    // Clear Firestore cart
     await setDoc(doc(db, "userCarts", currentUserId), { cart: [] }, { merge: true });
     alert("Order placed successfully!");
     window.location.href = "../index.html";
@@ -126,4 +139,17 @@ placeOrderBtn.addEventListener("click", async () => {
     console.error("Error placing order:", err);
     alert("Failed to place order. Please try again.");
   }
+}
+
+// ─── 6) Button Click & Form Submit Triggers ─────────────────────────
+// Desktop sidebar button
+placeOrderBtn?.addEventListener("click", (e) => {
+  e.preventDefault();
+  handlePlaceOrder();
+});
+
+// Mobile form submit button
+shippingForm?.addEventListener("submit", (e) => {
+  e.preventDefault();
+  handlePlaceOrder();
 });

@@ -310,9 +310,6 @@
   .wishlist-card h3 {
     font-size: 1.2rem;
   }
-  .wishlist-header h1{
-font-size: 2.5rem;
-  }
   .wishlist-card .price .original,
   .wishlist-card .price .discounted {
     font-size: 1rem;
@@ -339,9 +336,6 @@ font-size: 2.5rem;
 
   .wishlist-card h3 {
     font-size: 1.8rem;
-  }
-  .wishlist-header h1{
-font-size: 2.75rem;
   }
 }
 
@@ -511,5 +505,26 @@ font-size: 1.8rem;
   }
   .wishlist-header{
 font-size: 1.5rem;
+  }
+}
+.wishlist-header h1 {
+  font-size: 3rem;  /* desktop default */
+}
+
+@media (max-width: 992px) {
+  .wishlist-header h1 {
+    font-size: 2.75rem;  /* small laptops & tablets */
+  }
+}
+
+@media (max-width: 768px) {
+  .wishlist-header h1 {
+    font-size: 2.2rem;  /* tablets & larger phones */
+  }
+}
+
+@media (max-width: 480px) {
+  .wishlist-header h1 {
+    font-size: 1.8rem;  /* phones */
   }
 }

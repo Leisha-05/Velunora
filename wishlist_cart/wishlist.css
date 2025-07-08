@@ -251,6 +251,9 @@
     color: red;
 }
 
+
+
+
 /* ─────────────────────────────────
    TABLET & MOBILE (≤768px)
    ───────────────────────────────── */
@@ -360,7 +363,7 @@
    ───────────────────────────────── */
 @media (max-width: 480px) {
   .wishlist-products {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 14px;
     padding: 8px;
   }
@@ -422,3 +425,59 @@
 }
 
 
+/* by default (desktop) show sidebar */
+.user-sidebar {
+  display: block;
+}
+
+/* when width ≤1024px (hamburger)—hide sidebar */
+@media (max-width: 1024px) {
+  .user-sidebar {
+    display: none !important;
+  }
+}
+
+/* when width >1024px—show again */
+@media (min-width: 1025px) {
+  .user-sidebar {
+    display: block !important;
+  }
+}
+/* hide on desktop (sidebar showing) */
+.wishlist-header {
+  display: none;
+}
+
+/* when sidebar is hidden (≤1024px) show it centered */
+@media (max-width: 1024px) {
+  .wishlist-header {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--maincolor);
+    margin: 20px 0;
+  }
+}
+/* ─────────────────────────────────
+   ICONS ALWAYS VISIBLE WHEN SIDEBAR HIDDEN
+   ───────────────────────────────── */
+@media (max-width: 1024px) {
+  /* Lift the icon bar out of “hidden until hover” */
+  .wishlist-card .icon-bar {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+
+  /* Make sure the icons themselves respond to tap right away */
+  .wishlist-card .icon-bar i {
+    pointer-events: auto;
+  }
+
+  /* Optionally move the icon bar into a nicer touch‑friendly spot */
+  .wishlist-card .icon-bar {
+    bottom: 1rem;  /* adjust up/down to taste */
+    right: 1rem;   /* adjust left/right to taste */
+  }
+}

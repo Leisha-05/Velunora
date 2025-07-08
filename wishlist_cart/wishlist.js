@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const logoutBtn = document.getElementById("logoutBtn");
     const cartNav = document.getElementById("cartNav");
 
+    
     if (cartNav) {
         cartNav.addEventListener("click", () => {
             window.location.href = "cart.html";

@@ -355,8 +355,7 @@ body {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  margin-right: 15rem;
-  margin-bottom: 1rem;
+  margin: 0 auto 1rem auto;
 }
 
 .logo-top {
@@ -368,14 +367,18 @@ body {
 
 .logo-text {
   font-family: "Palatino Linotype", serif;
-  font-size: 1.75rem;
+  font-size: 1.2rem;
   font-weight: bold;
   color: #6b705c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .logo-text i {
-  font-size: 0.875rem;
-  transform: translateY(-.2rem);
+  font-size: 0.7em;
+  margin-left: 5px;
+  transform: translateY(-0.01em);
 }
 
 .tagline {
@@ -481,11 +484,21 @@ body {
 }
 
 @media (max-width: 768px) {
+  html, body {
+    height: 100%;
+  }
+
+  body {
+    background: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
   .login-container {
     flex-direction: column;
     height: auto;
-    margin: 20px;
-    border-radius: 12px;
+    margin: 0 !important;
+    border-radius: 0 !important;
   }
 
   .login-box {
@@ -496,8 +509,10 @@ body {
     height: 220px;
     width: 100%;
     flex: none;
-    border-radius: 12px 12px 0 0;
+    border-radius: 0 0 70px 70px;
     order: -1;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   .image-side img {
@@ -505,8 +520,9 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 0 !important;
   }
-
+ 
   .form-side {
     padding: 25px;
   }
@@ -526,12 +542,21 @@ body {
   }
 
   .logo {
-    margin-right: 0;
+    align-items: center;
+    text-align: center;
   }
 
   .form-side a {
     margin-top: 5px;
   }
+
+  .logo-text {
+  font-size: 1rem;
+}
+
+.logo-text i {
+  font-size: 0.6em;
+}
 }
 
 @media (max-width: 480px) {
@@ -542,6 +567,14 @@ body {
   .login-btn {
     font-size: 1rem;
   }
+
+  .logo-text {
+  font-size: 0.95rem;
+}
+
+.logo-text i {
+  font-size: 0.6em;
+}
 
   .input-group label {
     font-size: 0.85rem;

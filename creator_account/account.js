@@ -1,4 +1,4 @@
-import { db, auth } from '../login_signup/firebase.js';
+import { db, auth } from "../login_signup/firebase.js";
 import {
   collection,
   addDoc,
@@ -7,7 +7,7 @@ import {
   doc,
   getDoc,
   query,
-  where
+  where,
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
@@ -23,38 +23,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
   onAuthStateChanged(auth, async (user) => {
     if (user) {
-  currentUID = user.uid;
-  currentDisplayName = user.displayName || "Unknown Creator";
+      currentUID = user.uid;
+      currentDisplayName = user.displayName || "Unknown Creator";
 
-  // Set email from auth
-  document.getElementById("creatorEmail").textContent = user.email;
+      // Set email from auth
+      document.getElementById("creatorEmail").textContent = user.email;
 
-  try {
-    const userDoc = await getDoc(doc(db, "users", currentUID));
-    if (userDoc.exists()) {
-      const data = userDoc.data();
-      currentDisplayName = data.name || currentDisplayName;
+      try {
+        const userDoc = await getDoc(doc(db, "users", currentUID));
+        if (userDoc.exists()) {
+          const data = userDoc.data();
+          currentDisplayName = data.name || currentDisplayName;
+        } else {
+          console.warn("No Firestore document found.");
+        }
+      } catch (err) {
+        console.error("Error fetching creator name:", err);
+      }
+
+      // Update UI with name
+      document.getElementById("creatorName").textContent = currentDisplayName;
+
+      // Load products
+      await loadCreatorProducts();
     } else {
-      console.warn("No Firestore document found.");
+      alert("Please log in to access your account.");
+      window.location.href = "../login_signup/login.html";
     }
-  } catch (err) {
-    console.error("Error fetching creator name:", err);
-  }
-
-  // Update UI with name
-  document.getElementById("creatorName").textContent = currentDisplayName;
-
-  // Load products
-  await loadCreatorProducts();
-} else {
-  alert("Please log in to access your account.");
-  window.location.href = '../login_signup/login.html';
-}
-});
+  });
 
   async function loadCreatorProducts() {
     container.innerHTML = "<p>Loading...</p>";
-    const q = query(collection(db, "products"), where("creatorUID", "==", currentUID));
+    const q = query(
+      collection(db, "products"),
+      where("creatorUID", "==", currentUID)
+    );
     const querySnapshot = await getDocs(q);
 
     creatorProducts = [];
@@ -83,25 +86,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     products.forEach((product) => {
-      const discountPercent = parseInt(product.discount?.replace("%", "") || "0");
-      const discountedPrice = Math.round(product.price - (product.price * discountPercent / 100));
+      const discountPercent = parseInt(
+        product.discount?.replace("%", "") || "0"
+      );
+      const discountedPrice = Math.round(
+        product.price - (product.price * discountPercent) / 100
+      );
 
       const card = document.createElement("div");
       card.className = "wishlist-card clickable";
       card.setAttribute("data-product-id", product.id);
 
       card.innerHTML = `
-        <div class="image-wrapper">
-          <img src="${product.img}" alt="${product.name}" />
-        </div>
-        <h3>${product.name}</h3>
-        <div class="price">
-          <span class="discounted">₹${discountedPrice}</span>
-          <span class="original">₹${product.price}</span>
-          <span class="discount-tag">(${product.discount} OFF)</span>
-        </div>
-      `;
-
+  <div class="image-wrapper">
+    <img src="${product.img}" alt="${product.name}" />
+    <div class="discount-ribbon">${product.discount} OFF</div>
+  </div>
+  <h3>${product.name}</h3>
+  <div class="price">
+    <span class="discounted">₹${discountedPrice}</span>
+    <span class="original">₹${product.price}</span>
+  </div>
+`;
       card.addEventListener("click", () => {
         window.location.href = `../product_pg/product.html?id=${product.id}`;
       });
@@ -118,9 +124,10 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const filtered = creatorProducts.filter(p =>
-      p.name.toLowerCase().includes(keyword) ||
-      p.category.toLowerCase().includes(keyword)
+    const filtered = creatorProducts.filter(
+      (p) =>
+        p.name.toLowerCase().includes(keyword) ||
+        p.category.toLowerCase().includes(keyword)
     );
 
     renderCreatorProducts(filtered);
@@ -151,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
           price,
           category,
           creatorUID: currentUID,
-          creator: currentDisplayName
+          creator: currentDisplayName,
         });
         alert("Product added!");
         addForm.reset();

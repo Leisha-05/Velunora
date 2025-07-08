@@ -62,6 +62,7 @@
   text-align: center;
   transition: transform 0.3s ease;
   position: relative;
+  padding-bottom: 1rem;
 }
 
 .creator-products .wishlist-card:hover {
@@ -165,6 +166,23 @@
   padding: 20px;
   font-size: 1.3rem;
 }
+.discount-ribbon {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: var(--maincolor);
+  color: white;
+  padding: 0.7rem 1.2rem;
+  font-size: 1.1rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  z-index: 2;
+}
+.image-wrapper {
+  position: relative; 
+  overflow: hidden;
+}
+
 
 @media (max-width: 1100px) {
   .account-container {
@@ -194,9 +212,23 @@
   .creator-products {
     grid-template-columns: repeat(2, 1fr);
     padding: 13px 10px;
+    gap: 15px;
+  }
+   .creator-products img {
+    height: 200px; /* Match Category page */
+  }
+  .ribbon{
+    font-size: .85rem;
   }
 }
+@media (max-width: 768px) and (min-width: 566px) {
+  .creator-products{
+   justify-content: center;
+     margin-left: auto;
+    margin-right: auto;
+  }
 
+}
 @media (max-width: 480px) {
   .btn {
     font-size: 0.9rem;
@@ -220,6 +252,12 @@
   }
 
   .creator-products {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
+  @media (max-width: 480px) {
+  .creator-products img {
+    height: 180px; /* Optional: match Category header image style */
+  }
+}
+
 }

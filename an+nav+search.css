@@ -369,6 +369,9 @@ html {
    .account-dropdown .user-icon{
     font-size: 15px;
   }
+  .account-dropdown .dropdown-content {
+    font-size: 1.3rem;
+  }
   .hamburger{
     font-size: 15px;
   }
@@ -488,6 +491,9 @@ html {
   .account-dropdown .user-icon{
     font-size: 18px;
   }
+   .account-dropdown .dropdown-content {
+    font-size: 1.2rem;
+  }
   .hamburger{
     font-size: 1.8rem;
   }
@@ -541,6 +547,9 @@ html {
   }
   .account-dropdown .user-icon{
     font-size: 15px;
+  }
+   .account-dropdown .dropdown-content {
+    font-size: 1.1rem;
   }
   .hamburger{
     font-size: 1.8rem;

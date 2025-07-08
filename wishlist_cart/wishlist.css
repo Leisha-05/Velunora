@@ -2,6 +2,7 @@
 .wishlist-container {
   display: flex;
   padding: 40px 50px;
+  padding-top: 0;
   background-color: var(--brown-bg);
   min-height: auto;
 }
@@ -250,10 +251,29 @@
 .icon-bar .wishlist-icon.active {
     color: red;
 }
-
-
-
-
+.wishlist-header{
+   /* position: sticky;  */
+  top: 90px;
+  /* background: #fff; */
+  padding: 1rem 2rem;
+  padding-bottom: 0;
+  margin-bottom: 1rem;
+  /* border-left: 6px solid var(--maincolor); subtle accent line */
+  /* box-shadow: 0 1px 4px rgba(0,0,0,0.05); */
+  z-index: 100;
+  border-radius: 6px;
+}
+.wishlist-header h1{
+ margin: 0;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  letter-spacing: 1px;
+  text-align: center;
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+  text-transform: uppercase;
+}
 /* ─────────────────────────────────
    TABLET & MOBILE (≤768px)
    ───────────────────────────────── */
@@ -311,7 +331,7 @@
   }
 
   .wishlist-card .image-wrapper {
-    height: 25rem; /* adjust height for small laptops */
+    height: 30rem; /* adjust height for small laptops */
   }
 
   .wishlist-card h3 {
@@ -356,6 +376,7 @@
     flex-direction: column;
     padding: 20px;
   }
+  
 }
 
 /* ─────────────────────────────────
@@ -454,10 +475,12 @@
     display: block;
     width: 100%;
     text-align: center;
-    font-size: 1.8rem;
+    
     font-weight: 600;
     color: var(--maincolor);
-    margin: 20px 0;
+  }
+  .wishlist-header{
+font-size: 1.8rem;
   }
 }
 /* ─────────────────────────────────
@@ -479,5 +502,29 @@
   .wishlist-card .icon-bar {
     bottom: 1rem;  /* adjust up/down to taste */
     right: 1rem;   /* adjust left/right to taste */
+  }
+  .wishlist-header{
+font-size: 1.5rem;
+  }
+}
+.wishlist-header h1 {
+  font-size: 3rem;  /* desktop default */
+}
+
+@media (max-width: 992px) {
+  .wishlist-header h1 {
+    font-size: 2.75rem;  /* small laptops & tablets */
+  }
+}
+
+@media (max-width: 768px) {
+  .wishlist-header h1 {
+    font-size: 2.2rem;  /* tablets & larger phones */
+  }
+}
+
+@media (max-width: 480px) {
+  .wishlist-header h1 {
+    font-size: 1.8rem;  /* phones */
   }
 }

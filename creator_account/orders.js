@@ -152,18 +152,38 @@ const sidebarLogout = document.getElementById("sidebarLogout");
         const total = subtotal + shipping;
 
         orderDiv.innerHTML = `
-          <h3>Order from: ${order.name}</h3>
-          <p><strong>Address:</strong> ${order.address}, ${order.city}, ${order.state}, ${order.pincode}</p>
-          <p><strong>Phone:</strong> ${order.phone}</p>
-          <p><strong>Payment:</strong> ${order.payment}</p>
-          <p><strong>Date:</strong> ${formattedDate}</p>
-          <h4>Items:</h4>
-          <ul>${itemList}</ul>
-          <p><strong>Subtotal:</strong> ₹${subtotal.toFixed(2)}</p>
-          <p><strong>Shipping:</strong> ₹${shipping}</p>
-          <p><strong>Total:</strong> ₹${total.toFixed(2)}</p>
-        `;
+  <div class="order-header">
+    <h3>Order from <span>${order.name}</span></h3>
+    <p class="order-date">
+      <i class="fa-regular fa-calendar"></i>
+      ${formattedDate}
+    </p>
+  </div>
 
+    <div class="order-info">
+      <div class="order-section">
+        <h4>Shipping Details</h4>
+        <p><i class="fa-solid fa-location-dot"></i> ${order.address}, ${order.city}, ${order.state} - ${order.pincode}</p>
+        <p><i class="fa-solid fa-phone"></i> ${order.phone}</p>
+      </div>
+      <div class="order-section">
+        <h4>Payment</h4>
+        <p><i class="fa-solid fa-wallet"></i> ${order.payment}</p>
+      </div>
+    </div>
+
+    <div class="order-items">
+      <h4>Items</h4>
+      <ul>${itemList}</ul>
+    </div>
+
+    <div class="order-summary">
+      <div class="summary-row"><span>Subtotal:</span> <span>₹${subtotal.toFixed(2)}</span></div>
+      <div class="summary-row"><span>Shipping:</span> <span>₹${shipping}</span></div>
+      <div class="summary-total"><span>Total:</span> <span>₹${total.toFixed(2)}</span></div>
+    </div>
+  </div>
+`;
         ordersContainer.appendChild(orderDiv);
       });
     } catch (error) {

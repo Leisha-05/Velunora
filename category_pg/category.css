@@ -35,8 +35,8 @@
   padding: 20px 40px;
   border-radius: 10px;
   text-transform: capitalize;
+  text-align: center;
 }
-
 .product-section {
   padding: 60px 50px;
 }
@@ -215,7 +215,7 @@
   transform: translateY(0);
 }
 
- h2 {
+.section-header {
   margin-left: 5rem;
 }
 
@@ -263,7 +263,7 @@
   .ribbon{
     font-size: 1rem;
   }
-  h2 {
+.section-header{
   margin-left: 5rem;
   font-size: 1.25rem;
 }
@@ -319,7 +319,7 @@
   .ribbon{
     font-size: .85rem;
   }
-   h2 {
+  .section-header {
   margin-left: 3rem;
   font-size: 1rem;
 }

@@ -20,12 +20,17 @@ document.addEventListener("DOMContentLoaded", () => {
       if (loginSignup) loginSignup.remove();
 
       let isCreator = false;
+      let userName = 'User';
+
       try {
         const userRef = doc(db, "users", user.uid);
         const userSnap = await getDoc(userRef);
         if (userSnap.exists()) {
           const userData = userSnap.data();
           isCreator = userData.role === "creator";
+          userName = userData.name || user.displayName || 'User';
+        } else {
+          userName = user.displayName || 'User';
         }
       } catch (err) {
         console.error("❌ Error fetching user role:", err);
@@ -61,25 +66,24 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
 
-      // Update sidebar user info + user links
+      // ✅ Update sidebar user info with Firestore name
       const sidebarUserInfo = document.querySelector(".sidebar-user-info");
       const sidebarUserLinks = document.querySelector(".sidebar-user-links");
 
       if (sidebarUserInfo) {
-  sidebarUserInfo.innerHTML = `
-    <div class="sidebar-user-inline">
-      <div class="sidebar-user-icon">
-        <i class="fas fa-user"></i>
-      </div>
-      <div class="sidebar-user-details">
-        <p class="welcome-text">Good Day 👋</p>
-        <p class="user-name">${user.displayName || 'User'}</p>
-        <p class="user-email">${user.email}</p>
-      </div>
-    </div>
-  `;
-}
-
+        sidebarUserInfo.innerHTML = `
+          <div class="sidebar-user-inline">
+            <div class="sidebar-user-icon">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="sidebar-user-details">
+              <p class="welcome-text">Good Day 👋</p>
+              <p class="user-name">${userName}</p>
+              <p class="user-email">${user.email}</p>
+            </div>
+          </div>
+        `;
+      }
 
       if (sidebarUserLinks) {
         sidebarUserLinks.innerHTML = `

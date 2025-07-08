@@ -214,6 +214,39 @@ html {
 .nav-links>a:hover::after {
   width: 100%;      /* expands underline fully */
 }
+
+.nav-links .dropdown .dropbtn:hover {
+  color: var(--maincolor);
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f3f6f4;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  min-width: 160px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: var(--black);
+  padding: 10px 16px;
+  display: block;
+  text-decoration: none;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown .dropdown-content a:hover {
+  color: #6b705c;
+}
 .search-bar {
   margin-top: 120px;
   background-color: #f3f0eb;
@@ -260,9 +293,7 @@ html {
   margin-left: 15px;
   cursor: pointer;
 }
-.account-dropdown i{
-  color: var(--text-heading);
-}
+
 .user-icon {
   font-size: 20px;
   color: var(--text-heading);
@@ -421,7 +452,9 @@ html {
   color: var(--black);
   text-decoration: none;
 }
-
+.account-dropdown i{
+  color: var(--text-heading);
+}
 .account-dropdown .dropdown-content a:hover {
   background-color: #f3f3f3;
 }
@@ -529,7 +562,7 @@ html {
 .slide-sidebar {
   position: fixed;
   top: 0;
-  left: -280px;  /* hidden by default */
+  left: 0;  /* hidden by default */
   width: 240px;  /* a bit slimmer for modern feel */
   height: 100%;
   background: var(--white);
@@ -540,12 +573,13 @@ html {
   flex-direction: column;
   padding: 2rem 1.5rem;
   border-radius: 0 25px 25px 0;
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
 }
 
 .slide-sidebar.open {
-  left: 0;
+  transform: translateX(0); /* Slides it into view */
 }
-
 .slide-sidebar-overlay {
   position: fixed;
   top: 0;
@@ -600,7 +634,7 @@ html {
 }
 
 .sidebar-user-icon i {
-  font-size: 2rem;
+  font-size: 3.5rem;
   color: var(--logo);
 }
 
@@ -612,17 +646,20 @@ html {
 .sidebar-user-details .welcome-text {
   font-size: 1.2rem;
   color: var(--light-black);
+  line-height: 2rem;
 }
 
 .sidebar-user-details .user-name {
   font-weight: bold;
   font-size: 1.4rem;
   color: var(--black);
+  line-height: 2rem;
 }
 
 .sidebar-user-details .user-email {
   font-size: 1rem;
   color: var(--light-black);
+  line-height: 2rem;
 }
 
 .slide-sidebar nav {

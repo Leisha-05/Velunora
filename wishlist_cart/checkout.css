@@ -116,3 +116,28 @@
 #wish{
   margin-top: 120px;
 }
+@media (max-width: 768px) {
+  /* 1) Show the sidebar again */
+  main#wish.wishlist-container .user-sidebar {
+    display: block !important;  /* override wishlist.css */
+  }
+
+  /* 2) Stack everything vertically */
+  main#wish.wishlist-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 3) Move the Order Summary above the form */
+  main#wish.wishlist-container .user-sidebar {
+    order: -1;        /* appear first */
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  main#wish.wishlist-container .checkout-form-section {
+    order: 2;         /* form comes second */
+    width: 100%;
+  }
+}
+

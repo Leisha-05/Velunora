@@ -34,6 +34,7 @@ const db = getFirestore(app);
 let currentUser = null;
 
 document.addEventListener("DOMContentLoaded", () => {
+    
     const cartContainer = document.getElementById("cartContainer");
     const userName = document.getElementById("userName");
     const userEmail = document.getElementById("userEmail");
@@ -61,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
         currentUser = user;
         userName.textContent = user.displayName || user.email?.split("@")[0] || "Guest User";
         userEmail.textContent = user.email || "guest@email.com";
-
+ 
         // 🔹 Check role to hide sidebar links if not creator
         try {
             const userDoc = await getDoc(doc(db, "users", user.uid));
@@ -83,6 +84,10 @@ document.addEventListener("DOMContentLoaded", () => {
         currentUser = anonUser.user;
         userName.textContent = "Guest User";
         userEmail.textContent = "guest@email.com";
+        const emailName = "Guest";
+
+
+
     }
 
     // 🔹 Load and render cart + wishlist
@@ -91,17 +96,9 @@ document.addEventListener("DOMContentLoaded", () => {
     renderCart(cart, wishlist);
 
     // 🔹 Logout handling
-    const logoutBtn = document.getElementById("logoutBtn");
-    if (logoutBtn) {
-        logoutBtn.addEventListener("click", async () => {
-            try {
-                await signOut(auth);
-                window.location.href = "../login_signup/login.html"; // or window.location.reload();
-            } catch (error) {
-                console.error("Error during logout:", error);
-            }
-        });
-    }
+   
+        
+    
     const sidebarLogout = document.getElementById("sidebarLogout");
 if (sidebarLogout) {
   sidebarLogout.addEventListener("click", async () => {
@@ -110,7 +107,8 @@ if (sidebarLogout) {
       // clear any local state if needed:
       localStorage.clear();
       // redirect to login page:
-      window.location.href = "../login_signup/login.html";
+      window.location.href = `${window.location.origin}/login_signup/login.html`;
+
     } catch (err) {
       console.error("Sidebar logout failed:", err);
     }

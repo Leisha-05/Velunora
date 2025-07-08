@@ -37,6 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("navName").textContent = user.displayName || user.email?.split("@")[0] || "User";
         userName.textContent = user.displayName || user.email?.split("@")[0] || "Guest";
         userEmail.textContent = user.email || "guest@email.com";
+         
+
 
         // 🚩 Role-based sidebar control
         const userDoc = await getDoc(doc(db, "users", user.uid));
@@ -73,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
     sidebarLogout.addEventListener("click", async () => {
       try {
         await signOut(auth);
-        window.location.href = "../login_signup/login.html";
+    window.location.href = `${window.location.origin}/login_signup/login.html`;
       } catch (err) {
         console.error("Sidebar logout failed:", err);
       }

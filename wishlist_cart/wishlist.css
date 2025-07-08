@@ -3,7 +3,7 @@
   display: flex;
   padding: 40px 50px;
   background-color: var(--brown-bg);
-  min-height: 100vh;
+  min-height: auto;
 }
 
 .user-sidebar {
@@ -68,10 +68,11 @@
 /* Right Panel: Wishlist Items */
 .wishlist-products {
   flex: 1;
-  padding: 13px 50px;
+  
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+ grid-template-columns: repeat(3, 1fr);
+ gap: 30px;
+ padding: 20px 50px;
   background-color: var(--brown-bg);
 }
 
@@ -249,4 +250,175 @@
 .icon-bar .wishlist-icon.active {
     color: red;
 }
+
+/* ─────────────────────────────────
+   TABLET & MOBILE (≤768px)
+   ───────────────────────────────── */
+@media (max-width: 768px) {
+  /* Keep 2 cards per row, tighten spacing */
+  .wishlist-products {
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+    gap: 16px;
+    padding: 10px;
+  }
+
+  /* Hide the sidebar on smaller screens */
+  .user-sidebar {
+    display: none;
+  }
+
+  /* Stack main container vertically */
+  .wishlist-container {
+    flex-direction: column;
+    padding: 20px;
+  }
+}
+
+/* ─────────────────────────────────
+   PHONE‑ONLY TWEAKS (≤480px)
+   ───────────────────────────────── */
+@media (max-width: 480px) {
+  /* Cap image height so cards stay compact */
+  .wishlist-card .image-wrapper {
+    height: clamp(100px, 30vw, 150px);
+  }
+
+  /* Smaller titles & prices */
+  .wishlist-card h3 {
+    font-size: 1.2rem;
+  }
+  .wishlist-card .price .original,
+  .wishlist-card .price .discounted {
+    font-size: 1rem;
+  }
+
+  /* Shrink the order button */
+  .order-all-btn {
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+  }
+}
+/* ───────────────────────────────
+   SMALL LAPTOPS & TABLETS (≤992px)
+─────────────────────────────── */
+@media (max-width: 992px) {
+  .wishlist-products {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px; /* consistent spacing */
+  }
+
+  .wishlist-card .image-wrapper {
+    height: 25rem; /* adjust height for small laptops */
+  }
+
+  .wishlist-card h3 {
+    font-size: 1.8rem;
+  }
+}
+
+
+
+/* ─────────────────────────────────
+   PHONE‑ONLY TWEAKS (≤480px)
+   ───────────────────────────────── */
+@media (max-width: 480px) {
+  .wishlist-card .image-wrapper {
+    height: clamp(100px, 30vw, 150px);
+  }
+  .wishlist-card h3 {
+    font-size: 1.2rem;
+  }
+  .wishlist-card .price .original,
+  .wishlist-card .price .discounted {
+    font-size: 1rem;
+  }
+  .order-all-btn {
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+  }
+}
+/* ─────────────────────────────────
+   TABLET & MOBILE (≤768px)
+   ───────────────────────────────── */
+@media (max-width: 768px) {
+  .wishlist-products {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 10px;
+  }
+  .user-sidebar {
+    display: none;
+  }
+  .wishlist-container {
+    flex-direction: column;
+    padding: 20px;
+  }
+}
+
+/* ─────────────────────────────────
+   PHONE‑ONLY TWEAKS (≤480px)
+   ───────────────────────────────── */
+@media (max-width: 480px) {
+  .wishlist-products {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 14px;
+    padding: 8px;
+  }
+   .wishlist-container {
+    flex-direction: column;
+    padding: 16px;
+  }
+  .wishlist-card .image-wrapper {
+    height: clamp(100px, 30vw, 150px);
+  }
+
+  .wishlist-card h3 {
+    font-size: 1.2rem;
+  }
+  .wishlist-card .price .original,
+  .wishlist-card .price .discounted {
+    font-size: 1rem;
+  }
+  .order-all-btn {
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+  }
+}
+/* ─────────────────────────────────
+   UNIVERSAL RESPONSIVE ICON SIZING
+   ───────────────────────────────── */
+.wishlist-card .icon-bar {
+  /* Scale the gap and corner inset */
+  bottom: clamp(6px, 2vh, 12px);
+  right: clamp(6px, 2vw, 12px);
+  gap: clamp(4px, 1vw, 10px);
+}
+
+.wishlist-card .icon-bar i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Circle dims */
+  width:  clamp(24px, 4vw, 40px);
+  height: clamp(24px, 4vw, 40px);
+
+  /* Icon (font) size */
+  font-size: clamp(0.9rem, 2.5vw, 1.4rem);
+
+  /* Background & border */
+  background-color: rgba(255,255,255,0.95);
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+
+  /* Smooth hover */
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.wishlist-card .icon-bar i:hover {
+  background-color: var(--maincolor);
+  color: #fff;
+  transform: scale(1.1);
+}
+
 

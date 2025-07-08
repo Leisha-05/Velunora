@@ -34,8 +34,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 500);
       return;
     }
+    const loginLink = document.querySelector(".login-signup");
+if (loginLink) loginLink.style.display = "none";
 
-    loginLink.style.display = "none";
+    
     userDropdown.style.display = "inline-block";
 
     creatorEmailDisplay.textContent = user.email || "Guest";

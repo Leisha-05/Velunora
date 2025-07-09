@@ -24,6 +24,10 @@
 #shipping-form {
   display: flex;
   flex-direction: column;
+ 
+}
+.checkout-form-card {
+  margin-top: 2rem; /* or 2rem as needed */
 }
 
 #shipping-form label {
@@ -69,10 +73,25 @@
   padding-bottom: 5rem;
 }
 
+  .checkout-summary-box{
+    margin-top: 2rem; /* or 1rem if you want less space */
+  }
+.user-sidebar {
+  width: 280px;
+  background: var(--white);
+  border-radius: 12px;
+  padding: 30px 20px;
+  text-align: center;
+  box-shadow: 0 4px 10px var(--shadow);
+  margin-top: 6rem;
+  flex-shrink: 0;
+}
+
+
 .checkout-summary-box h3 {
   font-size: 1.7rem;
   color: var(--text-heading);
-  margin-bottom: 15px;
+  margin-bottom: 14px;
 }
 
 .checkout-summary-box p {
@@ -86,32 +105,53 @@
   box-shadow: 0 4px 10px var(--shadow);
   padding: 30px 40px;
   width: 100%;
+  
 }
-.payment-option {
+
+h1{
+  font-size: large;
+  font-family: 'playfair display',serif;
+}
+.checkout-summary-box h1 {
+    margin-bottom: 20px; /* increase this to your liking */
+}
+
+.checkout-summary-box h1 {
+  text-align: center;
+}
+
+/*.payment-option {
   margin-top: 10px;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.payment-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+
+.payment-row-del {
+  position: relative;       
+  display: block;           
+  padding: 12px 15px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 15px;      
   font-size: 1.3rem;
-  color: var(--black);
   cursor: pointer;
-  transform: translateY(-2.5rem);
-}
-h1{
-  font-size: large;
-  font-family: 'playfair display',serif;
-}
-.checkout-summary-box h1 {
-  text-align: center;
 }
 
-.radio{
+
+.payment-row input[type="radio"],
+.payment-row-del input[type="radio"] {
+  position: absolute;      
+  bottom: 12px;             
+  left: 15px;               
+  transform: scale(1.2);    
+  margin: 0;               
+  padding: 0;
+}*/
+
+/*.radio{
     transform: translateX(-30.5rem);
 }
 .radio2{
@@ -120,6 +160,58 @@ h1{
 }
 #radio{
     gap: 20rem;
+}*/
+
+
+/*.payment-label {
+  display: block;             
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 12px 15px;
+  margin-bottom: 15px;        
+  font-size: 1.3rem;
+  color: var(--black);
+}
+
+.payment-label input[type="radio"] {
+  display: block;             
+  margin: 8px 0 0 0;          
+  transform: scale(1.2);      
+}
+*/
+.payment-option {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.payment-row,
+.payment-row-del {
+  display: flex;
+  flex-direction: column;   /* stack vertically */
+  align-items: flex-start;
+   gap: 10px; 
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 12px 15px;
+  border-radius: 8px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: background 0.3s;
+  justify-content: flex-start;    /* ✅ Ensures left alignment */
+  text-align: left;
+}
+
+.payment-row:hover,
+.payment-row-del:hover {
+  background-color: #f8f8f8;
+}
+
+.payment-row input[type="radio"],
+.payment-row-del input[type="radio"] {
+  transform: scale(1.2);
 }
 #wish{
   margin-top: 120px;
@@ -233,5 +325,19 @@ h1{
 @media (min-width: 1023px) {
   .order-btn-mobile {
     display: none !important;
+  }
+}
+
+.payment-row,
+.payment-row-del {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+   text-align: left;
+}
+@media (max-width: 600px) {
+  .payment-row input[type="radio"],
+  .payment-row-del input[type="radio"] {
+    transform: scale(1.4);
   }
 }

@@ -80,7 +80,7 @@ function renderTotals() {
   let subtotal = cartItems.reduce((sum, item) => {
     const price    = Number(item.price)    || 0;
     const quantity = Number(item.quantity) || 1;
-    return sum + price * quantity;
+    return sum + price ;
   }, 0);
 
   subtotalElem.textContent = subtotal.toFixed(2);
@@ -112,7 +112,7 @@ async function handlePlaceOrder() {
   }
 
   const deliveryCharge = 50;
-  const subtotal = cartItems.reduce((sum, it) => sum + (it.price * it.quantity), 0);
+  const subtotal = cartItems.reduce((sum, it) => sum + (it.price ), 0);
   const total    = subtotal + deliveryCharge;
 
   const order = {

@@ -11,12 +11,20 @@ import {
   getDocs
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
+document.addEventListener("DOMContentLoaded", () => {
 // ✅ Matching variable names to category_pg
 const productGrid = document.getElementById("searchResultsContainer");
 const sectionTitle = document.getElementById("resultTitle");
 const searchInput = document.querySelector(".search-container input");
 const searchIcon = document.querySelector(".search-container i");
 
+  if (!productGrid || !sectionTitle) {
+    console.warn(
+      "search_results.js: no #searchResultsContainer or #resultTitle on this page — skipping."
+    );
+    return;
+  }
+  
 function getKeywordFromURL() {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get("keyword")?.toLowerCase().trim();
@@ -194,7 +202,7 @@ if (searchInput && searchIcon) {
   const handleSearch = () => {
     const newKeyword = searchInput.value.trim();
     if (newKeyword) {
-      window.location.href = `../search_results.html?keyword=${encodeURIComponent(newKeyword)}`;
+      window.location.href = `search_results.html?keyword=${encodeURIComponent(newKeyword)}`;
     }
   };
   searchIcon.addEventListener("click", handleSearch);
@@ -204,3 +212,4 @@ if (searchInput && searchIcon) {
     }
   });
 }
+});

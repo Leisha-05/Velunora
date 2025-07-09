@@ -58,9 +58,8 @@
   min-height: 80px;
 }
 
-.payment-option {
-  margin-top: 15px;
-  font-size: 1.3rem;
+#wish{
+  margin-top: 120px;
 }
 
 .checkout-summary-box {
@@ -120,102 +119,6 @@ h1{
   text-align: center;
 }
 
-/*.payment-option {
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-
-.payment-row-del {
-  position: relative;       
-  display: block;           
-  padding: 12px 15px;
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  margin-bottom: 15px;      
-  font-size: 1.3rem;
-  cursor: pointer;
-}
-
-
-.payment-row input[type="radio"],
-.payment-row-del input[type="radio"] {
-  position: absolute;      
-  bottom: 12px;             
-  left: 15px;               
-  transform: scale(1.2);    
-  margin: 0;               
-  padding: 0;
-}*/
-
-/*.radio{
-    transform: translateX(-30.5rem);
-}
-.radio2{
-    transform: translateY(-2.5rem);
-    transform: translateX(-40rem);
-}
-#radio{
-    gap: 20rem;
-}*/
-
-
-/*.payment-label {
-  display: block;             
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 12px 15px;
-  margin-bottom: 15px;        
-  font-size: 1.3rem;
-  color: var(--black);
-}
-
-.payment-label input[type="radio"] {
-  display: block;             
-  margin: 8px 0 0 0;          
-  transform: scale(1.2);      
-}
-*/
-.payment-option {
-  margin-top: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.payment-row,
-.payment-row-del {
-  display: flex;
-  flex-direction: column;   /* stack vertically */
-  align-items: flex-start;
-   gap: 10px; 
-  background: #fff;
-  border: 1px solid #ccc;
-  padding: 12px 15px;
-  border-radius: 8px;
-  font-size: 1.3rem;
-  cursor: pointer;
-  transition: background 0.3s;
-  justify-content: flex-start;    /* ✅ Ensures left alignment */
-  text-align: left;
-}
-
-.payment-row:hover,
-.payment-row-del:hover {
-  background-color: #f8f8f8;
-}
-
-.payment-row input[type="radio"],
-.payment-row-del input[type="radio"] {
-  transform: scale(1.2);
-}
-#wish{
-  margin-top: 120px;
-}
 @media (max-width: 1022px) {
   /* Stack columns */
   main#wish.wishlist-container {
@@ -328,16 +231,101 @@ h1{
   }
 }
 
+
+.payment-option {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+   background: #fff;
+  border: 1px solid #ccc;
+  padding: 10px 15px;
+  border-radius: 8px;
+  padding-top: 0;
+}
+
 .payment-row,
 .payment-row-del {
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-   text-align: left;
+  display: inline-flex;   /* ✅ only takes content width! */
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;               /* tight gap! */
+ 
+  font-size: 1.3rem;
 }
+
+.payment-row span,
+.payment-row-del span {
+  white-space: nowrap;
+}
+
+.payment-option {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: flex-start;  /* so boxes stay left */
+}
+
+.payment-row,
+.payment-row-del {
+  width: auto;      /* ✅ only as wide as needed */
+}
+
+.payment-option > div {
+  width: 100%;      /* ✅ outer container still full-width */
+}
+.pay{
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .checkout-form-card {
+    font-size: 0.9rem;  /* 14.4px */
+    /* padding: 1.5rem; */
+  }
+  .payment-option span{
+    font-size: 1.3rem;
+  }
+  span{
+    font-size: 1.4rem;
+  }
+  .checkout-form-card h2 {
+    font-size: 2.5rem; /* 24px */
+  }
+}
+
+/* Small tablets & large phones */
 @media (max-width: 600px) {
-  .payment-row input[type="radio"],
-  .payment-row-del input[type="radio"] {
-    transform: scale(1.4);
+  .checkout-form-card {
+    font-size: 0.85rem;  /* ~13.6px */
+    /* padding: 2.3rem; */
+  }
+  .payment-option span{
+    font-size: 1.2rem;
+  }
+  span{
+    font-size: 1.3rem;
+  }
+
+  .checkout-form-card h2 {
+    font-size: rem;
+  }
+}
+
+/* Phones */
+@media (max-width: 480px) {
+  .checkout-form-card {
+    font-size: 0.8rem;  /* ~12.8px */
+    /* padding: 1rem; */
+  }
+  .payment-option span{
+    font-size: 1rem;
+  }
+  span{
+    font-size: 1.2rem;
+  }
+   
+  .checkout-form-card h2 {
+    font-size: 2rem;
   }
 }

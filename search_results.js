@@ -85,8 +85,8 @@ async function fetchAndDisplayResults(keyword) {
         <div class="product-info">
           <h3>${product.name}</h3>
           <div class="price">
+          <span class="discounted">₹${finalPrice}</span>
             ${discount > 0 ? `<span class="original">₹${originalPrice}</span>` : ""}
-            <span class="discounted">₹${finalPrice}</span>
           </div>
         </div>
       `;
